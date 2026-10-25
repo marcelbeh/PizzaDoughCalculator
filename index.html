@@ -47,7 +47,11 @@ const toppings=[
 {id:'pesto',name:'Pesto, Burrata & Tomaten',count:1,items:[['Pesto',25,'g'],['Burrata',70,'g'],['Kirschtomaten',50,'g'],['Pinienkerne',5,'g']]},
 {id:'crudo',name:'Crudo, Rucola & gelbe Tomate',count:1,items:[['Gelbe Tomatensauce',60,'g'],['Fior di Latte',70,'g'],['Parmaschinken',35,'g'],['Rucola',10,'g'],['Parmesan',8,'g']]},
 {id:'funghi',name:'Prosciutto cotto e funghi',count:1,items:[['Tomatensauce',65,'g'],['Fior di Latte',80,'g'],['Kochschinken',35,'g'],['Champignons',35,'g']]},
-{id:'bianca',name:'Bianca',count:1,items:[['Ricotta / weiße Basis',60,'g'],['Fior di Latte',70,'g'],['Parmesan',8,'g']]}
+{id:'bianca',name:'Bianca',count:1,items:[['Ricotta / weiße Basis',60,'g'],['Fior di Latte',70,'g'],['Parmesan',8,'g']]},
+{id:'mortadella',name:'Mortadella, Pistazie & Burrata',count:0,items:[['Pistaziencreme',20,'g'],['Fior di Latte',60,'g'],['Mortadella',45,'g'],['Burrata',50,'g'],['Pistazien',8,'g']]},
+{id:'nduja',name:'’Nduja, Stracciatella & Honig',count:0,items:[['Tomatensauce',60,'g'],['Fior di Latte',60,'g'],['’Nduja',25,'g'],['Stracciatella',40,'g'],['Honig',5,'g']]},
+{id:'diavola',name:'Diavola & Hot Honey',count:0,items:[['Tomatensauce',65,'g'],['Fior di Latte',80,'g'],['Scharfe Salami',40,'g'],['Chili-Honig',8,'g'],['Basilikum',2,'Blätter']]},
+{id:'tartufo',name:'Funghi, Trüffel & Stracciatella',count:0,items:[['Weiße Pizzabasis',55,'g'],['Fior di Latte',65,'g'],['Champignons',45,'g'],['Stracciatella',40,'g'],['Trüffelcreme',8,'g']]}
 ];
 let state={total:10,profile:'pizzeria',yeastType:'dry',fermentHours:48,ball:280,hydration:64,roomTemp:21,waterTemp:10,ferment:48,saltPct:3,counts:Object.fromEntries(toppings.map(t=>[t.id,t.count]))};
 let recipe={},allocated={};
