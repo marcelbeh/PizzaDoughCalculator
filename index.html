@@ -44,12 +44,12 @@ const profiles={pizzeria:{name:'Caputo Pizzeria',hydration:64,salt:3,yeast:.10,n
 const toppings=[
 {id:'margherita',name:'Margherita',weight:5,items:[['Tomatensauce',70,'g'],['Fior di Latte',80,'g'],['Basilikum',2,'Blätter']]},
 {id:'salami',name:'Salami, Oliven & Burrata',weight:2,items:[['Tomatensauce',60,'g'],['Fior di Latte',60,'g'],['Salami',35,'g'],['Oliven',15,'g'],['Burrata',60,'g']]},
-{id:'pesto',name:'Pesto, Burrata & Tomaten',weight:1,items:[['Pesto',25,'g'],['Burrata',70,'g'],['Kirschtomaten',50,'g'],['Pinienkerne',5,'g']]},
-{id:'crudo',name:'Crudo, Rucola & gelbe Tomate',weight:1,items:[['Gelbe Tomatensauce',60,'g'],['Fior di Latte',70,'g'],['Parmaschinken',35,'g'],['Rucola',10,'g'],['Parmesan',8,'g']]},
-{id:'funghi',name:'Prosciutto cotto e funghi',weight:1,items:[['Tomatensauce',65,'g'],['Fior di Latte',80,'g'],['Kochschinken',35,'g'],['Champignons',35,'g']]},
-{id:'bianca',name:'Bianca',weight:1,items:[['Ricotta / weiße Basis',60,'g'],['Fior di Latte',70,'g'],['Parmesan',8,'g']]}
+{id:'pesto',name:'Pesto, Burrata & Tomaten',count:1,items:[['Pesto',25,'g'],['Burrata',70,'g'],['Kirschtomaten',50,'g'],['Pinienkerne',5,'g']]},
+{id:'crudo',name:'Crudo, Rucola & gelbe Tomate',count:1,items:[['Gelbe Tomatensauce',60,'g'],['Fior di Latte',70,'g'],['Parmaschinken',35,'g'],['Rucola',10,'g'],['Parmesan',8,'g']]},
+{id:'funghi',name:'Prosciutto cotto e funghi',count:1,items:[['Tomatensauce',65,'g'],['Fior di Latte',80,'g'],['Kochschinken',35,'g'],['Champignons',35,'g']]},
+{id:'bianca',name:'Bianca',count:1,items:[['Ricotta / weiße Basis',60,'g'],['Fior di Latte',70,'g'],['Parmesan',8,'g']]}
 ];
-let state={total:10,profile:'pizzeria',yeastType:'dry',fermentHours:48,ball:280,hydration:64,roomTemp:21,waterTemp:10,ferment:48,saltPct:3,weights:Object.fromEntries(toppings.map(t=>[t.id,t.weight]))};
+let state={total:10,profile:'pizzeria',yeastType:'dry',fermentHours:48,ball:280,hydration:64,roomTemp:21,waterTemp:10,ferment:48,saltPct:3,counts:Object.fromEntries(toppings.map(t=>[t.id,t.count]))};
 let recipe={},allocated={};
 const saved=(()=>{try{return JSON.parse(localStorage.getItem('pdc-state-v3')||'null')}catch(e){return null}})();
 if(saved)state={...state,...saved,weights:{...state.weights,...(saved.weights||{})}};
