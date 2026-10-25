@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f2e9">
+<meta name="description" content="Pizza Dough Calculator – Teig berechnen, Gärung planen und Pizzatag organisieren.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Pizza Dough Calculator</title>
+<style>
+:root{--paper:#f7f2e9;--card:#fffdf8;--ink:#292722;--muted:#81796e;--red:#bd392c;--red2:#9f2b22;--line:#e9e0d3;--green:#526d50;--shadow:0 7px 24px #3726190a}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:92px}
+button,input,select{font:inherit}button{cursor:pointer}.app{max-width:740px;margin:auto;padding:20px 17px 24px}
+.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;align-items:center;gap:11px}.logo{width:43px;height:43px;border-radius:15px;background:var(--red);display:grid;place-items:center;color:white;font-size:23px;box-shadow:0 4px 12px #bd392c25}.eyebrow{font-size:10px;font-weight:800;letter-spacing:1.5px;color:var(--red);text-transform:uppercase}.brand h1{font-size:19px;line-height:1.1;margin:3px 0 0;letter-spacing:-.5px}.roundbtn{border:1px solid var(--line);background:var(--card);width:41px;height:41px;border-radius:50%;font-size:18px}
+h2{font-size:25px;letter-spacing:-.7px;margin:0 0 5px}p.sub{color:var(--muted);margin:0 0 19px;font-size:13px;line-height:1.5}
+.hero{background:var(--red);color:white;border-radius:22px;padding:20px;margin:0 0 18px;position:relative;overflow:hidden}.hero:after{content:"🍕";position:absolute;right:15px;top:17px;font-size:62px;opacity:.17;transform:rotate(15deg)}.hero .eyebrow{color:#f8c5b8}.hero h3{font-size:22px;margin:8px 0 7px;max-width:78%}.hero p{font-size:12px;line-height:1.5;max-width:77%;margin:0;color:#ffe6de}.hero button{margin-top:15px;background:#fff7ed;color:var(--red);border:0;border-radius:12px;padding:11px 14px;font-weight:750;font-size:12px}
+.section-head{display:flex;justify-content:space-between;align-items:center;margin:21px 1px 11px}.section-head h3{font-size:15px;margin:0}.section-head span{font-size:11px;color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:19px;padding:16px;margin-bottom:12px;box-shadow:var(--shadow)}.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;color:var(--muted);font-size:11px;font-weight:650;margin:0 0 7px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:11px 10px;background:#fffefa;color:var(--ink);outline-color:#d88b7f}.unit{position:relative}.unit small{position:absolute;right:11px;top:12px;color:var(--muted);font-size:12px;pointer-events:none}.unit input{padding-right:40px}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin:12px 0}.stat{background:#f7f0e6;border-radius:14px;padding:13px}.stat .label{font-size:10px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.7px}.stat strong{display:block;font-size:21px;letter-spacing:-.5px;margin-top:5px}.stat small{font-size:11px;color:var(--muted)}
+.ingredients{width:100%;border-collapse:collapse;font-size:13px}.ingredients td{padding:11px 2px;border-bottom:1px solid var(--line)}.ingredients tr:last-child td{border-bottom:0}.ingredients td:last-child{text-align:right;font-weight:750;font-variant-numeric:tabular-nums}.ingicon{display:inline-grid;place-items:center;width:27px;height:27px;border-radius:9px;background:#f4e8d8;margin-right:8px}
+.pill{display:inline-block;background:#f7e7df;color:var(--red);font-size:10px;font-weight:800;padding:5px 8px;border-radius:99px}.primary{border:0;background:var(--red);color:white;border-radius:12px;padding:12px 15px;font-weight:750;font-size:13px}.secondary{border:1px solid var(--line);background:transparent;border-radius:12px;padding:10px 12px;color:var(--ink);font-size:12px;font-weight:700}.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;background:#fffdf8ee;backdrop-filter:blur(14px);border-top:1px solid var(--line);padding:8px max(10px,env(safe-area-inset-left)) calc(8px + env(safe-area-inset-bottom));display:flex;justify-content:center}.navinner{width:min(740px,100%);display:grid;grid-template-columns:repeat(4,1fr);gap:3px}.nav button{border:0;background:transparent;color:var(--muted);padding:7px 3px;border-radius:12px;font-size:10px;font-weight:700;display:flex;align-items:center;gap:4px;flex-direction:column}.nav button .ico{font-size:19px;line-height:1.2}.nav button.active{color:var(--red);background:#f8eae4}
+.page{display:none}.page.active{display:block}.checklist{display:flex;align-items:flex-start;gap:11px;padding:13px 0;border-bottom:1px solid var(--line)}.checklist:last-child{border-bottom:0}.checklist input{accent-color:var(--red);width:18px;height:18px;margin-top:1px}.checktext{flex:1;font-size:13px;line-height:1.4}.checktext small{display:block;color:var(--muted);font-size:11px;margin-top:3px}.checklist.done .checktext{text-decoration:line-through;color:var(--muted)}.timeitem{display:grid;grid-template-columns:63px 1fr;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.timeitem:last-child{border-bottom:0}.time{font-size:12px;font-weight:800;color:var(--red);padding-top:2px}.timeitem strong{font-size:13px}.timeitem p{font-size:11px;color:var(--muted);margin:4px 0 0;line-height:1.45}.note{background:#f4eadb;padding:12px;border-radius:12px;font-size:11px;line-height:1.5;color:#675a49;margin-top:10px}.muted{color:var(--muted)}.small{font-size:11px}.batchrow{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid var(--line);font-size:12px}.batchrow:last-child{border-bottom:0}.batchrow strong{text-align:right}.toast{display:none;position:fixed;top:15px;left:50%;transform:translateX(-50%);background:#292722;color:white;border-radius:99px;padding:10px 16px;font-size:12px;z-index:30;box-shadow:var(--shadow)}.toast.show{display:block}
+@media(min-width:600px){.app{padding:28px 24px}.stats{grid-template-columns:repeat(4,minmax(0,1fr))}.hero{padding:26px}.hero h3{font-size:26px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">✳</div><div><div class="eyebrow">Dein Pizzatag</div><h1>Pizza Dough Calculator</h1></div></div><button class="roundbtn" id="resetBtn" title="Einstellungen zurücksetzen">↻</button></header>
+
+<section id="calculator" class="page active">
+<div class="hero"><div class="eyebrow">Teig. Zeit. Perfektion.</div><h3>Dein nächster Pizzateig beginnt hier.</h3><p>Rezept berechnen, Gärung planen und entspannt Pizza backen.</p><button onclick="showPage('schedule')">Zeitplan ansehen&nbsp; →</button></div>
+<h2>Teig-Rechner</h2><p class="sub">Zutaten passend zu deiner Pizzarunde berechnen.</p>
+<div class="card"><div class="grid2">
+<div class="field"><label>Anzahl Pizzen</label><input id="pizzas" type="number" min="1" max="100" value="10"></div>
+<div class="field"><label>Teiggewicht pro Pizza</label><div class="unit"><input id="ball" type="number" min="100" max="500" value="280"><small>g</small></div></div>
+<div class="field"><label>Hydration</label><div class="unit"><input id="hydration" type="number" min="45" max="85" value="64"><small>%</small></div></div>
+<div class="field"><label>Salz (bezogen auf Mehl)</label><div class="unit"><input id="saltpct" type="number" min="1" max="5" step=".1" value="3"><small>%</small></div></div>
+<div class="field"><label>Hefeart</label><select id="yeastType"><option value="dry">Trockenhefe</option><option value="fresh">Frischhefe</option></select></div>
+<div class="field"><label>Hefe (bezogen auf Mehl)</label><div class="unit"><input id="yeastpct" type="number" min=".01" max="1" step=".01" value=".1"><small>%</small></div></div>
+</div>
+<div class="stats"><div class="stat"><div class="label">Gesamtteig</div><strong id="total">2.800 g</strong><small id="ballsText">10 Teiglinge</small></div><div class="stat"><div class="label">Mehl</div><strong id="flour">1.674 g</strong><small>Caputo Pizzeria</small></div><div class="stat"><div class="label">Wasser</div><strong id="water">1.071 g</strong><small id="hydText">64 % Hydration</small></div><div class="stat"><div class="label">Hefe</div><strong id="yeast">1,7 g</strong><small id="yeastCaption">Trockenhefe</small></div></div>
+<table class="ingredients"><tbody><tr><td><span class="ingicon">🌾</span>Mehl</td><td id="flour2">1.674 g</td></tr><tr><td><span class="ingicon">💧</span>Wasser</td><td id="water2">1.071 g</td></tr><tr><td><span class="ingicon">🧂</span>Salz</td><td id="salt">50 g</td></tr><tr><td><span class="ingicon">◌</span><span id="yeastLabel">Trockenhefe</span></td><td id="yeast2">1,7 g</td></tr></tbody></table>
+<div class="actions"><button class="primary" id="copyRecipe">Rezept kopieren</button><button class="secondary" onclick="showPage('thermomix')">TM5-Chargen berechnen</button></div>
+</div>
+<div class="note">Rechenbasis: Zielgewicht wird auf die Gesamtmenge aus Mehl, Wasser, Salz und Hefe abgestimmt. Die Hefemenge ist ein Startwert für eine lange, kalte Führung – je nach Temperatur und Zeit anpassen.</div>
+</section>
+
+<section id="schedule" class="page">
+<h2>Gär- & Backplaner</h2><p class="sub">Rückwärts vom ersten Backzeitpunkt planen.</p>
+<div class="card"><div class="grid2">
+<div class="field"><label>Backdatum</label><input id="bakeDate" type="date" value="2026-10-27"></div>
+<div class="field"><label>Erste Pizza</label><input id="bakeTime" type="time" value="17:30"></div>
+<div class="field"><label>Stückgare bei Raumtemperatur</label><div class="unit"><input id="roomHours" type="number" value="4.5" min="0" max="24" step=".5"><small>Std.</small></div></div>
+<div class="field"><label>Stockgare im Kühlschrank</label><div class="unit"><input id="bulkHours" type="number" value="24" min="1" max="96" step="1"><small>Std.</small></div></div>
+<div class="field"><label>Kühlschrank</label><div class="unit"><input id="fridgeTemp" type="number" value="5" min="1" max="12"><small>°C</small></div></div>
+<div class="field"><label>Ofen vorheizen</label><div class="unit"><input id="preheat" type="number" value="75" min="15" max="180" step="5"><small>Min.</small></div></div>
+</div><div class="actions"><button class="primary" id="makeSchedule">Zeitplan erstellen</button></div></div>
+<div class="card"><div class="section-head"><h3>Dein Ablauf</h3><span class="pill">Rückwärts geplant</span></div><div id="timeline"></div><div class="note">Hinweis: Der Plan ist eine praktische Orientierung. Teigtemperatur, Raumtemperatur und tatsächliche Aktivität des Teigs gehen vor der Uhrzeit.</div></div>
+</section>
+
+<section id="thermomix" class="page">
+<h2>Thermomix-Chargen</h2><p class="sub">Teig in mehreren kleinen Mengen mischen und anschließend zusammenführen.</p>
+<div class="card"><div class="grid2"><div class="field"><label>Max. Mehl pro Charge</label><div class="unit"><input id="maxFlour" type="number" value="500" min="100" step="50"><small>g</small></div></div><div class="field"><label>Rundung der Waage</label><select id="rounding"><option value="5">Auf 5 g runden</option><option value="1">Auf 1 g runden</option></select></div></div><div class="actions"><button class="primary" id="makeBatches">Chargen berechnen</button></div></div>
+<div class="card"><div class="section-head"><h3>Aufteilung</h3><span id="batchCount" class="pill">4 Chargen</span></div><div id="batches"></div><div class="note">Hefe kann bei kleinen Mengen zu ungenau für die Waage sein. Bei sehr kleinen Werten besser mit einer Feinwaage abwiegen oder die Hefe in Wasser verteilen und exakt aufteilen.</div></div>
+</section>
+
+<section id="checklist" class="page">
+<h2>Deine Checkliste</h2><p class="sub">Alles im Blick – erledigte Aufgaben bleiben auf diesem Gerät gespeichert.</p>
+<div class="card"><div class="section-head"><h3>Vorbereitung</h3><span class="muted small" id="progress">0 / 8 erledigt</span></div><div id="todoList"></div><div class="actions"><button class="secondary" id="clearChecks">Häkchen zurücksetzen</button></div></div>
+<div class="card"><div class="section-head"><h3>Pizza belegen</h3><span class="muted small">Merkliste</span></div><div class="checklist"><input type="checkbox" data-key="topping1"><div class="checktext">Margherita<small>Tomatensauce, Fior di Latte, Basilikum nach dem Backen</small></div></div><div class="checklist"><input type="checkbox" data-key="topping2"><div class="checktext">Prosciutto cotto e funghi<small>Kochschinken, Champignons und Fior di Latte</small></div></div><div class="checklist"><input type="checkbox" data-key="topping3"><div class="checktext">Pesto, Burrata & Kirschtomaten<small>Pesto und Burrata nach dem Backen ergänzen</small></div></div><div class="checklist"><input type="checkbox" data-key="topping4"><div class="checktext">Salami, Oliven & Burrata<small>Burrata erst nach dem Backen auflegen</small></div></div><div class="checklist"><input type="checkbox" data-key="topping5"><div class="checktext">Bianca<small>Weiße Basis nach eigenem Rezept</small></div></div></div>
+</section>
+</div>
+<nav class="nav"><div class="navinner"><button class="active" data-page="calculator"><span class="ico">◉</span>Rechner</button><button data-page="schedule"><span class="ico">◷</span>Zeitplan</button><button data-page="thermomix"><span class="ico">▦</span>Thermomix</button><button data-page="checklist"><span class="ico">☑</span>Checkliste</button></div></nav>
+<div id="toast" class="toast"></div>
+<script>
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n);
+const grams=n=>`${fmt(n)} g`;
+let recipe={};
+function calc(){
+ const n=Math.max(1,+$('pizzas').value||1), ball=Math.max(100,+$('ball').value||280), h=Math.max(0,+$('hydration').value||64)/100, sp=Math.max(0,+$('saltpct').value||3)/100, yp=Math.max(.001,+$('yeastpct').value||.1)/100, yeastFactor=$('yeastType').value==='fresh'?3:1;
+ const total=n*ball, flour=total/(1+h+sp+yp*yeastFactor), water=flour*h, salt=flour*sp, yeast=flour*yp*yeastFactor;
+ recipe={n,ball,total,flour,water,salt,yeast,yeastType:$('yeastType').value,h:h*100};
+ $('total').textContent=grams(total);$('ballsText').textContent=`${n} Teiglinge à ${ball} g`;$('flour').textContent=grams(flour);$('water').textContent=grams(water);$('hydText').textContent=`${fmt(h*100)} % Hydration`;$('yeast').textContent=grams(yeast);$('yeastCaption').textContent=$('yeastType').value==='fresh'?'Frischhefe':'Trockenhefe';
+ $('flour2').textContent=grams(flour);$('water2').textContent=grams(water);$('salt').textContent=grams(salt);$('yeast2').textContent=grams(yeast);$('yeastLabel').textContent=$('yeastType').value==='fresh'?'Frischhefe':'Trockenhefe';
+ renderBatches();
+}
+function showPage(id){document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id===id));document.querySelectorAll('.nav button').forEach(b=>b.classList.toggle('active',b.dataset.page===id));if(id==='schedule')buildSchedule();if(id==='thermomix')renderBatches();window.scrollTo({top:0,behavior:'smooth'})}
+document.querySelectorAll('.nav button').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+['pizzas','ball','hydration','saltpct','yeastpct','yeastType'].forEach(id=>$(id).addEventListener('input',calc));
+function toast(t){$('toast').textContent=t;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
+$('copyRecipe').onclick=()=>{const r=recipe;const t=`Pizza Dough Calculator\n${r.n} Pizzen à ${r.ball} g\nMehl: ${fmt(r.flour)} g\nWasser: ${fmt(r.water)} g\nSalz: ${fmt(r.salt)} g\n${r.yeastType==='fresh'?'Frischhefe':'Trockenhefe'}: ${fmt(r.yeast)} g\nHydration: ${fmt(r.h)} %`;if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast('Rezept kopiert')).catch(()=>prompt('Rezept kopieren:',t));else prompt('Rezept kopieren:',t)};
+function buildSchedule(){
+ const date=$('bakeDate').value||new Date().toISOString().slice(0,10), time=$('bakeTime').value||'17:30';
+ const bake=new Date(`${date}T${time}:00`), room=+ $('roomHours').value||0, bulk=+ $('bulkHours').value||24, pre=+$('preheat').value||75;
+ const ballTime=new Date(bake.getTime()-room*3600000), bulkStart=new Date(ballTime.getTime()-bulk*3600000), oven=new Date(bake.getTime()-pre*60000);
+ const fmtDate=d=>new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}).format(d);
+ const fmtTime=d=>new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit'}).format(d);
+ const items=[{d:bulkStart,title:'Teig mischen & in die Stockgare',desc:`Teig abgedeckt in den Kühlschrank stellen (${ $('fridgeTemp').value} °C).`},{d:ballTime,title:'Abstechen und rundwirken',desc:'Teiglinge portionieren, rundwirken und in leicht geölte Teigboxen legen.'},{d:oven,title:'Pizzaofen vorheizen',desc:'Stein- und Ofentemperatur prüfen; bei Bedarf Flamme vor dem Einschießen reduzieren.'},{d:new Date(bake.getTime()-30*60000),title:'Arbeitsplatz vorbereiten',desc:'Sauce, Käse und Toppings bereitstellen; feuchte Zutaten abtropfen lassen.'},{d:bake,title:'Erste Pizza backen',desc:'Teiggefühl und Ofen beobachten – die Uhr ist nur eine Orientierung.'}].sort((a,b)=>a.d-b.d);
+ $('timeline').innerHTML=items.map(i=>`<div class="timeitem"><div class="time">${fmtDate(i.d)}<br>${fmtTime(i.d)}</div><div><strong>${i.title}</strong><p>${i.desc}</p></div></div>`).join('');
+}
+$('makeSchedule').onclick=buildSchedule;
+function renderBatches(){
+ if(!recipe.flour)return;
+ const max=Math.max(100,+$('maxFlour').value||500), round=+$('rounding').value||5, count=Math.ceil(recipe.flour/max), out=[];
+ for(let i=0;i<count;i++){const f=recipe.flour/count,w=recipe.water/count,s=recipe.salt/count,y=recipe.yeast/count;const rnd=v=>Math.round(v/round)*round;
+ out.push(`<div class="section-head"><h3>Charge ${i+1}</h3><span class="muted small">von ${count}</span></div><div class="batchrow"><span>Mehl</span><strong>${grams(rnd(f))}</strong></div><div class="batchrow"><span>Wasser</span><strong>${grams(rnd(w))}</strong></div><div class="batchrow"><span>Salz</span><strong>${grams(rnd(s))}</strong></div><div class="batchrow"><span>${recipe.yeastType==='fresh'?'Frischhefe':'Trockenhefe'}</span><strong>${grams(Math.round(y*10)/10)}</strong></div>`);
+ }
+ $('batchCount').textContent=`${count} ${count===1?'Charge':'Chargen'}`;$('batches').innerHTML=out.join('');
+}
+$('makeBatches').onclick=()=>{renderBatches();toast('Chargen aktualisiert')};
+const todos=[['Zutaten abwiegen','Mehl, Wasser, Salz und Hefe vorbereiten'],['Teig mischen','Teigtemperatur im Blick behalten'],['Stockgare starten','Abgedeckt in den Kühlschrank'],['Teiglinge abstechen','Gleichmäßig portionieren und rundwirken'],['Teigboxen vorbereiten','Leicht ölen, Teiglinge mit Abstand einsetzen'],['Tomatensauce machen','Tomaten würzen und bereitstellen'],['Käse schneiden und abtropfen','Fior di Latte möglichst trocken verwenden'],['Ofen und Arbeitsplatz vorbereiten','Schieber, Mehl und Toppings bereitstellen']];
+function loadChecks(){let done=0;$('todoList').innerHTML=todos.map((t,i)=>{const checked=localStorage.getItem('pdc-todo-'+i)==='1';if(checked)done++;return `<div class="checklist ${checked?'done':''}"><input type="checkbox" data-todo="${i}" ${checked?'checked':''}><div class="checktext">${t[0]}<small>${t[1]}</small></div></div>`}).join('');$('progress').textContent=`${done} / ${todos.length} erledigt`;document.querySelectorAll('[data-todo]').forEach(c=>c.onchange=()=>{localStorage.setItem('pdc-todo-'+c.dataset.todo,c.checked?'1':'0');loadChecks()});document.querySelectorAll('[data-key]').forEach(c=>{c.checked=localStorage.getItem('pdc-'+c.dataset.key)==='1';c.onchange=()=>localStorage.setItem('pdc-'+c.dataset.key,c.checked?'1':'0')})}
+$('clearChecks').onclick=()=>{todos.forEach((_,i)=>localStorage.removeItem('pdc-todo-'+i));loadChecks();toast('Häkchen zurückgesetzt')};
+$('resetBtn').onclick=()=>{if(confirm('Standardwerte wiederherstellen?')){['pizzas','ball','hydration','saltpct','yeastpct'].forEach((id,i)=>$(id).value=[10,280,64,3,.1][i]);$('yeastType').value='dry';calc();toast('Standardwerte wiederhergestellt')}};
+calc();buildSchedule();loadChecks();
+if('serviceWorker' in navigator && location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
