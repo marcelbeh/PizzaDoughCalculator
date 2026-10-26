@@ -1,10 +1,10 @@
 {
-  "name": "Pizza Dough Calculator",
-  "short_name": "Pizza Dough",
-  "description": "Teig berechnen, Gärung planen und Pizza organisieren.",
+  "name": "Pizza Day — Dein Pizzatag",
+  "short_name": "Pizza Day",
+  "description": "Geführter Pizzatag-Assistent für Teig, Pizzakarte, Einkauf und Backablauf.",
   "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#f7f2e9",
-  "theme_color": "#f7f2e9",
+  "background_color": "#11110f",
+  "theme_color": "#11110f",
   "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }
