@@ -826,7 +826,7 @@ function applyRecommendedCounts(){
  state.menuTouched=false;syncAutoCounts();save();refresh();toast('Empfohlene Teiglingzahl übernommen');
 }
 function resetDoughStatus(){
- try{localStorage.setItem('pdc-dough-status-reset-v1',new Date().toISOString())}catch(e){}
+ try{localStorage.setItem('pdc-dough-status-reset-v1',JSON.stringify({date:state.bakeDate||'',time:state.bakeTime||'18:30',hours:+state.hours||48,proof:+state.proof||4,at:new Date().toISOString()}))}catch(e){}
  renderHomeDashboard();
  toast('Teigstatus zurückgesetzt');
 }
@@ -836,7 +836,7 @@ function renderHomeDashboard(){
  $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
  $('homeDoughTitle').textContent=date?'Teigplan bis zum Backtag':'Teigreife geplant';
- const doughResetAt=localStorage.getItem('pdc-dough-status-reset-v1');const doughReset=doughResetAt&&(!date||new Date(doughResetAt).getTime()>new Date(date+'T'+(state.bakeTime||'18:30')+':00').getTime()-doughHours*3600000);
+ let doughResetData=null;try{doughResetData=JSON.parse(localStorage.getItem('pdc-dough-status-reset-v1')||'null')}catch(e){}const doughReset=!!doughResetData&&doughResetData.date===(state.bakeDate||'')&&doughResetData.time===(state.bakeTime||'18:30')&&+doughResetData.hours===doughHours&&+doughResetData.proof===(+state.proof||4);
  $('homeDoughDetail').textContent=doughHours+' Std.';
  let progress=0,stage=0,mixLabel='Zeitplan folgt',proofLabel='geplant',bakeLabel=date?(state.bakeTime||'18:30'):'Backzeit';
  if(plannedDate){
