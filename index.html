@@ -67,14 +67,14 @@ h2{font-size:28px;letter-spacing:-.8px}h3{font-size:15px;letter-spacing:.05px}
 /* Fotokarten für die Pizzakarte */
 .pizza-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
 .pizza{overflow:hidden;padding:0;display:flex;flex-direction:column;min-width:0}
-.pizza-photo{display:block;width:100%;height:140px;object-fit:cover;background:#202628;border-bottom:1px solid var(--line)}
+.pizza-photo{display:block;width:100%;aspect-ratio:1.55/1;height:auto;object-fit:cover;object-position:center;background:#202628;border-bottom:1px solid var(--line);filter:saturate(.94) contrast(1.03)}
 .pizza-content{padding:12px}
 .pizzahead{display:block}
 .pizzahead strong{display:block;font-size:14px;line-height:1.35;margin-bottom:5px}
 .pizzahead span{display:block;line-height:1.5;font-size:10px;color:var(--muted)}
 .pizza .rangehead{align-items:center}
 .pizza .qty{max-width:100px}
-@media(max-width:480px){.pizza-grid{grid-template-columns:1fr 1fr;gap:8px}.pizza-photo{height:105px}.pizza-content{padding:9px}.pizzahead strong{font-size:12px}.pizzahead span{font-size:9px}}
+@media(max-width:480px){.pizza-grid{grid-template-columns:1fr 1fr;gap:8px}.pizza-photo{aspect-ratio:1.35/1}.pizza-content{padding:9px}.pizzahead strong{font-size:12px}.pizzahead span{font-size:9px}}
 
 </style></head>
 <body><div class="app">
@@ -92,6 +92,22 @@ h2{font-size:28px;letter-spacing:-.8px}h3{font-size:15px;letter-spacing:.05px}
 <section class="page" id="page2"><h2>Deine Pizzakarte</h2><p class="intro">Wähle Klassiker und moderne Beläge. Die Mengen pro Pizza sind hinterlegte Richtwerte; die Einkaufsliste summiert nur Sorten mit Stückzahl größer null.</p><div class="card"><div class="cardhead"><h3>Sorten & Stückzahlen</h3><span class="tag" id="menuTotalTag">0 Pizzen</span></div><div id="pizzaList"></div><div class="note" id="menuAdvice"></div></div><div class="card"><div class="cardhead"><h3>Deine Planung</h3><span class="pill">automatisch aktualisiert</span></div><div class="stats"><div class="stat"><span>Pizzen gesamt</span><strong id="menuTotal">0</strong></div><div class="stat"><span>Teig gesamt</span><strong id="menuDough">0 g</strong></div><div class="stat"><span>San-Marzano-Dosen</span><strong id="tomatoCans">0</strong><small>400 g, ca. 4 Pizzen pro Dose</small></div><div class="stat"><span>Fior di Latte</span><strong id="mozzPacks">0</strong><small>125-g-Packungen, inkl. 10 % Reserve</small></div></div></div><div class="actions"><button class="btn secondary back">← Teigstudio</button><button class="btn next">Einkauf erstellen →</button></div></section>
 <section class="page" id="page3"><h2>Einkauf & Vorbereitung</h2><p class="intro">Hier findest du konsolidierte Mengen, praktische Packungsempfehlungen und eine Checkliste. Abhaken bleibt auf diesem Gerät gespeichert.</p><div class="card"><div class="cardhead"><h3>Teigzutaten</h3><button class="btn secondary" id="copyShopping">Liste kopieren</button></div><div id="doughShop"></div></div><div class="card"><div class="cardhead"><h3>Beläge & Zutaten</h3><span class="pill" id="shopCount">0 Pizzen</span></div><div id="toppingShop"></div><div class="note">Packungsgrößen sind Einkaufshilfen und editierbare Richtwerte. Bei San-Marzano-Tomaten wird nur rote Tomatensauce gezählt; gelbe Sauce und weiße Basis werden getrennt geführt. Burrata und Stracciatella kommen typischerweise nach dem Backen auf die Pizza.</div></div><div class="card"><div class="cardhead"><h3>Vor dem Backtag</h3><span class="pill" id="prepProgress">0 erledigt</span></div><div id="prepList"></div></div><div class="actions"><button class="btn secondary back">← Pizzakarte</button><button class="btn next">Backtag vorbereiten →</button></div></section>
 <section class="page" id="page4"><h2>Backtag-Modus</h2><p class="intro">Ein chronologischer Ablauf vom Teig bis zur ersten Pizza. Wenn sich der Teig anders entwickelt als erwartet, hat die Teigreife Vorrang vor dem Zeitplan.</p><div class="card"><div class="cardhead"><h3 id="dayTitle">Dein Ablauf</h3><span class="tag">rückwärts geplant</span></div><div id="timeline"></div><div class="note">Die Zeiten sind Richtwerte. Besonders bei der Teigführung solltest du Temperatur und sichtbare Reife beobachten. Bei sehr warmer Küche kann der Teig früher reif sein, bei kühler Küche später.</div></div><div class="card"><div class="cardhead"><h3>Ofen-Check</h3><span class="pill">vor der ersten Pizza</span></div><div id="ovenList"></div><div class="note">Bei deinem Hochtemperaturofen: Steinoberfläche mit Infrarotthermometer prüfen, nicht nur auf die Anzeige verlassen. Wenn der Boden zu dunkel wird, Stein kurz abkühlen lassen bzw. Brennerleistung und Position anpassen.</div></div><div class="card"><div class="cardhead"><h3>Backprotokoll</h3><span class="pill">optional</span></div><div class="grid2"><div class="field"><label>Steintemperatur (°C)</label><input id="stoneTemp" type="number" placeholder="z. B. 430"></div><div class="field"><label>Backzeit (Sekunden)</label><input id="bakeSeconds" type="number" placeholder="z. B. 90"></div><div class="field"><label>Boden</label><select id="crustResult"><option>Perfekt</option><option>Zu dunkel</option><option>Zu hell</option><option>Zu weich</option></select></div><div class="field"><label>Nächste Pizza</label><select id="nextAdjustment"><option>Keine Änderung</option><option>Stein abkühlen lassen</option><option>Flamme reduzieren</option><option>Flamme erhöhen</option><option>Pizza öfter drehen</option></select></div></div><div class="actions"><button class="btn" id="saveLog">Backnotiz speichern</button><button class="btn secondary" id="copyPlan">Gesamtplan kopieren</button></div><div id="savedLog" class="note hidden"></div></div>
+<div class="card">
+  <div class="cardhead"><h3>Pizza-Fingerprint · Lernsystem</h3><span class="pill">nur auf diesem Gerät</span></div>
+  <p class="muted small">Speichere dein Ergebnis mit den wichtigsten Backparametern. Beim nächsten Mal kannst du gezielt eine Stellschraube verändern, statt alles gleichzeitig anzupassen.</p>
+  <div class="grid2">
+    <div class="field"><label>Ergebnis</label><select id="learnResult"><option value="great">Sehr gut – wiederholen</option><option value="bottom-dark">Boden zu dunkel</option><option value="bottom-pale">Boden zu hell</option><option value="crust-dense">Rand zu dicht / wenig luftig</option><option value="dough-sticky">Teig zu klebrig</option><option value="overproof">Teig überreif</option><option value="underproof">Teig unterreif</option></select></div>
+    <div class="field"><label>Was willst du beim nächsten Mal testen?</label><select id="learnChange"><option value="none">Nichts ändern</option><option value="stone">Steintemperatur / Vorheizen</option><option value="flame">Brennerleistung / Flamme</option><option value="ferment">Gärzeit</option><option value="water">Hydration</option><option value="yeast">Hefemenge</option><option value="handling">Teiglinge formen / Handling</option></select></div>
+    <div class="field"><label>Steintemperatur (°C)</label><input id="learnStone" type="number" min="0" max="600" placeholder="z. B. 430"></div>
+    <div class="field"><label>Backzeit (Sekunden)</label><input id="learnSeconds" type="number" min="0" max="900" placeholder="z. B. 90"></div>
+  </div>
+  <div class="field" style="margin-top:12px"><label>Notiz (optional)</label><input id="learnNote" maxlength="240" placeholder="z. B. zweite Pizza war unten zu dunkel"></div>
+  <div class="actions"><button class="btn" id="saveLearning">Ergebnis speichern</button><button class="btn secondary" id="copyLearning">Lernhistorie kopieren</button></div>
+  <div class="stats"><div class="stat"><span>Gespeicherte Tests</span><strong id="learnCount">0</strong></div><div class="stat"><span>Letztes Ergebnis</span><strong id="learnLast" style="font-size:14px">Noch keins</strong></div></div>
+  <div id="learningHistory" class="small muted" style="margin-top:12px">Noch keine Backversuche gespeichert.</div>
+</div>
+<div class="actions"><button class="btn secondary back">← Einkauf</button><button class="btn" id="finish">Plan abschließen</button></div></section>
+</div>
 <!-- Teig SOS ist ein eigenständiges Werkzeug und kein Schritt im Pizzatag-Workflow. -->
 <div class="sos-overlay hidden" id="doughSosOverlay" role="dialog" aria-modal="true" aria-labelledby="doughSosTitle">
   <div class="sos-panel">
@@ -112,22 +128,7 @@ h2{font-size:28px;letter-spacing:-.8px}h3{font-size:15px;letter-spacing:.05px}
     <p class="small muted">Die Einschätzung ist eine Orientierung, keine Messung. Temperatur, Mehl und Gärverlauf beeinflussen die Teigreife.</p>
   </div>
 </div>
-<div class="card">
-  <div class="cardhead"><h3>Pizza-Fingerprint · Lernsystem</h3><span class="pill">nur auf diesem Gerät</span></div>
-  <p class="muted small">Speichere dein Ergebnis mit den wichtigsten Backparametern. Beim nächsten Mal kannst du gezielt eine Stellschraube verändern, statt alles gleichzeitig anzupassen.</p>
-  <div class="grid2">
-    <div class="field"><label>Ergebnis</label><select id="learnResult"><option value="great">Sehr gut – wiederholen</option><option value="bottom-dark">Boden zu dunkel</option><option value="bottom-pale">Boden zu hell</option><option value="crust-dense">Rand zu dicht / wenig luftig</option><option value="dough-sticky">Teig zu klebrig</option><option value="overproof">Teig überreif</option><option value="underproof">Teig unterreif</option></select></div>
-    <div class="field"><label>Was willst du beim nächsten Mal testen?</label><select id="learnChange"><option value="none">Nichts ändern</option><option value="stone">Steintemperatur / Vorheizen</option><option value="flame">Brennerleistung / Flamme</option><option value="ferment">Gärzeit</option><option value="water">Hydration</option><option value="yeast">Hefemenge</option><option value="handling">Teiglinge formen / Handling</option></select></div>
-    <div class="field"><label>Steintemperatur (°C)</label><input id="learnStone" type="number" min="0" max="600" placeholder="z. B. 430"></div>
-    <div class="field"><label>Backzeit (Sekunden)</label><input id="learnSeconds" type="number" min="0" max="900" placeholder="z. B. 90"></div>
-  </div>
-  <div class="field" style="margin-top:12px"><label>Notiz (optional)</label><input id="learnNote" maxlength="240" placeholder="z. B. zweite Pizza war unten zu dunkel"></div>
-  <div class="actions"><button class="btn" id="saveLearning">Ergebnis speichern</button><button class="btn secondary" id="copyLearning">Lernhistorie kopieren</button></div>
-  <div class="stats"><div class="stat"><span>Gespeicherte Tests</span><strong id="learnCount">0</strong></div><div class="stat"><span>Letztes Ergebnis</span><strong id="learnLast" style="font-size:14px">Noch keins</strong></div></div>
-  <div id="learningHistory" class="small muted" style="margin-top:12px">Noch keine Backversuche gespeichert.</div>
-</div>
-<div class="actions"><button class="btn secondary back">← Einkauf</button><button class="btn" id="finish">Plan abschließen</button></div></section>
-</div>
+
 <nav class="nav"><div class="navinner"><span class="navtext" id="navStatus">Schritt 1 von 5 · Plan</span><div><button class="btn secondary" id="navBack">Zurück</button> <button class="btn" id="navNext">Weiter →</button></div></div></nav><div class="toast" id="toast"></div>
 <script>
 const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n),grams=n=>fmt(n)+' g',dateFmt=d=>new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}).format(d),timeFmt=d=>new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit'}).format(d);
@@ -160,16 +161,16 @@ function checkedItem(id,title,detail){return '<label class="item '+(checks[id]?'
 function renderStepper(){document.querySelectorAll('.step').forEach(b=>{const n=+b.dataset.step;b.classList.toggle('active',n===state.step);b.classList.toggle('done',n<state.step)});document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',p.id==='page'+state.step));$('navStatus').textContent='Schritt '+(state.step+1)+' von 5 · '+['Plan','Teigstudio','Pizzakarte','Einkauf','Backtag'][state.step];$('navBack').disabled=state.step===0;$('navNext').textContent=state.step===4?'Fertig ✓':'Weiter →';$('navNext').classList.toggle('hidden',state.step===4);$('navBack').classList.toggle('hidden',state.step===4);window.scrollTo({top:0,behavior:'smooth'})}
 function go(step){state.step=Math.max(0,Math.min(4,step));save();renderStepper();if(state.step===3)renderShopping();if(state.step===4)renderBakeDay()}
 const pizzaImages={
- margherita:'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80',
- salami:'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80',
- pesto:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=900&q=80',
- crudo:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80',
- funghi:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
- bianca:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=900&q=80',
- mortadella:'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=80',
- nduja:'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=80',
- diavola:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80',
- tartufo:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80'
+ margherita:'https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=900&q=85',
+ salami:'https://images.unsplash.com/photo-1759311943662-5ff7fc6ee5c4?auto=format&fit=crop&w=900&q=85',
+ pesto:'https://images.unsplash.com/photo-1761315632041-5fde8412ecae?auto=format&fit=crop&w=900&q=85',
+ crudo:'https://images.unsplash.com/photo-1748932123935-87690a44332c?auto=format&fit=crop&w=900&q=85',
+ funghi:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85',
+ bianca:'https://images.unsplash.com/photo-1571407970349-bc81e7e96d47?auto=format&fit=crop&w=900&q=85',
+ mortadella:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=85',
+ nduja:'https://images.unsplash.com/photo-1628840042765-356cda07504e?auto=format&fit=crop&w=900&q=85',
+ diavola:'https://images.unsplash.com/photo-1759311943662-5ff7fc6ee5c4?auto=format&fit=crop&w=900&q=85',
+ tartufo:'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=85'
 };
 function renderPizzas(){const groups=['Klassiker','Gourmet'];$('pizzaList').innerHTML=groups.map(cat=>'<div class="eyebrow" style="margin:16px 0 8px">'+cat+'</div><div class="pizza-grid">'+pizzas.filter(p=>p.category===cat).map(p=>'<div class="pizza"><img class="pizza-photo" src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt="'+p.name+'" loading="lazy" onerror="this.style.display=\'none\'"><div class="pizza-content"><div class="pizzahead"><strong>'+p.name+'</strong><span>'+p.items.map(x=>x[0]).slice(0,3).join(' · ')+'</span></div><div class="rangehead" style="margin-top:10px"><label class="muted small" for="qty-'+p.id+'">Anzahl</label><select class="qty" id="qty-'+p.id+'" data-qty="'+p.id+'">'+Array.from({length:21},(_,i)=>'<option value="'+i+'" '+((+state.counts[p.id]||0)===i?'selected':'')+'>'+i+'</option>').join('')+'</select></div></div></div>').join('')+'</div>').join('');document.querySelectorAll('[data-qty]').forEach(el=>el.addEventListener('change',()=>{state.menuTouched=true;state.counts[el.dataset.qty]=+el.value;save();renderMenuSummary();renderDough();renderPizzas()}))}
 function renderMenuSummary(){const total=countsTotal(),r=dough(),items=aggregate();$('menuTotalTag').textContent=total+' Pizzen';$('menuTotal').textContent=total;$('menuDough').textContent=grams(total*r.ball);const tomato=items.find(x=>x.key==='San-Marzano-Dose')?.amount||0,mozz=items.find(x=>x.key==='Fior di Latte')?.amount||0;$('tomatoCans').textContent=tomato?Math.ceil(tomato/400):0;$('mozzPacks').textContent=mozz?Math.ceil(mozz*1.1/125):0;$('menuAdvice').textContent=total?'Deine Sorten ergeben '+total+' Pizzen. '+(total<recommended()?'Das sind weniger als die Startempfehlung von '+recommended()+'.':total>recommended()?'Du planst '+(total-recommended())+' Pizza(n) mehr als empfohlen.':'Das entspricht deiner Startempfehlung.'):'Wähle mindestens eine Pizza. Ohne Sortenauswahl nutzt die Teigberechnung vorläufig die Startempfehlung.'}
@@ -204,6 +205,7 @@ document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventLis
 
 // Teig SOS kombiniert Teigmerkmale und Backzeitpunkt in einer einzigen Einschätzung.
 function analyzeDoughTraits(){
+ const result=$('traitAnalysisResult');if(!result)return;
  const traits=[...document.querySelectorAll('input[name="doughTrait"]:checked')].map(el=>el.value);
  const note=$('doughTraitNote').value.trim(), when=$('sosWhen').value;
  if(!traits.length){$('traitAnalysisResult').textContent='Bitte wähle mindestens ein Merkmal aus.';return}
@@ -232,8 +234,8 @@ function analyzeDoughTraits(){
  parts.push('<br><small>Orientierung, keine sichere Messung der Teigreife. Temperatur, Mehl und Gärverlauf können die Einschätzung verändern.</small>');
  $('traitAnalysisResult').innerHTML=parts.join('');
 }
-$('analyzeTraits').onclick=analyzeDoughTraits;
-$('clearTraits').onclick=()=>{document.querySelectorAll('input[name="doughTrait"]').forEach(el=>el.checked=false);$('doughTraitNote').value='';$('sosWhen').value='later';$('traitAnalysisResult').textContent='Wähle deine Beobachtungen aus und starte die Einschätzung.'};
+$('analyzeTraits').addEventListener('click',analyzeDoughTraits);
+$('clearTraits').addEventListener('click',()=>{document.querySelectorAll('input[name="doughTrait"]').forEach(el=>el.checked=false);$('doughTraitNote').value='';$('sosWhen').value='later';$('traitAnalysisResult').textContent='Wähle deine Beobachtungen aus und starte die Einschätzung.'};
 $('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{toast('Pizzatag-Plan abgeschlossen');copy(planText(),'Gesamtplan kopiert')};
 $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
