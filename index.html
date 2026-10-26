@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#11110f"><meta name="description" content="Geführter Assistent für deinen Pizzatag: Teig, Pizzakarte, Einkauf und Backablauf.">
+<meta name="theme-color" content="#07100d"><meta name="description" content="Geführter Assistent für deinen Pizzatag: Teig, Pizzakarte, Einkauf und Backablauf.">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><title>Ciao! Der Pizzateig - Assistent</title>
 <style>
 :root{color-scheme:dark;--bg:#11110f;--panel:#1b1b18;--panel2:#24241f;--line:#38382f;--text:#f7f3e9;--muted:#b4b0a4;--red:#d84b36;--red2:#f0785d;--green:#a5c69b;--gold:#e6c37c}
@@ -308,6 +308,65 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 .dough-style-card .style-check{display:grid;place-items:center;width:21px;height:21px;border-radius:50%;background:transparent;color:transparent;border:1px solid #475156;font-size:12px}
 .dough-style-card.selected{border:2px solid #e74747;background:#1b1717;padding:5px;box-shadow:0 0 0 1px #e7474720}.dough-style-card.selected .style-check{background:#e74747;border-color:#e74747;color:#fff}
 @media(min-width:620px){.dough-style-list{grid-template-columns:repeat(2,minmax(0,1fr))}.dough-style-card{grid-template-columns:68px minmax(0,1fr) 22px}.dough-style-card img{width:68px;height:58px}}
+
+
+/* Ciao! Premium & Playful visual system */
+:root{color-scheme:dark;--bg:#07100d;--panel:#0d1914;--panel2:#13221a;--line:#293a2e;--text:#f6f2e7;--muted:#b6c0b2;--red:#e33832;--red2:#ff6b58;--green:#a8c79b;--gold:#efc77d}
+html{background:#07100d}
+body{background:radial-gradient(ellipse at 50% -15%,#203a2a 0%,#0b1710 42%,#050907 100%);color:var(--text)}
+.app{max-width:900px;padding-top:16px}
+.top{position:relative;padding-bottom:13px;border-bottom:1px solid #26372b;margin-bottom:19px}
+.brand{gap:12px}
+.logo{background:linear-gradient(145deg,#efc77d,#c99548);border:1px solid #f7d99b;box-shadow:0 5px 22px #efc77d20}
+.brand h1{color:#fff4d9;text-shadow:0 2px 18px #efc77d20}
+.brand-sub{color:var(--gold)}
+.iconbtn{background:#111d16;border-color:#334637;color:#f6f2e7}
+h2,h3{color:#fff9eb}
+.intro,.muted{color:#b8c2b4}
+.hero,.home-hero{border:1px solid #3b4b35;border-radius:22px;overflow:hidden;box-shadow:0 15px 40px #0005}
+.hero{background-image:linear-gradient(0deg,rgba(3,10,6,.94),rgba(3,10,6,.1) 78%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1400&q=90');background-position:center 58%;min-height:200px}
+.hero .eyebrow,.home-hero .eyebrow{color:var(--gold)}
+.home-hero{height:290px;background-image:linear-gradient(0deg,rgba(3,10,6,.96),rgba(3,10,6,.12) 75%),url('https://images.unsplash.com/photo-1600628422019-6c9b6f4a5f1e?auto=format&fit=crop&w=1400&q=90');background-position:center 55%;padding:22px}
+.home-hero h2{font-size:clamp(30px,7vw,42px);letter-spacing:-1px}
+.home-hero p{color:#e3e8dc}
+.card,.sos-panel{background:linear-gradient(145deg,#112017,#0a130e);border-color:#304434;border-radius:20px;box-shadow:0 10px 28px #0003}
+.cardhead h3{font-size:15px}
+.field input:not([type=range]),.field select,.field textarea{background:#07100c;border-color:#354939;color:#f6f2e7;border-radius:13px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #efc77d;outline-offset:1px}
+.step{background:#0e1a13;border-color:#2d4031;color:#b5c2b3;border-radius:13px}
+.step b{background:#1b2b1e;color:#f3e6c8}
+.step.active{background:#19281b;border-color:var(--gold);color:#fff9eb}
+.step.active b,.step.done b{background:var(--gold);color:#152016}
+.stat,.note{background:#122017;border-color:#304433;border-radius:14px}
+.stat strong{color:var(--gold)}
+.btn{background:linear-gradient(110deg,#ed4137,#c9242c);border-color:#f45a4c;border-radius:14px;box-shadow:0 5px 18px #e3383220}
+.btn.secondary{background:#15241a;border-color:#3b503d;color:#f6f2e7;box-shadow:none}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+.home-tile{background:linear-gradient(110deg,#14251a,#0b150f);border-color:#304633;border-radius:17px;min-height:72px;transition:transform .15s,border-color .15s}
+.home-tile:active,.dough-style-card:active{transform:scale(.985)}
+.tile-icon{background:#253722;color:var(--gold);border:1px solid #41563b;border-radius:13px}
+.home-tile>b{color:var(--gold)}
+.nav{background:rgba(5,12,8,.94);border-top:1px solid #2c4030;box-shadow:0 -8px 30px #0004}
+.tab{color:#91a092;border-radius:13px}
+.tab.active{color:var(--gold);background:#17251a}
+.dough-style-card{background:linear-gradient(120deg,#15241a,#0b140e)!important;border-color:#304633!important;border-radius:17px!important;overflow:hidden}
+.dough-style-card strong{color:#fff8e8}
+.dough-style-card small{color:#b7c2b2}
+.dough-style-card.selected,.dough-style-card[aria-pressed=true]{border-color:var(--gold)!important;box-shadow:0 0 0 1px #efc77d55,0 8px 24px #0003}
+.style-check{background:var(--red)!important}
+.pizza{background:#101d14;border-color:#304333;border-radius:16px;overflow:hidden}
+.pizza-photo{border-color:#304333}
+.pizzahead strong{color:#fff6e4}
+.tag{background:#352b17;color:#f3d28c;border:1px solid #5a4828}
+.checkitem{background:#14231a;border-color:#334934}
+.checkitem input{accent-color:var(--gold)}
+.sos-overlay{background:rgba(1,5,3,.88)}
+.sos-screen{background:radial-gradient(ellipse at top,#1b3020,#07100b 55%);color:var(--text)}
+.sos-top{border-bottom:1px solid #293c2d}
+.sos-brand{color:var(--gold)}
+.sos-cover{border:1px solid #3a4c36;border-radius:17px;background-image:linear-gradient(0deg,#07100b 0%,rgba(7,16,11,.16) 75%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1000&q=85')}
+@media(min-width:700px){.app{max-width:900px}.top{padding:15px 0 18px}.home-hero{height:330px}.home-actions{gap:12px}.home-tile{padding:13px}}
+@media(max-width:480px){.home-hero{height:270px;padding:17px}.card{padding:14px}.top{margin-bottom:16px}}
 
 </style></head>
 <body>
