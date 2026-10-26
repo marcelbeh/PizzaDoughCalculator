@@ -672,6 +672,12 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
       <button class="dashboard-primary" id="homePlanButton">Zeitplan ansehen <span aria-hidden="true">→</span></button>
     </div>
     <div class="dashboard-card planned-pizzas"><h3>Geplante Pizzen</h3><div id="homePizzaList" class="home-pizza-list"></div><button class="dashboard-link" id="homePizzaButton">Pizzakarte bearbeiten <span aria-hidden="true">→</span></button></div>
+    <div class="dashboard-plan-actions" id="dashboardPlanActions">
+      <button type="button" id="homeSavePlan">Plan ins Dashboard übertragen</button>
+      <button type="button" id="homeDeletePlan">Dashboard-Plan löschen</button>
+      <button type="button" id="homeAutoCounts">Empfohlene Mengen anwenden (<span id="homeRecommendedCount">10</span> Teiglinge)</button>
+      <p id="dashboardPlanStatus" aria-live="polite">Noch kein Plan ausdrücklich im Dashboard gespeichert.</p>
+    </div>
   </section>
 </section>
   <div class="home-actions">
@@ -804,6 +810,20 @@ function learningText(){return getLearning().map((x,i)=>(i+1)+'. '+x.date+' · '
 function bindChecks(){document.querySelectorAll('[data-check]').forEach(c=>{c.onchange=()=>{checks[c.dataset.check]=c.checked;try{localStorage.setItem('pdc-guided-checks',JSON.stringify(checks))}catch(e){}c.closest('.item').classList.toggle('done',c.checked);progressChecks()}})}
 function progressChecks(){const all=[...document.querySelectorAll('[data-check]')];const done=all.filter(c=>c.checked).length;$('prepProgress').textContent=done+' / '+all.length+' erledigt'}
 
+let dashboardPlan=null;
+try{dashboardPlan=JSON.parse(localStorage.getItem('pdc-dashboard-plan-v1')||'null')}catch(e){dashboardPlan=null}
+function transferPlanToDashboard(){
+ dashboardPlan={name:state.planName||'Pizzaabend',guests:+state.guests||1,perGuest:+state.perGuest||1,reserve:+state.reserve||0,bakeDate:state.bakeDate||'',bakeTime:state.bakeTime||'18:30',ball:+state.ball||280,counts:{...state.counts},savedAt:new Date().toISOString()};
+ try{localStorage.setItem('pdc-dashboard-plan-v1',JSON.stringify(dashboardPlan))}catch(e){}
+ renderHomeDashboard();toast('Plan ins Dashboard übertragen');
+}
+function deleteDashboardPlan(){
+ dashboardPlan=null;try{localStorage.removeItem('pdc-dashboard-plan-v1')}catch(e){}
+ renderHomeDashboard();toast('Dashboard-Plan gelöscht');
+}
+function applyRecommendedCounts(){
+ state.menuTouched=false;syncAutoCounts();save();refresh();toast('Empfohlene Teiglingzahl übernommen');
+}
 function renderHomeDashboard(){
  const date=state.bakeDate, now=new Date(), plannedDate=date?new Date(date+'T'+(state.bakeTime||'18:30')+':00'):null;
  const doughHours=Math.max(1,+state.hours||48), guests=Math.max(1,+state.guests||1), pizzaCount=countsTotal()||recommended();
@@ -826,9 +846,9 @@ function renderHomeDashboard(){
  $('homeDoughProgress').style.width=Math.round(progress*100)+'%';
  $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
- const sorted=pizzas.filter(p=>(+state.counts[p.id]||0)>0).sort((a,b)=>(+state.counts[b.id]||0)-(+state.counts[a.id]||0)).slice(0,3);
- $('homePizzaList').innerHTML=sorted.length?sorted.map(p=>'<div class="home-pizza-item"><img src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt=""><strong>'+p.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</strong><small>'+(+state.counts[p.id]||0)+' ×</small></div>').join(''):'<div class="home-pizza-empty">Wähle deine Sorten in der Pizzakarte.</div>';
- $('homePizzaButton').style.display='block';
+ const displayCounts=dashboardPlan?.counts||state.counts;const sorted=pizzas.filter(p=>(+displayCounts[p.id]||0)>0).sort((a,b)=>(+displayCounts[b.id]||0)-(+displayCounts[a.id]||0)).slice(0,3);
+ $('homePizzaList').innerHTML=sorted.length?sorted.map(p=>'<div class="home-pizza-item"><img src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt=""><strong>'+p.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</strong><small>'+(+displayCounts[p.id]||0)+' ×</small></div>').join(''):'<div class="home-pizza-empty">Wähle deine Sorten in der Pizzakarte.</div>';
+ $('homePizzaButton').style.display='block';$('homeRecommendedCount').textContent=recommended();$('dashboardPlanStatus').textContent=dashboardPlan?'Dashboard-Plan: '+(dashboardPlan.name||'Pizzaabend')+' · '+pizzas.reduce((n,p)=>n+(+dashboardPlan.counts?.[p.id]||0),0)+' Teiglinge gespeichert.':'Noch kein Plan ausdrücklich im Dashboard gespeichert.';
  $('homePlanButton').innerHTML=(date?'Zeitplan ansehen':'Pizzatag planen')+' <span aria-hidden="true">→</span>';
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
@@ -837,9 +857,9 @@ function copy(text,msg){if(navigator.clipboard&&navigator.clipboard.writeText)na
 function planText(){const r=dough(),items=aggregate();return (state.planName||'Pizzatag')+'\nGäste: '+state.guests+' · Pizzen: '+countsTotal()+' · Backstart: '+state.bakeDate+' '+state.bakeTime+'\n\nTEIG\n'+r.profile.name+' · '+state.hours+' h · '+state.hydration+' % Hydration\nMehl '+grams(r.flour)+'\nWasser '+grams(r.water)+'\nSalz '+grams(r.salt)+'\n'+(state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' '+grams(r.yeast)+' (Näherungswert)\n\nPIZZAKARTE\n'+pizzas.filter(p=>+state.counts[p.id]>0).map(p=>state.counts[p.id]+' × '+p.name).join('\n')+'\n\nEINKAUF\n'+items.map(x=>x.name+': '+(x.unit==='g'?grams(x.amount):fmt(x.amount)+' '+x.unit)).join('\n')+'\n\nABLAUF\n'+[...document.querySelectorAll('#timeline .timeline')].map(x=>x.innerText.replace('\n',' ')).join('\n')}
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
-$('homePlanButton').addEventListener('click',()=>go(0));$('homePizzaButton').addEventListener('click',()=>go(2));
+$('homePlanButton').addEventListener('click',()=>go(0));$('homeSavePlan').addEventListener('click',transferPlanToDashboard);$('homeDeletePlan').addEventListener('click',deleteDashboardPlan);$('homeAutoCounts').addEventListener('click',applyRecommendedCounts);$('homePizzaButton').addEventListener('click',()=>go(2));
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({plan:0,recipes:2,shop:3,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
-const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value;if(['guests','perGuest','reserve'].includes(id))state.menuTouched=false}refresh()})});
+const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value;if(['guests','perGuest','reserve'].includes(id)){state.menuTouched=false;syncAutoCounts()}}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
 document.querySelectorAll('[data-dough-style]').forEach(btn=>btn.addEventListener('click',()=>{const style=btn.dataset.doughStyle;state.doughStyle=style;const presets={neapolitan:{flour:'pizzeria',method:'mixed',hours:24,yeastType:'dry',ball:260,hydration:64,salt:2.9,oil:0},ny:{flour:'cuoco',method:'cold',hours:48,yeastType:'dry',ball:280,hydration:60,salt:2.5,oil:2},teichner:{flour:'pizzeria',method:'cold',hours:48,yeastType:'fresh',ball:280,hydration:64,salt:3,oil:0},waldi:{flour:'pizzeria',method:'cold',hours:42,yeastType:'fresh',ball:280,hydration:70,salt:3,oil:1},roma:{flour:'cuoco',method:'mixed',hours:24,yeastType:'dry',ball:250,hydration:70,salt:2.8,oil:3},custom:{flour:state.flour,method:state.method,hours:+state.hours,yeastType:state.yeastType,ball:+state.ball,hydration:+state.hydration,salt:+state.salt,oil:+state.oil||0}};Object.assign(state,presets[style]);['flour','method','hours','yeastType','ball','hydration','salt'].forEach(id=>{const el=$(id);if(el)el.value=state[id]});renderDoughStyle();refresh()}));function renderDoughStyle(){document.querySelectorAll('[data-dough-style]').forEach(b=>b.classList.toggle('selected',b.dataset.doughStyle===(state.doughStyle||'neapolitan')))}renderDoughStyle();
 
@@ -974,4 +994,27 @@ init();
 .home-pizza-empty{font-size:12px;color:#80664f;padding:4px 0 10px}
 .dashboard-link{display:none;width:100%;margin-top:12px;padding:10px;border:1px solid #d9bd93;border-radius:12px;background:transparent;color:#795139;font-size:12px;font-weight:700}
 @media(max-width:380px){.dashboard-heading h2{font-size:27px}.dashboard-card{padding:12px 10px}.dough-status-copy b{font-size:22px}.home-pizza-list{gap:6px}}
+</style>
+<style>
+.top{position:relative!important;top:auto!important;z-index:3!important;margin-top:0!important}
+.app{padding-bottom:calc(125px + env(safe-area-inset-bottom))!important}
+.nav{z-index:30!important}
+.pizza-detail-backdrop{background:rgba(49,35,24,.70)!important;backdrop-filter:blur(7px)!important;align-items:center!important;padding:18px 14px!important}
+.pizza-detail{background:#fff4df!important;border:1px solid #ddc49c!important;border-radius:24px!important;color:#493021!important;box-shadow:0 18px 60px #1f140f55!important}
+.pizza-detail-body{background:linear-gradient(145deg,#fff5e2,#f7e7cb)!important;color:#493021!important}
+.pizza-detail-body h3{color:#8f2d1c!important;font-family:Lora,Georgia,serif!important}
+.pizza-detail-kicker{color:#a83b24!important}
+.pizza-detail-ingredients{color:#6e5a47!important}
+.pizza-detail-hint{color:#80664f!important}
+.pizza-detail-count{color:#493021!important}
+.pizza-detail-count small{color:#80664f!important}
+.pizza-detail-close{background:rgba(255,247,232,.96)!important;border:1px solid #ddc49c!important;color:#a73520!important}
+.pizza-add-primary{background:#b43a22!important;color:#fff8e9!important;border-radius:14px!important}
+.qty-step.large{background:#f2dfbf!important;border:1px solid #d9b98d!important;color:#a73520!important}
+.dashboard-plan-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:0 0 18px;padding:12px;border:1px solid #ead7b8;border-radius:17px;background:#fff8e9}
+.dashboard-plan-actions button{min-width:0;padding:11px 9px;border:1px solid #d9bd93;border-radius:12px;background:#fff4df;color:#795139;font-size:12px;font-weight:750;line-height:1.35}
+.dashboard-plan-actions button:first-child{grid-column:1/-1;background:#b43a22;border-color:#b43a22;color:#fff8e9}
+.dashboard-plan-actions button:last-of-type{grid-column:1/-1}
+.dashboard-plan-actions p{grid-column:1/-1;margin:0;color:#80664f;font-size:11px;line-height:1.4}
+@media(max-width:380px){.dashboard-plan-actions button{font-size:11px;padding:10px 7px}}
 </style>
