@@ -598,6 +598,20 @@ h2,h3,.cardhead h3,.home-tile strong{font-family:'Lora',Georgia,serif!important;
 @media(max-width:480px){.app{padding:8px 10px 110px!important}.top{margin:-8px -10px 12px!important;padding:9px 54px!important}.bake-hero{height:clamp(270px,76vw,340px)!important;margin:0 -10px 12px!important;border-radius:0 0 18px 18px!important;padding:18px 16px!important}.bake-timeline-card{padding:11px!important}.bake-timeline-item{grid-template-columns:34px 76px minmax(0,1fr)!important;gap:10px!important;min-height:90px!important}.bake-timeline-item img{width:76px!important;height:76px!important;min-height:76px!important}.bake-item-copy strong{font-size:13px!important}.bake-item-copy p{font-size:11px!important}.bake-item-copy small{font-size:10px!important}.tab{font-size:10px!important}.tab svg{width:22px!important;height:22px!important}.brand h1{font-size:43px!important}}
 @media(min-width:620px){.app{max-width:720px!important}.bake-timeline-card{padding:18px!important}.bake-timeline-item{grid-template-columns:40px 88px minmax(0,1fr)!important}.bake-timeline-item img{width:88px!important;height:88px!important}}
 
+
+/* Readability correction: no pale text on pale Rustica surfaces */
+body,.app,.page,.card,.field,.field label,.field small,.field p,.choice,.choice strong,.choice small,.item,.item main,.item strong,.item p,.item small,.home-tile,.home-tile strong,.home-tile small,.stat,.stat span,.stat small,.note,.timeline,.timeline p,.dough-style-card,.dough-style-card strong,.dough-style-card small,.pizza,.pizzahead strong,.pizzahead span,.rangehead,.bake-item-copy,.bake-item-copy strong,.bake-item-copy p,.bake-item-copy small,.bake-note,.checkitem,.sos-panel,.pill,.tag{color:#43291f!important}
+.stat strong,.stats .stat strong{color:#294f35!important;opacity:1!important}
+.stat span,.stat small,.field label,.choice small,.item small,.home-tile small,.bake-note,.bake-item-copy p,.timeline p{color:#715a48!important;opacity:1!important}
+.note{background:#f2e1c6!important;color:#43291f!important}
+.card,.stat,.home-tile,.pizza,.dough-style-card,.bake-timeline-card,.sos-panel{background:#fff5e4!important}
+input,select,textarea,.qty,.field input:not([type=range]),.field select,.field textarea,.choice select{color:#43291f!important;background:#fffaf0!important;-webkit-text-fill-color:#43291f!important;opacity:1!important}
+input::placeholder,textarea::placeholder{color:#826b57!important;opacity:1!important;-webkit-text-fill-color:#826b57!important}
+input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-color:#43291f!important}
+.step,.step span,.step small,.step b{color:#715a48!important}
+.step.active,.step.active span,.step.active b{color:#a92f16!important}
+.tab{color:#826b57!important}.tab.active{color:#fff4df!important}
+
 </style></head>
 <body>
 <div class="app">
