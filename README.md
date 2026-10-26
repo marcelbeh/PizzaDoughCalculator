@@ -26,4 +26,4 @@ Der Teig-Check arbeitet direkt im Browser mit deinen angekreuzten Beobachtungen.
 2. Teilen → „Zum Home-Bildschirm“ wählen.
 
 ## Fachlicher Hinweis
-Der Teig-Check nutzt deine Angaben zu Volumen, Blasen, Oberfläche und Teiggefühl. Sie kann Teigtemperatur, Glutenstruktur oder Hefetätigkeit nicht direkt messen und ersetzt keine Prüfung am echten Teig. Die Hefemenge ist eine grobe Startschätzung, keine präzise Gärprognose. Raumtemperatur, Kühlschranktemperatur, Teigtemperatur, Mehl und tatsächliche Teigreife beeinflussen den Verlauf.
+Der Teig-Check nutzt deine Angaben zu Volumen, Blasen, Oberfläche und Teiggefühl. Er kann Teigtemperatur, Glutenstruktur oder Hefetätigkeit nicht direkt messen und ersetzt keine Prüfung am echten Teig. Die Hefemenge ist eine grobe Startschätzung, keine präzise Gärprognose. Raumtemperatur, Kühlschranktemperatur, Teigtemperatur, Mehl und tatsächliche Teigreife beeinflussen den Verlauf.
