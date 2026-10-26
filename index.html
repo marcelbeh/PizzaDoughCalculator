@@ -367,11 +367,11 @@ $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetze
 function init(){view='home';syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 const sosOverlay=$('doughSosOverlay');
 const sosChoices={volume:'some',bubbles:null,feel:null,when:'later'};
-function resetSos(){Object.assign(sosChoices,{volume:'some',bubbles:null,feel:null,when:'later'});document.querySelectorAll('[data-sos-group]').forEach(b=>b.classList.toggle('selected',sosChoices[b.dataset.sosGroup]===b.dataset.sosValue));$('sosResultCard').classList.add('hidden');$('sosResultCard').innerHTML='';$('sosNext').textContent='Prüfen →';}
+let sosStage=1;function showSosStage(n){sosStage=n;document.querySelectorAll('[data-sos-stage]').forEach(s=>s.classList.toggle('hidden',+s.dataset.sosStage!==n));$('sosResultView').classList.toggle('hidden',n!==4);document.querySelectorAll('[data-sos-step-indicator]').forEach(s=>{const k=+s.dataset.sosStepIndicator;s.classList.toggle('active',k===Math.min(n,3));s.classList.toggle('done',k<Math.min(n,3));s.querySelector('b').textContent=k<Math.min(n,3)?'✓':k});sosOverlay.scrollTop=0;}function resetSos(){sosStage=1;Object.assign(sosChoices,{volume:'double',bubbles:null,feel:null,when:'soon'});document.querySelectorAll('[data-sos-group]').forEach(b=>b.classList.toggle('selected',sosChoices[b.dataset.sosGroup]===b.dataset.sosValue));$('sosResultCard').innerHTML='';$('sosNotes').value='';showSosStage(1);}
 function openSos(){resetSos();sosOverlay.classList.remove('hidden');document.body.style.overflow='hidden';}
 function closeSos(){sosOverlay.classList.add('hidden');document.body.style.overflow='';}
 if($('openDoughSos'))$('openDoughSos').onclick=openSos;$('homeSos').onclick=openSos;$('closeDoughSos').onclick=closeSos;$('sosBack').onclick=closeSos;$('sosOverview').onclick=closeSos;
-document.querySelectorAll('[data-sos-group]').forEach(b=>b.addEventListener('click',()=>{const g=b.dataset.sosGroup;sosChoices[g]=b.dataset.sosValue;document.querySelectorAll('[data-sos-group="'+g+'"]').forEach(x=>x.classList.toggle('selected',x===b));}));
+document.querySelectorAll('[data-sos-group]').forEach(b=>b.addEventListener('click',()=>{const g=b.dataset.sosGroup;sosChoices[g]=b.dataset.sosValue;document.querySelectorAll('[data-sos-group="'+g+'"]').forEach(x=>x.classList.toggle('selected',x===b));}));document.querySelectorAll('[data-sos-next]').forEach(b=>b.addEventListener('click',()=>{const n=+b.dataset.sosNext;if(n===2&&!sosChoices.volume){toast('Bitte wähle das Teigvolumen.');return}if(n===3&&(!sosChoices.bubbles||!sosChoices.feel)){toast('Bitte wähle Blasen und Teiggefühl.');return}showSosStage(n)}));
 function assessDough(){
  const {volume,bubbles,feel,when}=sosChoices;
  if(!volume||!bubbles||!feel||!when){const missing=[['volume','Volumen'],['bubbles','Blasen'],['feel','Teiggefühl'],['when','Backzeit']].filter(([k])=>!sosChoices[k]).map(x=>x[1]);$('sosResultCard').classList.remove('hidden');$('sosResultCard').innerHTML='<h3>Fast geschafft</h3><p>Bitte wähle noch: '+missing.join(', ')+'.</p>';return;}
@@ -399,10 +399,9 @@ function assessDough(){
  if(feel==='elastic')steps.push('Beim Formen kurze Pausen einlegen, falls sich der Teig zurückzieht.');
  if(volume==='double'&&feel==='soft'&&bubbles!=='none'){title='Gute Reifezeichen';tag='WAHRSCHEINLICH BACKBEREIT';intro='Volumen, Luftigkeit und Blasen passen oft zu einem reifen Pizzateig.';steps.unshift('Teigling vorsichtig öffnen und die Luft im Rand erhalten.');}
  $('sosResultCard').innerHTML='<span class="result-tag">'+tag+'</span><h3>'+title+'</h3><p>'+intro+'</p><ul>'+steps.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><strong>Kontrollpunkt:</strong> Der Teig sollte angenehm luftig sein und sich dehnen lassen. Wenn Geruch, Temperatur oder Rezept stark abweichen, beurteile ihn nicht nur nach den Blasen.</p>';
- $('sosResultCard').classList.remove('hidden');$('sosResultCard').scrollIntoView({behavior:'smooth',block:'start'});
-}
-$('sosNext').onclick=assessDough;
-$('sosRestart').onclick=()=>{resetSos();document.querySelector('.sos-cover').scrollIntoView({behavior:'smooth',block:'start'})};
+ const note=$('sosNotes').value.trim();if(note)steps.push('Deine Zusatznotiz: '+note);$('sosResultCard').innerHTML='<span class="result-tag">'+tag+'</span><h3>'+title+'</h3><p>'+intro+'</p><h4>Empfehlung</h4><ul>'+steps.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><strong>Kontrollpunkt:</strong> Der Teig sollte angenehm luftig sein und sich dehnen lassen. Wenn Geruch, Temperatur oder Rezept stark abweichen, beurteile ihn nicht nur nach den Blasen.</p>';$('sosResultCard').classList.remove('hidden');const status=document.querySelector('.sos-result-status');status.querySelector('b').textContent=title;showSosStage(4);
+$('sosNext').onclick=()=>{if(!sosChoices.when){toast('Bitte wähle, wann du backen möchtest.');return}assessDough()};
+$('sosRestart').onclick=()=>{resetSos()};
 sosOverlay.addEventListener('click',e=>{if(e.target===sosOverlay)closeSos()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sosOverlay.classList.contains('hidden'))closeSos()});
 init();
 </script></body></html>
