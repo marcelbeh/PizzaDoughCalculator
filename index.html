@@ -234,7 +234,7 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 .sos-cover h2{font-size:30px!important;line-height:1.05!important;margin:0 0 5px!important;color:#fff!important;letter-spacing:-.5px!important}
 .sos-cover p{font-size:14px!important;line-height:1.4!important;color:#e3e5e5!important;margin:0!important}
 .sos-form{padding:0!important}
-.sos-progress{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;position:relative!important;align-items:start!important;gap:0!important;margin:0 0 25px!important}
+.sos-progress{display:grid!important;grid-template-columns:1fr auto 1fr auto 1fr!important;position:relative!important;align-items:start!important;gap:0!important;margin:0 0 25px!important}
 .sos-progress-step{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:6px!important;font-size:11px!important;color:#b3b8ba!important}
 .sos-progress-step b{width:38px!important;height:38px!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:#20272b!important;border:2px solid #2b3438!important;color:#f6f7f7!important;font-size:14px!important}
 .sos-progress-step.active b{background:#e74646!important;border-color:#e74646!important;color:#fff!important}
@@ -434,7 +434,7 @@ function assessDough(){
  const {volume,bubbles,feel,when}=sosChoices;
  if(!volume||!bubbles||!feel||!when){const missing=[['volume','Volumen'],['bubbles','Blasen'],['feel','Teiggefühl'],['when','Backzeit']].filter(([k])=>!sosChoices[k]).map(x=>x[1]);$('sosResultCard').classList.remove('hidden');$('sosResultCard').innerHTML='<h3>Fast geschafft</h3><p>Bitte wähle noch: '+missing.join(', ')+'.</p>';return;}
  let title='Dein Teig ist auf einem guten Weg',tag='WEITER WIE GEPLANT',intro='Die gewählten Merkmale sprechen für einen gut entwickelten Teig.',steps=[];
- if(volume==='fallen'||bubbles==='large'){
+ if(volume==='fallen'||bubbles==='large'||bubbles==='fallen'){
   title='Der Teig ist wahrscheinlich schon sehr reif';tag='JETZT SANFT BEHANDELN';intro='Große Blasen oder ein eingefallener Teig können auf fortgeschrittene Gare hindeuten.';
   steps.push('Nicht kräftig durchkneten und die Luft nicht herausdrücken.','Teig vorsichtig portionieren und mit wenig Mehl oder leicht geölten Händen bearbeiten.');
   if(when==='soon')steps.push('Bald backen. Die Teiglinge nur kurz entspannen lassen und dann formen.');
