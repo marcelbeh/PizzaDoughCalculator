@@ -7,7 +7,7 @@ Eine installierbare, responsive PWA, die dich Schritt für Schritt durch deinen 
 2. **Teigstudio:** Mehlprofil, Gärstrategie, Gärzeit, Teiggewicht, Hydration, Salz und Temperaturen einstellen.
 3. **Pizzakarte:** Klassiker und Gourmet-Beläge mit frei wählbaren Stückzahlen kombinieren.
 4. **Einkauf:** Teig- und Belagmengen werden zusammengeführt; Packungsgrößen und Reserven helfen beim Einkaufen.
-5. **Backtag:** Rückwärts geplanter Zeitablauf, Ofen-Check, Pizza-Coach, Fotoanalyse und Backprotokoll.
+5. **Backtag:** Rückwärts geplanter Zeitablauf, Ofen-Check, Pizza-Coach, Teig-Check und Backprotokoll.
 
 ## Weitere Funktionen
 - Thermomix-Chargenplanung mit maximal 415 g Mehl je Charge als Planungsgrenze
