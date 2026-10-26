@@ -432,7 +432,7 @@ if($('openDoughSos'))$('openDoughSos').onclick=openSos;$('homeSos').onclick=open
 document.querySelectorAll('[data-sos-group]').forEach(b=>b.addEventListener('click',()=>{const g=b.dataset.sosGroup;sosChoices[g]=b.dataset.sosValue;document.querySelectorAll('[data-sos-group="'+g+'"]').forEach(x=>x.classList.toggle('selected',x===b));}));document.querySelectorAll('[data-sos-next]').forEach(b=>b.addEventListener('click',()=>{const n=+b.dataset.sosNext;if(n===2&&!sosChoices.volume){toast('Bitte wähle das Teigvolumen.');return}if(n===3&&(!sosChoices.bubbles||!sosChoices.feel)){toast('Bitte wähle Blasen und Teiggefühl.');return}showSosStage(n)}));
 function assessDough(){
  const {volume,bubbles,feel,when}=sosChoices;
- if(!volume||!bubbles||!feel||!when){const missing=[['volume','Volumen'],['bubbles','Blasen'],['feel','Teiggefühl'],['when','Backzeit']].filter(([k])=>!sosChoices[k]).map(x=>x[1]);$('sosResultCard').classList.remove('hidden');$('sosResultCard').innerHTML='<h3>Fast geschafft</h3><p>Bitte wähle noch: '+missing.join(', ')+'.</p>';return;}
+ if(!volume||!bubbles||!feel||!when){toast('Bitte beantworte alle Auswahlfragen.');return;}
  let title='Dein Teig ist auf einem guten Weg',tag='WEITER WIE GEPLANT',intro='Die gewählten Merkmale sprechen für einen gut entwickelten Teig.',steps=[];
  if(volume==='fallen'||bubbles==='large'||bubbles==='fallen'){
   title='Der Teig ist wahrscheinlich schon sehr reif';tag='JETZT SANFT BEHANDELN';intro='Große Blasen oder ein eingefallener Teig können auf fortgeschrittene Gare hindeuten.';
@@ -456,8 +456,10 @@ function assessDough(){
  if(feel==='soft')steps.push('Den Teig vorsichtig bewegen, damit die eingeschlossene Luft erhalten bleibt.');
  if(feel==='elastic')steps.push('Beim Formen kurze Pausen einlegen, falls sich der Teig zurückzieht.');
  if(volume==='double'&&feel==='soft'&&bubbles!=='none'){title='Gute Reifezeichen';tag='WAHRSCHEINLICH BACKBEREIT';intro='Volumen, Luftigkeit und Blasen passen oft zu einem reifen Pizzateig.';steps.unshift('Teigling vorsichtig öffnen und die Luft im Rand erhalten.');}
- $('sosResultCard').innerHTML='<span class="result-tag">'+tag+'</span><h3>'+title+'</h3><p>'+intro+'</p><ul>'+steps.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><strong>Kontrollpunkt:</strong> Der Teig sollte angenehm luftig sein und sich dehnen lassen. Wenn Geruch, Temperatur oder Rezept stark abweichen, beurteile ihn nicht nur nach den Blasen.</p>';
- const note=$('sosNotes').value.trim();if(note)steps.push('Deine Zusatznotiz: '+note);$('sosResultCard').innerHTML='<span class="result-tag">'+tag+'</span><h3>'+title+'</h3><p>'+intro+'</p><h4>Empfehlung</h4><ul>'+steps.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><strong>Kontrollpunkt:</strong> Der Teig sollte angenehm luftig sein und sich dehnen lassen. Wenn Geruch, Temperatur oder Rezept stark abweichen, beurteile ihn nicht nur nach den Blasen.</p>';$('sosResultCard').classList.remove('hidden');const status=document.querySelector('.sos-result-status');status.querySelector('b').textContent=title;showSosStage(4);
+ const note=$('sosNotes').value.trim();if(note)steps.push('Deine Zusatznotiz: '+note);
+ $('sosResultCard').innerHTML='<span class="result-tag">'+tag+'</span><h3>'+title+'</h3><p>'+intro+'</p><h4>Empfehlung</h4><ul>'+steps.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><strong>Kontrollpunkt:</strong> Der Teig sollte angenehm luftig sein und sich dehnen lassen. Beurteile ihn bei ungewöhnlichem Geruch oder auffälliger Temperatur nicht nur nach den Blasen.</p>';
+ const status=document.querySelector('.sos-result-status');status.querySelector('b').textContent=title;showSosStage(4);
+}
 $('sosNext').onclick=()=>{if(!sosChoices.when){toast('Bitte wähle, wann du backen möchtest.');return}assessDough()};
 $('sosRestart').onclick=()=>{resetSos()};
 sosOverlay.addEventListener('click',e=>{if(e.target===sosOverlay)closeSos()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sosOverlay.classList.contains('hidden'))closeSos()});
