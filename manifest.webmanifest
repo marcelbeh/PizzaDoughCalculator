@@ -1,6 +1,6 @@
 {
-  "name": "Pizza Day — Dein Pizzatag",
-  "short_name": "Pizza Day",
+  "name": "Ciao!",
+  "short_name": "Ciao!",
   "description": "Geführter Pizzatag-Assistent für Teig, Pizzakarte, Einkauf und Backablauf.",
   "start_url": "./index.html",
   "display": "standalone",
