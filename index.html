@@ -213,10 +213,20 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 .home-tile small{font-size:11px;color:#b5b9b9}
 .home-tile>b{margin-left:auto;color:#c6c9c9;font-size:26px;font-weight:300;line-height:1}
 
+
+/* Compact, intentional Ciao brand header */
+.top{display:flex;justify-content:space-between;align-items:center;min-height:72px;margin:0 -14px 18px;padding:12px 20px;background:linear-gradient(110deg,#090e11 0%,#050809 100%);border-bottom:1px solid #253238;box-shadow:0 8px 24px #0002}
+.brand{display:flex;gap:12px;align-items:center}
+.logo{width:42px;height:42px;border-radius:12px;background:transparent;display:grid;place-items:center;font-size:31px;line-height:1;filter:drop-shadow(0 2px 5px #0008)}
+.brand h1{font-size:22px;line-height:1;letter-spacing:1.1px;font-weight:850;margin:0;color:#f6f7f7}
+.iconbtn#reset{width:44px;height:44px;border-radius:50%;border:1px solid #344147;background:#11191d;color:#f4f6f6;font-size:24px;display:grid;place-items:center;transition:background .15s,border-color .15s}
+.iconbtn#reset:hover{background:#1a252a;border-color:#64747b}
+@media(max-width:380px){.top{min-height:64px;padding:10px 14px}.logo{width:36px;height:36px;font-size:28px}.brand h1{font-size:20px}}
+
 </style></head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo">🍕</div><div><div class="eyebrow">Dein persönlicher Pizza-Assistent</div><h1>Ciao!</h1></div></div><div style="display:flex;gap:8px;align-items:center"><button class="btn secondary" id="openDoughSos">Teig SOS</button><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></div></header>
+<header class="top"><div class="brand"><div class="logo" aria-hidden="true">🍕</div><h1>Ciao!</h1></div><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></header>
 <section class="home-screen" id="homeScreen">
   <div class="home-hero"><div class="home-hero-copy"><div class="eyebrow">DEIN PIZZA-ASSISTENT</div><h2>Ciao Marcel!</h2><p>Dein Begleiter für perfekte Pizza.</p></div></div>
   <div class="home-actions">
