@@ -670,7 +670,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
       <div class="dough-progress"><span id="homeDoughProgress"></span></div>
       <div class="dough-stages"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
       <button class="dashboard-primary" id="homePlanButton">Zeitplan ansehen <span aria-hidden="true">→</span></button>
-      <button type="button" class="dashboard-link" id="toggleDoughStatus" style="display:block!important">Teigstatus aus Dashboard entfernen</button>
+      <button type="button" class="dashboard-link" id="toggleDoughStatus" style="display:block!important">Teigstatus zurücksetzen</button>
     </div>
     <div class="dashboard-card planned-pizzas"><h3>Geplante Pizzen</h3><div id="homePizzaList" class="home-pizza-list"></div><button class="dashboard-link" id="homePizzaButton">Pizzakarte bearbeiten <span aria-hidden="true">→</span></button></div>
     <div class="dashboard-plan-actions" id="dashboardPlanActions">
@@ -825,12 +825,10 @@ function deleteDashboardPlan(){
 function applyRecommendedCounts(){
  state.menuTouched=false;syncAutoCounts();save();refresh();toast('Empfohlene Teiglingzahl übernommen');
 }
-let doughStatusHidden=localStorage.getItem('pdc-dough-status-hidden-v1')==='1';
-function toggleDoughStatus(){
- doughStatusHidden=!doughStatusHidden;
- try{localStorage.setItem('pdc-dough-status-hidden-v1',doughStatusHidden?'1':'0')}catch(e){}
+function resetDoughStatus(){
+ try{localStorage.setItem('pdc-dough-status-reset-v1',new Date().toISOString())}catch(e){}
  renderHomeDashboard();
- toast(doughStatusHidden?'Teigstatus aus dem Dashboard entfernt':'Teigstatus wieder eingeblendet');
+ toast('Teigstatus zurückgesetzt');
 }
 function renderHomeDashboard(){
  const date=state.bakeDate, now=new Date(), plannedDate=date?new Date(date+'T'+(state.bakeTime||'18:30')+':00'):null;
@@ -838,16 +836,19 @@ function renderHomeDashboard(){
  $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
  $('homeDoughTitle').textContent=date?'Teigplan bis zum Backtag':'Teigreife geplant';
+ const doughResetAt=localStorage.getItem('pdc-dough-status-reset-v1');const doughReset=doughResetAt&&(!date||new Date(doughResetAt).getTime()>new Date(date+'T'+(state.bakeTime||'18:30')+':00').getTime()-doughHours*3600000);
  $('homeDoughDetail').textContent=doughHours+' Std.';
  let progress=0,stage=0,mixLabel='Zeitplan folgt',proofLabel='geplant',bakeLabel=date?(state.bakeTime||'18:30'):'Backzeit';
  if(plannedDate){
    const bakeMs=plannedDate.getTime(),mixMs=bakeMs-doughHours*3600000,ballMs=bakeMs-Math.max(1,+state.proof||4)*3600000;
+   if(doughReset){progress=0;stage=0;mixLabel='Noch nicht gestartet';proofLabel='Status zurückgesetzt';bakeLabel=(state.bakeTime||'18:30');}else{
    const span=Math.max(1,bakeMs-mixMs);progress=Math.max(0,Math.min(1,(now.getTime()-mixMs)/span));
    stage=now.getTime()<mixMs?0:now.getTime()<ballMs?1:now.getTime()<bakeMs?2:3;
    const fmt=d=>d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
    mixLabel=dateFmt(new Date(mixMs))+' · '+fmt(new Date(mixMs));
    proofLabel=dateFmt(new Date(ballMs))+' · '+fmt(new Date(ballMs));
    bakeLabel=fmt(plannedDate);
+   }
  }else{
    progress=0;mixLabel='noch offen';proofLabel=doughHours+' Std. Reife';
  }
@@ -865,7 +866,7 @@ function copy(text,msg){if(navigator.clipboard&&navigator.clipboard.writeText)na
 function planText(){const r=dough(),items=aggregate();return (state.planName||'Pizzatag')+'\nGäste: '+state.guests+' · Pizzen: '+countsTotal()+' · Backstart: '+state.bakeDate+' '+state.bakeTime+'\n\nTEIG\n'+r.profile.name+' · '+state.hours+' h · '+state.hydration+' % Hydration\nMehl '+grams(r.flour)+'\nWasser '+grams(r.water)+'\nSalz '+grams(r.salt)+'\n'+(state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' '+grams(r.yeast)+' (Näherungswert)\n\nPIZZAKARTE\n'+pizzas.filter(p=>+state.counts[p.id]>0).map(p=>state.counts[p.id]+' × '+p.name).join('\n')+'\n\nEINKAUF\n'+items.map(x=>x.name+': '+(x.unit==='g'?grams(x.amount):fmt(x.amount)+' '+x.unit)).join('\n')+'\n\nABLAUF\n'+[...document.querySelectorAll('#timeline .timeline')].map(x=>x.innerText.replace('\n',' ')).join('\n')}
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
-$('homePlanButton').addEventListener('click',()=>go(0));$('toggleDoughStatus').addEventListener('click',toggleDoughStatus);$('homeSavePlan').addEventListener('click',transferPlanToDashboard);$('homeDeletePlan').addEventListener('click',deleteDashboardPlan);$('homeAutoCounts').addEventListener('click',applyRecommendedCounts);$('homePizzaButton').addEventListener('click',()=>go(2));
+$('homePlanButton').addEventListener('click',()=>go(0));$('toggleDoughStatus').addEventListener('click',resetDoughStatus);$('homeSavePlan').addEventListener('click',transferPlanToDashboard);$('homeDeletePlan').addEventListener('click',deleteDashboardPlan);$('homeAutoCounts').addEventListener('click',applyRecommendedCounts);$('homePizzaButton').addEventListener('click',()=>go(2));
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({plan:0,recipes:2,shop:3,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value;if(['guests','perGuest','reserve'].includes(id)){state.menuTouched=false;syncAutoCounts()}}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
