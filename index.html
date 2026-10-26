@@ -647,6 +647,11 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
 .stepper .step.done{color:#294f35!important}
 .stepper .step.done b{background:#294f35!important;color:#fff5e4!important;-webkit-text-fill-color:#fff5e4!important}
 
+/* Stepper: center each number independently from the label */
+.stepper .step{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:8px!important;line-height:1.2!important;text-align:center!important;padding:10px 4px!important}
+.stepper .step b{flex:0 0 34px!important;display:flex!important;align-items:center!important;justify-content:center!important;margin:0!important;padding:0!important;line-height:1!important;font-size:16px!important;transform:none!important;position:static!important}
+.stepper .step:not(.active):not(.done){color:#715a48!important}
+
 </style></head>
 <body>
 <div class="app">
@@ -690,7 +695,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
     <div class="field"><label>Backzeit (Sekunden)</label><input id="learnSeconds" type="number" min="0" max="900" placeholder="z. B. 90"></div>
   </div>
   <div class="field" style="margin-top:12px"><label>Notiz (optional)</label><input id="learnNote" maxlength="240" placeholder="z. B. zweite Pizza war unten zu dunkel"></div>
-  <div class="actions"><button class="btn" id="saveLearning">Ergebnis speichern</button><button class="btn secondary" id="copyLearning">Lernhistorie kopieren</button></div>
+  <div class="actions"><button class="btn" id="saveLearning">Ergebnis speichern</button><button class="btn secondary" id="copyLearning">Lernhistorie kopieren</button><button class="btn secondary" id="resetLearning">Fingerprint zurücksetzen</button></div>
   <div class="stats"><div class="stat"><span>Gespeicherte Tests</span><strong id="learnCount">0</strong></div><div class="stat"><span>Letztes Ergebnis</span><strong id="learnLast" style="font-size:14px">Noch keins</strong></div></div>
   <div id="learningHistory" class="small muted" style="margin-top:12px">Noch keine Backversuche gespeichert.</div>
 </div>
@@ -754,7 +759,7 @@ function go(step){view='workflow';state.step=Math.max(0,Math.min(4,step));save()
 const pizzaImages={
  margherita:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1000&q=85',
  salami:'https://mir-s3-cdn-cf.behance.net/project_modules/fs/33cdf3193828619.65f205a1cef9c.jpg',
- pesto:'https://images.unsplash.com/photo-1761315632041-5fde8412ecae?auto=format&fit=crop&w=1000&q=85',
+ pesto:'https://www.achetezafeurs.fr/130249-thickbox_default/vertigineuse.jpg',
  funghi:'https://images.unsplash.com/photo-1692737580563-7ba2d896f0f6?auto=format&fit=crop&w=1000&q=85',
  bianca:'https://revolvepizzaoven.com/cdn/shop/articles/Recipe_Mortadella_1200x800_2f3bf57e-d8f9-4d68-8dd3-b9d8c3851be7.webp?v=1677133374'
 };
@@ -794,7 +799,7 @@ document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventLis
 document.querySelectorAll('[data-dough-style]').forEach(btn=>btn.addEventListener('click',()=>{const style=btn.dataset.doughStyle;state.doughStyle=style;const presets={neapolitan:{flour:'pizzeria',method:'mixed',hours:24,yeastType:'dry',ball:260,hydration:64,salt:2.9,oil:0},ny:{flour:'cuoco',method:'cold',hours:48,yeastType:'dry',ball:280,hydration:60,salt:2.5,oil:2},teichner:{flour:'pizzeria',method:'cold',hours:48,yeastType:'fresh',ball:280,hydration:64,salt:3,oil:0},waldi:{flour:'pizzeria',method:'cold',hours:42,yeastType:'fresh',ball:280,hydration:70,salt:3,oil:1},roma:{flour:'cuoco',method:'mixed',hours:24,yeastType:'dry',ball:250,hydration:70,salt:2.8,oil:3},custom:{flour:state.flour,method:state.method,hours:+state.hours,yeastType:state.yeastType,ball:+state.ball,hydration:+state.hydration,salt:+state.salt,oil:+state.oil||0}};Object.assign(state,presets[style]);['flour','method','hours','yeastType','ball','hydration','salt'].forEach(id=>{const el=$(id);if(el)el.value=state[id]});renderDoughStyle();refresh()}));function renderDoughStyle(){document.querySelectorAll('[data-dough-style]').forEach(b=>b.classList.toggle('selected',b.dataset.doughStyle===(state.doughStyle||'neapolitan')))}renderDoughStyle();
 
 // Teigretter wird zentral weiter unten initialisiert.
-$('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');
+$('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');$('resetLearning').onclick=()=>{if(!confirm('Alle gespeicherten Pizza-Fingerprint-Tests auf diesem Gerät löschen?'))return;localStorage.removeItem('pdc-learning-v1');renderLearning();toast('Pizza-Fingerprint zurückgesetzt')};
 function reminderShoppingText(){const r=dough(),rows=[];const flour=r.flour,salt=r.salt,yeast=r.yeast,oil=r.oil;rows.push('Mehl – '+grams(flour));rows.push('Salz – '+grams(salt));rows.push((state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' – '+grams(yeast));if(oil>0)rows.push('Olivenöl – '+grams(oil));aggregate().forEach(x=>{const reserve=x.unit==='g'&&x.key!=='San-Marzano-Dose'?1.1:1;const amount=x.amount*reserve;let qty=x.unit==='Blätter'?fmt(x.amount)+' Blätter':grams(amount);if(x.key==='San-Marzano-Dose')qty=grams(amount);rows.push(x.name+' – '+qty)});return [...new Set(rows)].join('\n')}function sendToReminders(){const text=reminderShoppingText();if(!text.trim()){toast('Keine Zutaten zum Übertragen');return}const url='shortcuts://run-shortcut?name='+encodeURIComponent('Ciao Einkauf übertragen')+'&input=text&text='+encodeURIComponent(text);window.location.href=url;toast('Kurzbefehl wird geöffnet')}
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('sendReminders').onclick=sendToReminders;$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{copy(planText(),'Gesamtplan kopiert');view='home';renderStepper();toast('Pizzatag-Plan abgeschlossen')};
 $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
