@@ -2,7 +2,7 @@
 <html lang="de">
 <head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<meta name="theme-color" content="#07100d"><meta name="description" content="Geführter Assistent für deinen Pizzatag: Teig, Pizzakarte, Einkauf und Backablauf.">
+<meta name="theme-color" content="#030a06"><meta name="description" content="Geführter Assistent für deinen Pizzatag: Teig, Pizzakarte, Einkauf und Backablauf.">
 <link rel="manifest" href="manifest.webmanifest"><link rel="icon" href="icon.svg" type="image/svg+xml"><title>Ciao! Der Pizzateig - Assistent</title>
 <style>
 :root{color-scheme:dark;--bg:#11110f;--panel:#1b1b18;--panel2:#24241f;--line:#38382f;--text:#f7f3e9;--muted:#b4b0a4;--red:#d84b36;--red2:#f0785d;--green:#a5c69b;--gold:#e6c37c}
@@ -367,6 +367,74 @@ button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
 .sos-cover{border:1px solid #3a4c36;border-radius:17px;background-image:linear-gradient(0deg,#07100b 0%,rgba(7,16,11,.16) 75%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1000&q=85')}
 @media(min-width:700px){.app{max-width:900px}.top{padding:15px 0 18px}.home-hero{height:330px}.home-actions{gap:12px}.home-tile{padding:13px}}
 @media(max-width:480px){.home-hero{height:270px;padding:17px}.card{padding:14px}.top{margin-bottom:16px}}
+
+
+/* Ciao! reference-led premium visual pass */
+:root{--bg:#030a06;--panel:#07130c;--panel2:#0c1a10;--line:#203626;--text:#f8f4e9;--muted:#b9c2b4;--red:#ef292d;--red2:#ff6a60;--green:#a9c89b;--gold:#f5cc79}
+html{background:#030a06}
+body{background:radial-gradient(ellipse at 50% 0%,#12271a 0%,#07130b 42%,#020604 100%);color:var(--text);padding-bottom:100px}
+.app{max-width:760px;padding:13px 14px 32px}
+.top{margin-bottom:16px;padding:4px 0 13px;border-bottom:1px solid #1d3323;align-items:center}
+.brand{gap:11px}
+.logo{width:52px;height:52px;flex-basis:52px;border-radius:16px;background:linear-gradient(145deg,#f6d58c,#d29c4a);border:1px solid #ffedb5;box-shadow:0 0 28px #efc77d18}
+.brand h1{font-family:Georgia,'Times New Roman',serif;font-style:italic;font-size:32px;letter-spacing:-1.2px;font-weight:600;color:#f5d79b;text-shadow:0 2px 18px #f4ce8a26}
+.brand-sub{font-size:8px;letter-spacing:.7px;color:#f0d6a0}
+.iconbtn{background:#0b1710;border-color:#2a4030}
+h2{font-size:clamp(27px,6vw,36px);letter-spacing:-1px}
+h3{letter-spacing:-.2px}
+.intro{font-size:14px;color:#bfc8ba;line-height:1.55}
+.home-hero{height:clamp(390px,105vw,560px);max-height:560px;align-items:flex-start;padding:24px 19px;border-radius:24px;border:1px solid #263e2b;position:relative;isolation:isolate;background-image:linear-gradient(180deg,rgba(1,7,3,.75) 0%,rgba(1,7,3,.12) 38%,rgba(1,7,3,.04) 60%,rgba(1,7,3,.94) 100%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1400&q=90');background-size:cover;background-position:center;box-shadow:0 18px 50px #0008}
+.home-hero:after{content:"";position:absolute;z-index:-1;inset:0;background:radial-gradient(ellipse at 50% 65%,transparent 10%,rgba(0,0,0,.18) 70%);pointer-events:none}
+.home-hero .eyebrow{color:var(--gold);letter-spacing:2px;font-size:10px}
+.home-hero h2{font-size:clamp(29px,7vw,40px);line-height:1.05;margin:10px 0 7px;text-shadow:0 2px 20px #000}
+.home-hero p{font-size:14px;color:#f2f0e8;max-width:270px}
+.home-actions{grid-template-columns:1fr;gap:10px;margin-top:14px}
+.home-tile{min-height:82px;padding:10px 12px;background:linear-gradient(110deg,rgba(13,28,17,.96),rgba(4,13,7,.98));border:1px solid #263c2b;border-radius:17px;box-shadow:0 8px 24px #0003}
+.home-tile strong{font-size:14px}.home-tile small{font-size:12px;color:#b9c6b8}
+.tile-icon{width:48px;height:48px;flex-basis:48px;border-radius:14px;background:#17291b;border:1px solid #354d35;color:var(--gold)}
+.home-tile>b{color:#e8c779;font-size:28px}
+.card{background:linear-gradient(145deg,#0d1c11,#061009);border:1px solid #253b2a;border-radius:20px;padding:16px;box-shadow:0 12px 32px #0003}
+.cardhead h3{font-size:16px}
+.field label{font-size:12px;color:#bdc8ba}
+.field input:not([type=range]),.field select,.field textarea{background:#030a06;border:1px solid #2a4230;border-radius:13px;color:#f8f4e9;min-height:48px}
+.field input:focus,.field select:focus,.field textarea:focus{outline:2px solid #f5cc79;outline-offset:2px}
+.stepper{gap:6px}
+.step{background:#08150b;border-color:#233b28;border-radius:14px;color:#b8c5b7;padding:10px 4px}
+.step b{background:#17291b;color:#f5dca0;width:27px;height:27px}
+.step.active{background:#15261a;border-color:var(--gold);color:#fff9eb}
+.step.active b,.step.done b{background:var(--gold);color:#152016}
+.stat{background:#0a190e;border-color:#28402c;border-radius:15px}
+.stat strong{color:var(--gold)}
+.note{background:#102016;border-color:#2d4631;border-radius:14px}
+.btn{background:linear-gradient(105deg,#ff3438,#d91f2b);border:1px solid #ff5a54;color:#fff;border-radius:999px;min-height:50px;font-weight:800;box-shadow:0 8px 25px #ef292d24}
+.btn.secondary{background:#102016;border-color:#324b35;border-radius:14px;box-shadow:none}
+.actions{gap:10px}
+.dough-style-section>h3{font-size:20px;margin-bottom:14px}
+.dough-style-list{grid-template-columns:1fr;gap:11px}
+.dough-style-card{grid-template-columns:118px minmax(0,1fr) 28px;gap:13px;min-height:116px;padding:7px;border:1px solid #2b4130;border-radius:18px;background:linear-gradient(110deg,#0d1b11,#061009);box-shadow:0 8px 22px #0003}
+.dough-style-card img{width:118px;height:100px;border-radius:13px;object-fit:cover;filter:saturate(1.08) contrast(1.03)}
+.dough-style-card strong{font-size:16px;color:#fff8e8}.dough-style-card small{font-size:12px;color:#bac7b7;line-height:1.45}
+.dough-style-card .style-check{width:25px;height:25px;border-color:#50624e;font-size:13px}
+.dough-style-card.selected{border:1.5px solid #ff594b;background:linear-gradient(110deg,#1b2112,#0a160c);box-shadow:0 0 0 1px #ff594b40,0 10px 28px #0004;padding:6px}
+.dough-style-card.selected .style-check{background:#f12d31;border-color:#ff514d;color:white}
+.pizza{background:#09170d;border-color:#2b4130;border-radius:17px}
+.pizza-photo{border-color:#263d2b}
+.pizzahead strong{color:#fff6e5}
+.tag{background:#2a2716;color:#f5d48b;border:1px solid #554927}
+.nav{background:rgba(2,8,4,.94);border-top:1px solid #243b29;box-shadow:0 -10px 35px #0007;padding-top:9px}
+.navinner{max-width:620px;gap:5px}
+.tab{font-size:10px;color:#a5b1a3;border-radius:13px;padding:5px 2px}
+.tab span{font-size:23px;line-height:1.1}
+.tab.active{color:#ff4b4d;background:#111f14}
+.checkitem{background:#0e1d12;border-color:#2c4430}
+.checkitem input{accent-color:var(--gold)}
+.sos-overlay{background:rgba(0,4,1,.92);backdrop-filter:blur(15px)}
+.sos-screen{background:radial-gradient(ellipse at top,#17301d,#030a06 60%);color:var(--text)}
+.sos-brand{color:var(--gold)}
+.sos-cover{border:1px solid #2b432e;border-radius:19px}
+button:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+@media(min-width:620px){.app{max-width:900px}.home-actions{grid-template-columns:1fr 1fr}.home-hero{height:440px;max-height:520px}.dough-style-list{grid-template-columns:1fr 1fr}.dough-style-card{grid-template-columns:94px minmax(0,1fr) 24px;min-height:100px}.dough-style-card img{width:94px;height:84px}}
+@media(max-width:390px){.app{padding-left:10px;padding-right:10px}.home-hero{height:390px;padding:18px}.dough-style-card{grid-template-columns:98px minmax(0,1fr) 24px;min-height:102px;gap:10px}.dough-style-card img{width:98px;height:88px}.dough-style-card strong{font-size:14px}}
 
 </style></head>
 <body>
