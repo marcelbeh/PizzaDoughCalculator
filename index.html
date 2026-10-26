@@ -657,7 +657,21 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
 <div class="app">
 <header class="top"><div class="brand"><div class="logo" aria-hidden="true"><svg viewBox="0 0 64 64" role="img"><path d="M8 49V30a24 24 0 0 1 48 0v19" fill="none" stroke="#4b3021" stroke-width="6" stroke-linecap="round"/><path d="M17 48V31a15 15 0 0 1 30 0v17" fill="#b43a22"/><path d="M32 20c2 7-5 9-2 15 1-2 3-3 3-6 6 5 8 10 4 15-3 4-10 3-12-2-3-5 0-10 4-14-1 5 0 7 2 8 3-5 0-10 1-16z" fill="#f7e9c9"/><path d="M5 51h54" stroke="#4b3021" stroke-width="5" stroke-linecap="round"/></svg></div><div class="brand-lockup"><h1>Ciao!</h1><span class="brand-sub">PIZZA LAB · DAL 2026</span></div></div><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></header>
 <section class="home-screen" id="homeScreen">
-  <div class="home-hero"><div class="home-hero-copy"><div class="eyebrow">DEIN PIZZA-ASSISTENT</div><h2>Ciao Marcel!</h2><p>Dein Begleiter für perfekte Pizza.</p></div></div>
+  <section class="home-dashboard" aria-label="Dein Pizzatag">
+  <div class="dashboard-heading"><div class="eyebrow">CIAO, MARCEL</div><h2>Dein Pizzatag</h2><p>Alles im Blick für richtig gute Pizza.</p></div>
+  <div class="dashboard-plan">
+    <div class="dashboard-plan-head"><span class="dashboard-icon" aria-hidden="true">✦</span><div><strong id="homePlanTitle">Dein nächster Pizzaabend</strong><small id="homePlanSubtitle">Dein Plan auf einen Blick</small></div></div>
+    <div class="dashboard-stats">
+      <div class="dashboard-stat"><span>BACKTAG</span><strong id="homeBakeDate">Noch offen</strong></div>
+      <div class="dashboard-stat"><span>ERSTE PIZZA</span><strong id="homeBakeTime">18:30 Uhr</strong></div>
+      <div class="dashboard-stat"><span>GÄSTE</span><strong id="homeGuests">8 Personen</strong></div>
+      <div class="dashboard-stat"><span>PIZZEN</span><strong id="homePizzas">9 geplant</strong></div>
+    </div>
+    <div class="dashboard-dough"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dashboard-dough-copy"><strong id="homeDoughTitle">Dein Teigplan</strong><span id="homeDoughDetail">Reifezeit und Menge passend planen.</span></div><span class="dashboard-chevron" aria-hidden="true">›</span></div>
+    <button class="dashboard-primary" id="homePlanButton">Pizzatag planen <span aria-hidden="true">→</span></button>
+  </div>
+  <div class="dashboard-tip"><span class="tip-mark" aria-hidden="true">i</span><div><strong>Kleiner Tipp, großer Unterschied</strong><p>Gib deinem Teig Zeit. Eine lange, gut geplante Reife bringt mehr Aroma und eine bessere Struktur.</p></div></div>
+</section>
   <div class="home-actions">
     <button class="home-tile" data-goto="0"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="10" width="34" height="31" rx="3"/><path d="M15 6v9M33 6v9M7 19h34"/><path d="M24 24v11M18.5 29.5h11"/></svg></span><span><strong>Pizzatag planen</strong><small>Teig, Zeitplan und Mengen</small></span><b>›</b></button>
     <button class="home-tile" data-goto="2"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10c7-3 13-1 18 4v29c-5-5-11-7-18-4z"/><path d="M42 10c-7-3-13-1-18 4v29c5-5 11-7 18-4z"/><path d="M12 17c3 0 6 1 8 3M12 23c3 0 6 1 8 3M36 17c-3 0-6 1-8 3M36 23c-3 0-6 1-8 3"/><path d="M24 14v29"/></svg></span><span><strong>Rezepte</strong><small>Bewährte Rezepte</small></span><b>›</b></button>
@@ -787,12 +801,27 @@ function saveLearning(){
 function learningText(){return getLearning().map((x,i)=>(i+1)+'. '+x.date+' · '+(learnLabels[x.result]||x.result)+'\nMehl: '+x.flour+' · '+x.hours+' h · '+x.hydration+' % Hydration · Stein: '+(x.stone||'—')+' °C · Backzeit: '+(x.seconds||'—')+' s\nNächster Test: '+(changeLabels[x.change]||x.change)+(x.note?'\nNotiz: '+x.note:'')).join('\n\n')||'Noch keine Backversuche gespeichert.'}
 function bindChecks(){document.querySelectorAll('[data-check]').forEach(c=>{c.onchange=()=>{checks[c.dataset.check]=c.checked;try{localStorage.setItem('pdc-guided-checks',JSON.stringify(checks))}catch(e){}c.closest('.item').classList.toggle('done',c.checked);progressChecks()}})}
 function progressChecks(){const all=[...document.querySelectorAll('[data-check]')];const done=all.filter(c=>c.checked).length;$('prepProgress').textContent=done+' / '+all.length+' erledigt'}
-function refresh(){syncAutoCounts();save();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
+
+function renderHomeDashboard(){
+ const date=state.bakeDate;
+ $('homePlanTitle').textContent=state.planName||'Dein nächster Pizzaabend';
+ $('homePlanSubtitle').textContent=date?'Dein Pizzatag ist vorbereitet':'Plane deinen nächsten Pizzaabend';
+ $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Noch offen';
+ $('homeBakeTime').textContent=(state.bakeTime||'18:30')+' Uhr';
+ $('homeGuests').textContent=(+state.guests||1)+' '+((+state.guests||1)===1?'Person':'Personen');
+ $('homePizzas').textContent=(countsTotal()||recommended())+' geplant';
+ $('homeDoughTitle').textContent=(+state.hours||48)+' Stunden Teigreife';
+ $('homeDoughDetail').textContent='Rezept und Teigmenge für '+(countsTotal()||recommended())+' Pizzen abgestimmt.';
+ $('homePlanButton').textContent=date?'Zeitplan ansehen →':'Pizzatag planen →';
+}
+
+function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
 function copy(text,msg){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>toast(msg)).catch(()=>window.prompt('Text kopieren:',text));else window.prompt('Text kopieren:',text)}
 function planText(){const r=dough(),items=aggregate();return (state.planName||'Pizzatag')+'\nGäste: '+state.guests+' · Pizzen: '+countsTotal()+' · Backstart: '+state.bakeDate+' '+state.bakeTime+'\n\nTEIG\n'+r.profile.name+' · '+state.hours+' h · '+state.hydration+' % Hydration\nMehl '+grams(r.flour)+'\nWasser '+grams(r.water)+'\nSalz '+grams(r.salt)+'\n'+(state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' '+grams(r.yeast)+' (Näherungswert)\n\nPIZZAKARTE\n'+pizzas.filter(p=>+state.counts[p.id]>0).map(p=>state.counts[p.id]+' × '+p.name).join('\n')+'\n\nEINKAUF\n'+items.map(x=>x.name+': '+(x.unit==='g'?grams(x.amount):fmt(x.amount)+' '+x.unit)).join('\n')+'\n\nABLAUF\n'+[...document.querySelectorAll('#timeline .timeline')].map(x=>x.innerText.replace('\n',' ')).join('\n')}
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
+$('homePlanButton').addEventListener('click',()=>go(0));
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({plan:0,recipes:2,shop:3,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
@@ -851,4 +880,39 @@ init();
 .top .logo{display:grid!important;place-items:center!important;width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:15px!important;background:#f4e7cb!important;border:1.5px solid #d7b98c!important;box-shadow:none!important;filter:none!important;padding:4px!important}
 .top .logo svg{display:block!important;width:40px!important;height:40px!important}
 .top .brand{gap:11px!important}
+</style>
+
+<style>
+/* Home dashboard: replaces the oversized hero photo with useful live plan data */
+.home-hero{display:none!important}
+.home-dashboard{margin:0 0 16px;color:#493021}
+.dashboard-heading{padding:5px 5px 16px}
+.dashboard-heading .eyebrow{color:#b43a22!important;letter-spacing:2px;font-weight:800}
+.dashboard-heading h2{font-family:Lora,Georgia,serif;font-size:30px;line-height:1.1;margin:5px 0 5px;color:#4b3021}
+.dashboard-heading p{margin:0;color:#80664f;font-size:14px}
+.dashboard-plan{padding:16px;border:1px solid #e0c49c;border-radius:22px;background:linear-gradient(145deg,#fff8e9,#f7e8cc);box-shadow:0 7px 20px #74451a0d}
+.dashboard-plan-head{display:flex;align-items:center;gap:11px;margin-bottom:16px}
+.dashboard-icon{display:grid;place-items:center;width:40px;height:40px;border-radius:13px;background:#f1dcc0;color:#b43a22;font-size:24px}
+.dashboard-plan-head strong,.dashboard-dough-copy strong{display:block;font-family:Lora,Georgia,serif;font-size:17px;color:#4b3021}
+.dashboard-plan-head small{display:block;color:#886c53;font-size:12px;margin-top:3px}
+.dashboard-stats{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid #e7d2b3;border-bottom:1px solid #e7d2b3}
+.dashboard-stat{padding:12px 8px 12px 0;min-width:0}
+.dashboard-stat:nth-child(even){padding-left:12px;border-left:1px solid #e7d2b3}
+.dashboard-stat:nth-child(n+3){border-top:1px solid #e7d2b3}
+.dashboard-stat span{display:block;font-size:9px;font-weight:800;letter-spacing:1.2px;color:#987653;margin-bottom:5px}
+.dashboard-stat strong{display:block;font-size:16px;font-weight:750;color:#4b3021;overflow-wrap:anywhere}
+.dashboard-dough{display:flex;align-items:center;gap:11px;padding:13px 0 14px}
+.dough-ball-icon{width:46px;height:46px;flex:0 0 46px;border-radius:50%;display:grid;place-items:center;background:#f2dfbf}
+.dough-ball-icon svg{width:42px;height:42px}
+.dashboard-dough-copy{flex:1;min-width:0}
+.dashboard-dough-copy strong{font-family:inherit;font-size:14px}
+.dashboard-dough-copy span{display:block;margin-top:3px;font-size:12px;line-height:1.4;color:#80664f}
+.dashboard-chevron{font-size:25px;color:#b43a22}
+.dashboard-primary{width:100%;display:flex;align-items:center;justify-content:space-between;padding:13px 16px;border:0;border-radius:14px;background:#b43a22;color:#fff8e9;font-weight:800;font-size:14px}
+.dashboard-primary span{font-size:20px}
+.dashboard-tip{display:flex;gap:11px;align-items:flex-start;margin-top:12px;padding:14px;border:1px solid #d8c29e;border-radius:17px;background:#f8edd8}
+.tip-mark{display:grid;place-items:center;width:27px;height:27px;flex:0 0 27px;border-radius:50%;background:#e8d2aa;color:#79502d;font-weight:800;font-family:Georgia,serif}
+.dashboard-tip strong{display:block;color:#4b3021;font-family:Lora,Georgia,serif;font-size:14px}
+.dashboard-tip p{margin:4px 0 0;color:#80664f;font-size:12px;line-height:1.45}
+@media(max-width:380px){.dashboard-heading h2{font-size:27px}.dashboard-plan{padding:13px}.dashboard-stat strong{font-size:14px}}
 </style>
