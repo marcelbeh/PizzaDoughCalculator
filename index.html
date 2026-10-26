@@ -846,8 +846,8 @@ function renderHomeDashboard(){
  $('homeDoughProgress').style.width=Math.round(progress*100)+'%';
  $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
- const displayCounts=dashboardPlan?.counts||state.counts;const sorted=pizzas.filter(p=>(+displayCounts[p.id]||0)>0).sort((a,b)=>(+displayCounts[b.id]||0)-(+displayCounts[a.id]||0)).slice(0,3);
- $('homePizzaList').innerHTML=sorted.length?sorted.map(p=>'<div class="home-pizza-item"><img src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt=""><strong>'+p.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</strong><small>'+(+displayCounts[p.id]||0)+' ×</small></div>').join(''):'<div class="home-pizza-empty">Wähle deine Sorten in der Pizzakarte.</div>';
+ const displayCounts=dashboardPlan?.counts||{};const sorted=pizzas.filter(p=>(+displayCounts[p.id]||0)>0).sort((a,b)=>(+displayCounts[b.id]||0)-(+displayCounts[a.id]||0)).slice(0,3);
+ $('homePizzaList').innerHTML=sorted.length?sorted.map(p=>'<div class="home-pizza-item"><img src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt=""><strong>'+p.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</strong><small>'+(+displayCounts[p.id]||0)+' ×</small></div>').join(''):'<div class="home-pizza-empty">'+(dashboardPlan?'Wähle deine Sorten in der Pizzakarte.':'Übertrage deinen fertigen Plan hierher, damit die ausgewählten Pizzen auf der Startseite erscheinen.')+'</div>';
  $('homePizzaButton').style.display='block';$('homeRecommendedCount').textContent=recommended();$('dashboardPlanStatus').textContent=dashboardPlan?'Dashboard-Plan: '+(dashboardPlan.name||'Pizzaabend')+' · '+pizzas.reduce((n,p)=>n+(+dashboardPlan.counts?.[p.id]||0),0)+' Teiglinge gespeichert.':'Noch kein Plan ausdrücklich im Dashboard gespeichert.';
  $('homePlanButton').innerHTML=(date?'Zeitplan ansehen':'Pizzatag planen')+' <span aria-hidden="true">→</span>';
 }
