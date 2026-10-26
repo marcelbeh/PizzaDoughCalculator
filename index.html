@@ -223,6 +223,64 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 .iconbtn#reset:hover{background:#1a252a;border-color:#64747b}
 @media(max-width:380px){.top{min-height:64px;padding:10px 14px}.logo{width:36px;height:36px;font-size:28px}.brand h1{font-size:20px}}
 
+
+/* Teig SOS — match the supplied four-screen reference */
+.sos-overlay{position:fixed!important;inset:0!important;z-index:1000!important;padding:0!important;display:flex;align-items:stretch!important;justify-content:center!important;overflow:auto!important;background:#030708!important;backdrop-filter:none!important}
+.sos-screen{width:100%!important;max-width:430px!important;min-height:100dvh!important;margin:0!important;padding:0 17px calc(20px + env(safe-area-inset-bottom))!important;background:#030708!important;border:0!important;border-radius:0!important;color:#f5f6f6!important;overflow-y:auto!important}
+.sos-top{height:62px!important;flex-shrink:0;display:grid!important;grid-template-columns:38px 1fr 38px!important;align-items:center!important;gap:8px!important;padding:10px 0!important;border-bottom:1px solid #202a2d!important}
+.sos-back,.sos-help{width:36px!important;height:36px!important;border:0!important;border-radius:50%!important;background:transparent!important;color:#f5f6f6!important;font-size:26px!important;padding:0!important}
+.sos-brand{font-size:11px!important;letter-spacing:1.2px!important;color:#f4f5f5!important;text-align:center!important}
+.sos-cover{height:190px!important;min-height:190px!important;display:flex!important;align-items:flex-end!important;padding:18px!important;margin:8px 0 18px!important;border:0!important;border-radius:10px!important;background:linear-gradient(0deg,#030708 0%,#03070805 90%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1000&q=85') center 60%/cover!important}
+.sos-cover h2{font-size:30px!important;line-height:1.05!important;margin:0 0 5px!important;color:#fff!important;letter-spacing:-.5px!important}
+.sos-cover p{font-size:14px!important;line-height:1.4!important;color:#e3e5e5!important;margin:0!important}
+.sos-form{padding:0!important}
+.sos-progress{display:grid!important;grid-template-columns:1fr 1fr 1fr!important;position:relative!important;align-items:start!important;gap:0!important;margin:0 0 25px!important}
+.sos-progress-step{position:relative!important;z-index:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;gap:6px!important;font-size:11px!important;color:#b3b8ba!important}
+.sos-progress-step b{width:38px!important;height:38px!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:#20272b!important;border:2px solid #2b3438!important;color:#f6f7f7!important;font-size:14px!important}
+.sos-progress-step.active b{background:#e74646!important;border-color:#e74646!important;color:#fff!important}
+.sos-progress-step.done b{background:#73ba68!important;border-color:#73ba68!important;color:#102012!important}
+.sos-progress>i{height:3px!important;background:linear-gradient(90deg,#c8a66d,#343b3f)!important;margin:18px -14px 0!important;z-index:0!important}
+.sos-stage h3{font-size:19px!important;line-height:1.25!important;margin:0 0 5px!important;color:#f4f5f5!important;letter-spacing:-.2px!important}
+.sos-question{font-size:13px!important;color:#d2d7d8!important;margin:0 0 14px!important}
+.sos-options{display:grid!important;grid-template-columns:repeat(4,minmax(0,1fr))!important;gap:7px!important;margin:0 0 20px!important}
+.sos-option{position:relative!important;min-width:0!important;display:flex!important;flex-direction:column!important;align-items:stretch!important;gap:4px!important;text-align:center!important;padding:5px 4px 8px!important;border:2px solid transparent!important;border-radius:10px!important;background:#111719!important;color:#f5f6f6!important;overflow:visible!important;font-size:10px!important;line-height:1.25!important}
+.sos-option b{font-size:10px!important;line-height:1.25!important;color:#f5f6f6!important}
+.sos-option small{font-size:9px!important;line-height:1.2!important;color:#c1c5c6!important}
+.sos-art{height:auto!important;aspect-ratio:1/1!important;width:100%!important;border-radius:8px!important;margin:0!important;background:radial-gradient(ellipse at 50% 55%,#c69a67 0 34%,#8e5e38 35% 42%,#24201a 43% 100%)!important}
+.sos-art i{width:68%!important;height:52%!important}
+.sos-option.selected{border:2px solid #f04444!important;background:#17191a!important;padding:5px 4px 8px!important;box-shadow:0 0 0 1px #f0444425!important}
+.sos-option.selected:after{content:'✓';position:absolute;right:-5px;top:-8px;width:22px;height:22px;display:grid;place-items:center;border-radius:50%;background:#ed4444;color:white;font-size:13px;font-weight:900}
+.sos-subheading{margin-top:5px!important}
+.sos-footer{padding-top:10px!important;margin-top:14px!important}
+.sos-footer .btn{width:100%!important;min-height:52px!important;border-radius:28px!important;font-size:15px!important;background:#e83e46!important;color:#fff!important;box-shadow:0 4px 14px #e83e4628!important}
+.sos-button-row{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:20px!important}
+.sos-button-row .btn{width:100%!important;min-height:48px!important;border-radius:28px!important;font-size:12px!important;background:#e83e46!important;color:#fff!important}
+.sos-button-row .btn.secondary{background:#0c1215!important;border:1px solid #313a3f!important;color:#f2f4f4!important;box-shadow:none!important}
+.sos-timing-list{display:grid!important;grid-template-columns:1fr!important;gap:7px!important;margin:0 0 16px!important}
+.sos-timing-list .sos-option{display:flex!important;flex-direction:row!important;align-items:center!important;text-align:left!important;gap:12px!important;min-height:54px!important;padding:9px 12px!important;border:1px solid #171f23!important;border-radius:12px!important;background:#0e1417!important}
+.sos-timing-list .sos-option.selected{border:2px solid #ed4545!important;padding:8px 11px!important;background:#171819!important}
+.sos-timing-list .sos-option:after{top:50%;transform:translateY(-50%)}
+.sos-timing-list .sos-option>span:last-child{display:flex;flex-direction:column;gap:3px}
+.sos-time-icon{font-size:27px!important;color:#d9a85b!important;min-width:28px;text-align:center}
+.sos-notes-label{display:block;font-size:11px!important;color:#c6ccce!important;margin:12px 0 7px!important}
+#sosNotes{width:100%!important;resize:vertical!important;padding:12px!important;border:1px solid #303a3f!important;border-radius:10px!important;background:#0a1013!important;color:#f6f7f7!important;font:12px/1.4 inherit!important}
+.sos-result-status{display:flex;align-items:center;gap:12px;padding:16px;border-radius:12px;background:linear-gradient(120deg,#16492c,#1b6635);color:#f6fff6;margin-bottom:12px}
+.sos-result-status>span{width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:50%;background:#d8f3dc;color:#23643a;font-size:23px}
+.sos-result-status b{font-size:16px;line-height:1.3}
+.sos-result{border:0!important;background:#101719!important;border-radius:12px!important;padding:14px!important;margin-bottom:10px!important}
+.sos-result .result-tag{display:inline-block;font-size:10px;font-weight:800;letter-spacing:.7px;color:#a7d8a9;margin-bottom:8px}
+.sos-result h3{font-size:17px!important}
+.sos-result h4{font-size:13px;margin:14px 0 7px}
+.sos-result p,.sos-result li{font-size:12px!important;line-height:1.5!important;color:#d9dede!important}
+.sos-result ul{padding-left:19px;margin:7px 0}
+.sos-result li{margin:6px 0}
+.sos-result-tip{padding:13px;border-radius:12px;background:linear-gradient(120deg,#282216,#1b1914);color:#ffdc9d;margin:10px 0 14px}
+.sos-result-tip b{font-size:13px}
+.sos-result-tip p{font-size:12px;line-height:1.45;margin:6px 0 0;color:#e8dfcb}
+.sos-stage.hidden{display:none!important}
+@media(max-width:370px){.sos-screen{padding-left:12px!important;padding-right:12px!important}.sos-cover{height:170px!important;min-height:170px!important}.sos-options{gap:5px!important}.sos-option b{font-size:9px!important}}
+@media(min-width:600px){.sos-screen{max-width:430px!important;border:1px solid #263136!important}.sos-cover{height:205px!important}}
+
 </style></head>
 <body>
 <div class="app">
@@ -269,7 +327,7 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 <div class="sos-overlay hidden" id="doughSosOverlay" role="dialog" aria-modal="true" aria-labelledby="doughSosTitle">
  <div class="sos-screen">
   <header class="sos-top"><button class="sos-back" id="sosBack" aria-label="Zurück">←</button><div class="sos-brand">PIZZA DAY / TEIG SOS</div><button class="sos-help" id="closeDoughSos" aria-label="Teig SOS schließen">×</button></header>
-  <div class="sos-cover"><div><p class="eyebrow">DEIN TEIG-CHECK</p><h2 id="doughSosTitle">Wie geht’s deinem Teig?</h2><p>Wähle pro Bereich das passende Bild. Danach bekommst du konkrete nächste Schritte.</p></div></div>
+  <div class="sos-cover"><div><h2 id="doughSosTitle">Teig SOS</h2><p>Schnelle Hilfe für deinen Teig.</p></div></div>
   <div class="sos-form">
    <div class="sos-progress" aria-label="Fortschritt"><div class="sos-progress-step active" data-sos-step-indicator="1"><b>✓</b><span>Merkmale</span></div><i></i><div class="sos-progress-step" data-sos-step-indicator="2"><b>2</b><span>Ziel</span></div><i></i><div class="sos-progress-step" data-sos-step-indicator="3"><b>3</b><span>Ergebnis</span></div></div>
    <section class="sos-stage" data-sos-stage="1"><h3>1. Volumen</h3><p class="sos-question">Wie stark ist dein Teig aufgegangen?</p><div class="sos-options">
