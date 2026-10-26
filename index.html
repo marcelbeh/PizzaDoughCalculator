@@ -655,7 +655,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
 </style></head>
 <body>
 <div class="app">
-<header class="top"><div class="brand"><div class="logo" aria-hidden="true"></div><div class="brand-lockup"><h1>Ciao!</h1><span class="brand-sub">PIZZA LAB · DAL 2026</span></div></div><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></header>
+<header class="top"><div class="brand"><div class="logo" aria-hidden="true"><svg viewBox="0 0 64 64" role="img"><path d="M8 49V30a24 24 0 0 1 48 0v19" fill="none" stroke="#4b3021" stroke-width="6" stroke-linecap="round"/><path d="M17 48V31a15 15 0 0 1 30 0v17" fill="#b43a22"/><path d="M32 20c2 7-5 9-2 15 1-2 3-3 3-6 6 5 8 10 4 15-3 4-10 3-12-2-3-5 0-10 4-14-1 5 0 7 2 8 3-5 0-10 1-16z" fill="#f7e9c9"/><path d="M5 51h54" stroke="#4b3021" stroke-width="5" stroke-linecap="round"/></svg></div><div class="brand-lockup"><h1>Ciao!</h1><span class="brand-sub">PIZZA LAB · DAL 2026</span></div></div><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></header>
 <section class="home-screen" id="homeScreen">
   <div class="home-hero"><div class="home-hero-copy"><div class="eyebrow">DEIN PIZZA-ASSISTENT</div><h2>Ciao Marcel!</h2><p>Dein Begleiter für perfekte Pizza.</p></div></div>
   <div class="home-actions">
@@ -846,3 +846,9 @@ $('sosRestart').onclick=()=>{resetSos()};
 sosOverlay.addEventListener('click',e=>{if(e.target===sosOverlay)closeSos()});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sosOverlay.classList.contains('hidden'))closeSos()});
 init();
 </script></body></html>
+<style>
+/* Pizzaofen-Logo: Entwurf 3 */
+.top .logo{display:grid!important;place-items:center!important;width:48px!important;height:48px!important;flex:0 0 48px!important;border-radius:15px!important;background:#f4e7cb!important;border:1.5px solid #d7b98c!important;box-shadow:none!important;filter:none!important;padding:4px!important}
+.top .logo svg{display:block!important;width:40px!important;height:40px!important}
+.top .brand{gap:11px!important}
+</style>
