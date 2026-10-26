@@ -539,6 +539,65 @@ h2,h3,.cardhead h3,.home-tile strong{font-family:'Lora',Georgia,serif;color:var(
 .sos-overlay{background:#57321fb0;backdrop-filter:blur(8px)}.sos-panel{background:#fff4e1;border:1px solid #d9b990;box-shadow:0 18px 55px #44201040}.checkitem{background:#fff8eb!important;border-color:#e0c49f!important;color:var(--text)!important}.checkitem:has(input:checked){border-color:#a92f16!important;background:#f5dfc2!important}.checkitem input{accent-color:var(--red)}.toast{background:var(--green);color:#fff7e8}.home-hero .eyebrow{color:#f8d4a2}
 @media(min-width:700px){.app{max-width:720px;padding-top:18px}.top{margin:-18px -18px 18px;padding:10px 58px}.card{padding:18px}}@media(max-width:560px){.app{padding:12px 10px 24px}.top{margin:-12px -10px 14px;padding:8px 54px}.brand h1{font-size:42px!important}.card{padding:13px}.step{font-size:10px}.pizza-grid{gap:9px}}
 
+
+/* RUSTICA FINAL CONSISTENCY PASS — one light palette across every screen */
+:root{color-scheme:light!important;--bg:#f6ead5;--panel:#fff5e4;--panel2:#f1dfc3;--line:#dfc6a3;--text:#43291f;--muted:#826b57;--red:#a92f16;--red2:#c54b2d;--green:#294f35;--gold:#c17b37}
+html,body{background:#f6ead5!important;color:#43291f!important}
+body{background-image:radial-gradient(ellipse at 15% 0%,#fff9e9 0,transparent 48%),linear-gradient(135deg,#f8eedc,#f1dfc3)!important;color:#43291f!important}
+.app{max-width:560px!important;padding:12px 12px 110px!important}
+.top{background:rgba(248,238,220,.96)!important;border-bottom:1px solid #e2c9a6!important;box-shadow:0 3px 12px #70401a0a}
+.brand h1{font-family:'Caveat','Brush Script MT',cursive!important;font-size:43px!important;color:#a92f16!important;text-transform:none!important;letter-spacing:-1.8px!important;font-style:normal!important}
+.brand-sub{display:none!important}
+h2,h3,.cardhead h3,.home-tile strong{font-family:'Lora',Georgia,serif!important;color:#a92f16}
+.eyebrow{color:#c54b2d!important}
+.intro,.muted{color:#826b57!important}
+.card,.bake-timeline-card,.sos-panel{background:#fff5e4!important;color:#43291f!important;border:1px solid #e3cba9!important;border-radius:17px!important;box-shadow:0 4px 14px #73441a0d!important}
+.cardhead h3,.bake-timeline-card h3{color:#a92f16!important}
+.bake-hero{height:clamp(280px,72vw,390px)!important;margin:0 0 14px!important;border-radius:20px!important;overflow:hidden;background:linear-gradient(180deg,rgba(49,24,14,.08),rgba(49,24,14,.12) 40%,rgba(49,24,14,.82)),url('https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1400&q=90') center 54%/cover!important;border:1px solid #d6b58c!important;display:flex;align-items:flex-end;padding:20px!important}
+.bake-hero h2{color:#fff4df!important;font-family:'Lora',Georgia,serif!important;font-size:clamp(29px,7vw,38px)!important;margin:0 0 6px!important}
+.bake-hero p{color:#fff7e9!important;font-size:15px!important;margin:0!important}
+.bake-timeline-card{padding:14px!important;margin-bottom:12px!important}
+.bake-timeline-card>h3{margin:0 0 12px!important}
+.bake-timeline-item{display:grid!important;grid-template-columns:38px 84px minmax(0,1fr)!important;gap:12px!important;align-items:center!important;position:relative;padding:10px 0!important;border-bottom:1px solid #e5d0b2!important;min-height:104px!important;background:transparent!important}
+.bake-timeline-item:last-child{border-bottom:0!important}
+.bake-timeline-item:before{background:#d8c0a0!important}
+.bake-number{width:34px!important;height:34px!important;border-radius:50%!important;display:grid!important;place-items:center!important;background:#f1d0aa!important;color:#43291f!important;font-size:15px!important;font-weight:850!important;z-index:1!important;border:1px solid #dfbd8d!important}
+.bake-timeline-item img{width:84px!important;height:84px!important;min-height:84px!important;object-fit:cover!important;border-radius:13px!important;border:1px solid #e3cba9!important;background:#f1dfc3!important}
+.bake-item-copy{min-width:0!important}
+.bake-item-copy strong{display:block!important;color:#43291f!important;font-family:'Lora',Georgia,serif!important;font-size:15px!important;line-height:1.3!important}
+.bake-item-copy p{font-size:12px!important;line-height:1.45!important;color:#715a48!important;margin:5px 0!important}
+.bake-item-copy small{display:block!important;color:#a45b30!important;font-size:11px!important;margin-top:7px!important}
+.bake-note{font-size:11px!important;color:#826b57!important;padding:12px 0 2px!important;border-top:1px solid #e5d0b2!important;margin:8px 0 0!important}
+.page .card,.pizza,.dough-style-card,.home-tile,.stat,.note,.checkitem{background:#fff5e4!important;color:#43291f!important;border-color:#e3cba9!important;box-shadow:0 3px 12px #70401a0a!important}
+.field input:not([type=range]),.field select,.field textarea,.choice select,.qty{background:#fffaf0!important;color:#43291f!important;border:1px solid #dfc6a3!important}
+.field label,.choice small,.item small,.pizzahead span,.timeline p{color:#826b57!important}
+.btn{background:#a92f16!important;color:#fff7e9!important;border:1px solid #a92f16!important;box-shadow:none!important;border-radius:13px!important}
+.btn.secondary{background:#fff3df!important;color:#7e351f!important;border:1px solid #c89e72!important}
+.qty-step{background:#f0dfc5!important;border:1px solid #d7b88e!important;color:#a92f16!important;border-radius:50%!important;box-shadow:none!important}
+.qty-step:active{background:#a92f16!important;color:#fff!important}
+.home-hero{border:1px solid #d6b58c!important;background:linear-gradient(0deg,rgba(62,29,17,.82),transparent 76%),url('https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=1400&q=90') center/cover!important}
+.home-hero h2,.hero h2{color:#fff4df!important}
+.home-tile{background:#fff4e1!important;border-color:#e1c7a3!important;color:#43291f!important}
+.tile-icon{background:#efdfc5!important;color:#a92f16!important;border:1px solid #dfc6a3!important}
+.home-tile small{color:#826b57!important}
+.nav{background:rgba(248,238,220,.98)!important;border-top:1px solid #dfc6a3!important;box-shadow:0 -5px 20px #70401a0b!important;backdrop-filter:blur(18px)!important}
+.navinner{max-width:560px!important;display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;gap:4px!important}
+.tab{display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:4px!important;border:0!important;background:transparent!important;color:#8b7763!important;border-radius:12px!important;font:500 11px/1.2 'DM Sans',sans-serif!important;padding:7px 2px!important}
+.tab span{display:grid!important;place-items:center!important;font-size:0!important;line-height:1!important}
+.tab svg{width:23px!important;height:23px!important;fill:none!important;stroke:currentColor!important;stroke-width:1.65!important;stroke-linecap:round!important;stroke-linejoin:round!important}
+.tab.active{background:#294f35!important;color:#fff4df!important;font-weight:750!important}
+.tab.active svg{color:#f1d0aa!important}
+.tab.active:last-child{background:#294f35!important;color:#fff4df!important}
+.iconbtn{background:#fff3df!important;border:1px solid #d9bd98!important;color:#a92f16!important}
+.tag{background:#f0d8b4!important;color:#8e2b16!important;border:1px solid #dfbd8d!important}
+.pill{background:#f0dfc4!important;color:#765840!important;border:1px solid #e3c9a4!important}
+.toast{background:#294f35!important;color:#fff7e8!important}
+.sos-overlay{background:#57321fb0!important;backdrop-filter:blur(8px)!important}
+.checkitem{background:#fff8eb!important;border-color:#e0c49f!important;color:#43291f!important}
+.checkitem:has(input:checked){border-color:#a92f16!important;background:#f5dfc2!important}
+@media(max-width:480px){.app{padding:8px 10px 110px!important}.top{margin:-8px -10px 12px!important;padding:9px 54px!important}.bake-hero{height:clamp(270px,76vw,340px)!important;margin:0 -10px 12px!important;border-radius:0 0 18px 18px!important;padding:18px 16px!important}.bake-timeline-card{padding:11px!important}.bake-timeline-item{grid-template-columns:34px 76px minmax(0,1fr)!important;gap:10px!important;min-height:90px!important}.bake-timeline-item img{width:76px!important;height:76px!important;min-height:76px!important}.bake-item-copy strong{font-size:13px!important}.bake-item-copy p{font-size:11px!important}.bake-item-copy small{font-size:10px!important}.tab{font-size:10px!important}.tab svg{width:22px!important;height:22px!important}.brand h1{font-size:43px!important}}
+@media(min-width:620px){.app{max-width:720px!important}.bake-timeline-card{padding:18px!important}.bake-timeline-item{grid-template-columns:40px 88px minmax(0,1fr)!important}.bake-timeline-item img{width:88px!important;height:88px!important}}
+
 </style></head>
 <body>
 <div class="app">
@@ -608,11 +667,11 @@ h2,h3,.cardhead h3,.home-tile strong{font-family:'Lora',Georgia,serif;color:var(
 </div>
 <nav class="nav" aria-label="Hauptnavigation">
   <div class="navinner">
-    <button class="tab active" data-tab="home"><span>⌂</span>Home</button>
-    <button class="tab" data-tab="plan"><span>▦</span>Plan</button>
-    <button class="tab" data-tab="recipes"><span>▤</span>Rezepte</button>
-    <button class="tab" data-tab="shop"><span>☷</span>Einkauf</button>
-    <button class="tab" data-tab="bake"><span>♨</span>Backtag</button>
+    <button class="tab active" data-tab="home"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
+    <button class="tab" data-tab="plan"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 9h16M8 13h2M14 13h2M8 17h2M14 17h2"/></svg></span>Plan</button>
+    <button class="tab" data-tab="recipes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h6"/></svg></span>Rezepte</button>
+    <button class="tab" data-tab="shop"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></span>Einkauf</button>
+    <button class="tab" data-tab="bake"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-2-1-3-2-4 0 3-2 3-2 5"/><path d="M5 16a8 8 0 1 0 14 0"/></svg></span>Backtag</button>
   </div>
   <div class="legacy-nav" aria-hidden="true"><span id="navStatus">Schritt 1 von 5 · Plan</span><button id="navBack">Zurück</button><button id="navNext">Weiter →</button></div>
 </nav><div class="toast" id="toast"></div>
