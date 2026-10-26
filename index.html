@@ -658,19 +658,21 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
 <header class="top"><div class="brand"><div class="logo" aria-hidden="true"><svg viewBox="0 0 64 64" role="img"><path d="M8 49V30a24 24 0 0 1 48 0v19" fill="none" stroke="#4b3021" stroke-width="6" stroke-linecap="round"/><path d="M17 48V31a15 15 0 0 1 30 0v17" fill="#b43a22"/><path d="M32 20c2 7-5 9-2 15 1-2 3-3 3-6 6 5 8 10 4 15-3 4-10 3-12-2-3-5 0-10 4-14-1 5 0 7 2 8 3-5 0-10 1-16z" fill="#f7e9c9"/><path d="M5 51h54" stroke="#4b3021" stroke-width="5" stroke-linecap="round"/></svg></div><div class="brand-lockup"><h1>Ciao!</h1><span class="brand-sub">PIZZA LAB · DAL 2026</span></div></div><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></header>
 <section class="home-screen" id="homeScreen">
   <section class="home-dashboard" aria-label="Dein Pizzatag">
-  <div class="dashboard-heading"><div class="eyebrow">CIAO, MARCEL</div><h2>Dein Pizzatag</h2><p>Alles im Blick für richtig gute Pizza.</p></div>
-  <div class="dashboard-plan">
-    <div class="dashboard-plan-head"><span class="dashboard-icon" aria-hidden="true">✦</span><div><strong id="homePlanTitle">Dein nächster Pizzaabend</strong><small id="homePlanSubtitle">Dein Plan auf einen Blick</small></div></div>
-    <div class="dashboard-stats">
-      <div class="dashboard-stat"><span>BACKTAG</span><strong id="homeBakeDate">Noch offen</strong></div>
-      <div class="dashboard-stat"><span>ERSTE PIZZA</span><strong id="homeBakeTime">18:30 Uhr</strong></div>
-      <div class="dashboard-stat"><span>GÄSTE</span><strong id="homeGuests">8 Personen</strong></div>
-      <div class="dashboard-stat"><span>PIZZEN</span><strong id="homePizzas">9 geplant</strong></div>
+    <div class="dashboard-heading"><h2>Dein Pizzatag</h2><p>Alles bereit für großartige Pizza.</p><span class="dashboard-leaf" aria-hidden="true">✦</span></div>
+    <div class="dashboard-meta">
+      <div><span class="meta-icon" aria-hidden="true">▦</span><strong id="homeBakeDate">Noch offen</strong></div>
+      <i></i>
+      <div><span class="meta-icon" aria-hidden="true">♟</span><strong id="homeGuests">8 Personen</strong></div>
     </div>
-    <div class="dashboard-dough"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dashboard-dough-copy"><strong id="homeDoughTitle">Dein Teigplan</strong><span id="homeDoughDetail">Reifezeit und Menge passend planen.</span></div><span class="dashboard-chevron" aria-hidden="true">›</span></div>
-    <button class="dashboard-primary" id="homePlanButton">Pizzatag planen <span aria-hidden="true">→</span></button>
-  </div>
-  <div class="dashboard-tip"><span class="tip-mark" aria-hidden="true">i</span><div><strong>Kleiner Tipp, großer Unterschied</strong><p>Gib deinem Teig Zeit. Eine lange, gut geplante Reife bringt mehr Aroma und eine bessere Struktur.</p></div></div>
+    <div class="dashboard-card dough-status">
+      <h3>Teigstatus</h3>
+      <div class="dough-status-main"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dough-status-copy"><strong id="homeDoughTitle">Teigreife geplant</strong><b id="homeDoughDetail">48 Stunden</b></div></div>
+      <div class="dough-progress"><span id="homeDoughProgress"></span></div>
+      <div class="dough-stages"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
+      <button class="dashboard-primary" id="homePlanButton">Zeitplan ansehen <span aria-hidden="true">→</span></button>
+    </div>
+    <div class="dashboard-card planned-pizzas"><h3>Geplante Pizzen</h3><div id="homePizzaList" class="home-pizza-list"></div><button class="dashboard-link" id="homePizzaButton">Pizzakarte bearbeiten <span aria-hidden="true">→</span></button></div>
+  </section>
 </section>
   <div class="home-actions">
     <button class="home-tile" data-goto="0"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="10" width="34" height="31" rx="3"/><path d="M15 6v9M33 6v9M7 19h34"/><path d="M24 24v11M18.5 29.5h11"/></svg></span><span><strong>Pizzatag planen</strong><small>Teig, Zeitplan und Mengen</small></span><b>›</b></button>
@@ -803,25 +805,39 @@ function bindChecks(){document.querySelectorAll('[data-check]').forEach(c=>{c.on
 function progressChecks(){const all=[...document.querySelectorAll('[data-check]')];const done=all.filter(c=>c.checked).length;$('prepProgress').textContent=done+' / '+all.length+' erledigt'}
 
 function renderHomeDashboard(){
- const date=state.bakeDate;
- $('homePlanTitle').textContent=state.planName||'Dein nächster Pizzaabend';
- $('homePlanSubtitle').textContent=date?'Dein Pizzatag ist vorbereitet':'Plane deinen nächsten Pizzaabend';
- $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Noch offen';
- $('homeBakeTime').textContent=(state.bakeTime||'18:30')+' Uhr';
- $('homeGuests').textContent=(+state.guests||1)+' '+((+state.guests||1)===1?'Person':'Personen');
- $('homePizzas').textContent=(countsTotal()||recommended())+' geplant';
- $('homeDoughTitle').textContent=(+state.hours||48)+' Stunden Teigreife';
- $('homeDoughDetail').textContent='Rezept und Teigmenge für '+(countsTotal()||recommended())+' Pizzen abgestimmt.';
- $('homePlanButton').textContent=date?'Zeitplan ansehen →':'Pizzatag planen →';
+ const date=state.bakeDate, now=new Date(), plannedDate=date?new Date(date+'T'+(state.bakeTime||'18:30')+':00'):null;
+ const doughHours=Math.max(1,+state.hours||48), guests=Math.max(1,+state.guests||1), pizzaCount=countsTotal()||recommended();
+ $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
+ $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
+ $('homeDoughTitle').textContent=date?'Teigplan bis zum Backtag':'Teigreife geplant';
+ $('homeDoughDetail').textContent=doughHours+' Std.';
+ let progress=0,stage=0,mixLabel='Zeitplan folgt',proofLabel='geplant',bakeLabel=date?(state.bakeTime||'18:30'):'Backzeit';
+ if(plannedDate){
+   const bakeMs=plannedDate.getTime(),mixMs=bakeMs-doughHours*3600000,ballMs=bakeMs-Math.max(1,+state.proof||4)*3600000;
+   const span=Math.max(1,bakeMs-mixMs);progress=Math.max(0,Math.min(1,(now.getTime()-mixMs)/span));
+   stage=now.getTime()<mixMs?0:now.getTime()<ballMs?1:now.getTime()<bakeMs?2:3;
+   const fmt=d=>d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+   mixLabel=dateFmt(new Date(mixMs))+' · '+fmt(new Date(mixMs));
+   proofLabel=dateFmt(new Date(ballMs))+' · '+fmt(new Date(ballMs));
+   bakeLabel=fmt(plannedDate);
+ }else{
+   progress=0;mixLabel='noch offen';proofLabel=doughHours+' Std. Reife';
+ }
+ $('homeDoughProgress').style.width=Math.round(progress*100)+'%';
+ $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
+ [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
+ const sorted=pizzas.filter(p=>(+state.counts[p.id]||0)>0).sort((a,b)=>(+state.counts[b.id]||0)-(+state.counts[a.id]||0)).slice(0,3);
+ $('homePizzaList').innerHTML=sorted.length?sorted.map(p=>'<div class="home-pizza-item"><img src="'+(pizzaImages[p.id]||pizzaImages.margherita)+'" alt=""><strong>'+p.name.replace(/&/g,'&amp;').replace(/</g,'&lt;')+'</strong><small>'+(+state.counts[p.id]||0)+' ×</small></div>').join(''):'<div class="home-pizza-empty">Wähle deine Sorten in der Pizzakarte.</div>';
+ $('homePizzaButton').style.display='block';
+ $('homePlanButton').innerHTML=(date?'Zeitplan ansehen':'Pizzatag planen')+' <span aria-hidden="true">→</span>';
 }
-
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
 function copy(text,msg){if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(()=>toast(msg)).catch(()=>window.prompt('Text kopieren:',text));else window.prompt('Text kopieren:',text)}
 function planText(){const r=dough(),items=aggregate();return (state.planName||'Pizzatag')+'\nGäste: '+state.guests+' · Pizzen: '+countsTotal()+' · Backstart: '+state.bakeDate+' '+state.bakeTime+'\n\nTEIG\n'+r.profile.name+' · '+state.hours+' h · '+state.hydration+' % Hydration\nMehl '+grams(r.flour)+'\nWasser '+grams(r.water)+'\nSalz '+grams(r.salt)+'\n'+(state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' '+grams(r.yeast)+' (Näherungswert)\n\nPIZZAKARTE\n'+pizzas.filter(p=>+state.counts[p.id]>0).map(p=>state.counts[p.id]+' × '+p.name).join('\n')+'\n\nEINKAUF\n'+items.map(x=>x.name+': '+(x.unit==='g'?grams(x.amount):fmt(x.amount)+' '+x.unit)).join('\n')+'\n\nABLAUF\n'+[...document.querySelectorAll('#timeline .timeline')].map(x=>x.innerText.replace('\n',' ')).join('\n')}
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
-$('homePlanButton').addEventListener('click',()=>go(0));
+$('homePlanButton').addEventListener('click',()=>go(0));$('homePizzaButton').addEventListener('click',()=>go(2));
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({plan:0,recipes:2,shop:3,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
@@ -915,4 +931,47 @@ init();
 .dashboard-tip strong{display:block;color:#4b3021;font-family:Lora,Georgia,serif;font-size:14px}
 .dashboard-tip p{margin:4px 0 0;color:#80664f;font-size:12px;line-height:1.45}
 @media(max-width:380px){.dashboard-heading h2{font-size:27px}.dashboard-plan{padding:13px}.dashboard-stat strong{font-size:14px}}
+</style>
+
+<style>
+/* Home screen inspired by the approved Pizza Day concept */
+.home-hero{display:none!important}
+.home-dashboard{margin:0 0 14px;color:#493021}
+.dashboard-heading{position:relative;padding:5px 20px 18px 5px}
+.dashboard-heading h2{font-family:Lora,Georgia,serif;font-size:29px;line-height:1.1;margin:0 0 5px;color:#4b3021}
+.dashboard-heading p{margin:0;color:#80664f;font-size:14px}
+.dashboard-leaf{position:absolute;right:6px;top:10px;color:#71834a;font-size:30px;transform:rotate(-18deg)}
+.dashboard-meta{display:flex;align-items:center;justify-content:space-around;gap:8px;margin:0 0 12px;padding:13px 10px;border:1px solid #ead7b8;border-radius:17px;background:#fff8e9;box-shadow:0 4px 12px #74451a0b}
+.dashboard-meta>div{display:flex;align-items:center;justify-content:center;gap:8px;min-width:0}
+.dashboard-meta strong{font-size:12px;color:#493021;font-weight:700}
+.dashboard-meta i{height:24px;width:1px;background:#e5cfad;flex:0 0 1px}
+.meta-icon{font-size:20px;color:#b43a22;font-weight:800}
+.dashboard-card{margin:0 0 12px;padding:14px 13px;border:1px solid #ead7b8;border-radius:19px;background:linear-gradient(145deg,#fff9ed,#fbefd9);box-shadow:0 5px 14px #74451a0b}
+.dashboard-card h3{font-family:Lora,Georgia,serif;font-size:17px;color:#4b3021;margin:0 0 12px}
+.dough-status-main{display:flex;align-items:center;gap:12px;margin-bottom:13px}
+.dough-ball-icon{width:91px;height:68px;flex:0 0 91px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(ellipse,#f7e6ca,#fff8eb 68%,transparent 70%)}
+.dough-ball-icon svg{width:78px;height:68px}
+.dough-status-copy{min-width:0;display:flex;flex-direction:column;gap:3px}
+.dough-status-copy strong{font-family:Lora,Georgia,serif;font-size:14px;color:#493021}
+.dough-status-copy b{font-family:Lora,Georgia,serif;font-size:25px;line-height:1.1;color:#251c16}
+.dough-progress{height:13px;border-radius:99px;background:#efd9b6;overflow:hidden;margin:0 1px 14px}
+.dough-progress span{display:block;width:0;height:100%;border-radius:99px;background:#586d3b;transition:width .3s ease}
+.dough-stages{display:grid;grid-template-columns:1fr 14px 1fr 14px 1fr;align-items:start;text-align:center;margin:0 0 15px}
+.dough-stages>div{display:flex;align-items:center;flex-direction:column;min-width:0}
+.dough-stages>div>span{display:grid;place-items:center;width:27px;height:27px;border:2px solid #bc8d61;border-radius:50%;color:#bc8d61;background:#fff7e8;font-size:15px;font-weight:800;margin-bottom:6px}
+.dough-stages>div.done>span{background:#50643a;border-color:#50643a;color:white}
+.dough-stages>div.current>span{border:2px solid #b43a22;outline:2px solid #e4b49c;outline-offset:2px;color:#b43a22}
+.dough-stages>i{height:2px;background:#c5a27b;margin-top:13px}
+.dough-stages>div strong{font-family:Lora,Georgia,serif;font-size:11px;line-height:1.2;color:#493021}
+.dough-stages>div small{font-size:10px;color:#80664f;line-height:1.25;margin-top:4px}
+.dashboard-primary{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:0;border-radius:14px;background:#b43a22;color:#fff8e9;font-family:Lora,Georgia,serif;font-weight:700;font-size:14px}
+.dashboard-primary span,.dashboard-link span{font-size:19px}
+.home-pizza-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+.home-pizza-item{min-width:0;text-align:center}
+.home-pizza-item img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:13px;border:1px solid #ead7b8;margin-bottom:6px}
+.home-pizza-item strong{display:block;font-family:Lora,Georgia,serif;font-size:11px;line-height:1.25;color:#493021;overflow-wrap:anywhere}
+.home-pizza-item small{display:block;font-size:11px;font-weight:800;color:#b43a22;margin-top:4px}
+.home-pizza-empty{font-size:12px;color:#80664f;padding:4px 0 10px}
+.dashboard-link{display:none;width:100%;margin-top:12px;padding:10px;border:1px solid #d9bd93;border-radius:12px;background:transparent;color:#795139;font-size:12px;font-weight:700}
+@media(max-width:380px){.dashboard-heading h2{font-size:27px}.dashboard-card{padding:12px 10px}.dough-status-copy b{font-size:22px}.home-pizza-list{gap:6px}}
 </style>
