@@ -200,6 +200,19 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
  .pizza-content{padding:9px}
 }
 
+
+/* Startseiten-Icons nach dem freigegebenen Referenzbild */
+.home-tile{gap:13px;padding:10px 13px;min-height:68px;background:linear-gradient(110deg,#111719,#090d0f);border:1px solid #263034;border-radius:14px;box-shadow:inset 0 1px 0 #ffffff05,0 4px 12px #0004}
+.home-tile .tile-icon{width:42px;height:42px;flex:0 0 42px;display:grid;place-items:center;border:0;border-radius:9px;background:transparent;color:#ffc16a;font-size:0}
+.home-tile .tile-icon svg{display:block;width:34px;height:34px;fill:none;stroke:currentColor;stroke-width:2.8;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 3px #ffb74d22)}
+.home-tile .tile-icon.fire{color:#ff7543}
+.home-tile .tile-icon.fire svg{width:37px;height:37px}
+.home-tile .tile-icon.dough{border-radius:50%;overflow:hidden}
+.home-tile .tile-icon.dough img{display:block;width:42px;height:42px;object-fit:cover;border-radius:50%;border:0}
+.home-tile strong{font-size:13px;font-weight:750;color:#f5f5f2}
+.home-tile small{font-size:11px;color:#b5b9b9}
+.home-tile>b{margin-left:auto;color:#c6c9c9;font-size:26px;font-weight:300;line-height:1}
+
 </style></head>
 <body>
 <div class="app">
@@ -208,11 +221,11 @@ button:focus-visible{outline:2px solid #ffbd68;outline-offset:2px}
 <section class="home-screen" id="homeScreen">
   <div class="home-hero"><div class="home-hero-copy"><div class="eyebrow">DEIN PIZZA-ASSISTENT</div><h2>Ciao!</h2><p>Dein Begleiter für perfekte Pizza.</p></div></div>
   <div class="home-actions">
-    <button class="home-tile" data-goto="0"><span class="tile-icon">▦</span><span><strong>Pizzatag planen</strong><small>Teig, Zeitplan und Mengen</small></span><b>›</b></button>
-    <button class="home-tile" data-goto="2"><span class="tile-icon">▤</span><span><strong>Rezepte</strong><small>Bewährte Pizza-Kombinationen</small></span><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=240&q=80" alt=""></button>
-    <button class="home-tile" data-goto="3"><span class="tile-icon">🛒</span><span><strong>Einkaufsliste</strong><small>Zutaten automatisch berechnet</small></span><b>›</b></button>
-    <button class="home-tile" data-goto="4"><span class="tile-icon">♨</span><span><strong>Backtag</strong><small>Schritt für Schritt</small></span><img src="https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=240&q=80" alt=""></button>
-    <button class="home-tile" id="homeSos"><span class="tile-icon">◉</span><span><strong>Teig SOS</strong><small>Schnelle Hilfe & Analyse</small></span><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=240&q=80" alt=""></button>
+    <button class="home-tile" data-goto="0"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="8" y="11" width="32" height="29" rx="3"/><path d="M16 7v8M32 7v8M8 19h32M24 24v10M19 29h10"/></svg></span><span><strong>Pizzatag planen</strong><small>Teig, Zeitplan und Mengen</small></span><b>›</b></button>
+    <button class="home-tile" data-goto="2"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 10c7-3 13-1 17 4v27c-4-5-10-7-17-4zM41 10c-7-3-13-1-17 4v27c4-5 10-7 17-4z"/><path d="M13 17c3 0 5 1 7 3M35 17c-3 0-5 1-7 3"/></svg></span><span><strong>Rezepte</strong><small>Bewährte Rezepte</small></span><b>›</b></button>
+    <button class="home-tile" data-goto="3"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 7h6l5 25h23l5-18H12"/><path d="M17 20h22M20 26h17"/><circle cx="19" cy="39" r="2.5"/><circle cx="36" cy="39" r="2.5"/></svg></span><span><strong>Einkaufsliste</strong><small>Zutaten automatisch</small></span><b>›</b></button>
+    <button class="home-tile" data-goto="4"><span class="tile-icon fire"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M26 3c2 10-8 12-5 21 2-2 5-5 5-9 9 7 14 14 10 23-3 7-9 9-14 7C9 42 8 31 14 22c2-3 4-5 7-8-1 8 0 11 2 13C28 20 24 12 26 3z" fill="currentColor" stroke="none"/></svg></span><span><strong>Backtag</strong><small>Schritt für Schritt</small></span><b>›</b></button>
+    <button class="home-tile" id="homeSos"><span class="tile-icon dough"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=160&q=85" alt=""></span><span><strong>Teig SOS</strong><small>Schnelle Hilfe & Analyse</small></span><b>›</b></button>
   </div>
 </section>
 <div class="stepper" id="stepper"><button class="step active" data-step="0"><b>1</b>Plan</button><button class="step" data-step="1"><b>2</b>Teigstudio</button><button class="step" data-step="2"><b>3</b>Pizzakarte</button><button class="step" data-step="3"><b>4</b>Einkauf</button><button class="step" data-step="4"><b>5</b>Backtag</button></div>
