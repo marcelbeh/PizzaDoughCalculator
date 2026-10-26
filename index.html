@@ -36,6 +36,21 @@
   <div id="coachResult" class="note">Wähle die Beobachtungen aus und tippe auf „Teig einschätzen“.</div>
   <p class="small muted">Hinweis: Der Coach bewertet deine Angaben regelbasiert und analysiert keine Fotos. Teigtemperatur, Rezept und tatsächliche Entwicklung können die Einschätzung verändern.</p>
 </div>
+  <div class="card" id="photoCoachCard">
+  <div class="cardhead"><h3>Fotoanalyse · Teig sichtbar beurteilen</h3><span class="tag">KI-Analyse</span></div>
+  <p class="muted small">Lade bis zu 3 Fotos desselben Teigs hoch – zum Beispiel direkt nach dem Formen und später. Die KI beurteilt sichtbare Volumenzunahme, Blasen, Oberfläche und mögliche Anzeichen von Unter- oder Übergare. Mehrere Zeitpunkte helfen beim Vergleich.</p>
+  <div class="field"><label>Teigfotos (max. 3)</label><input id="doughPhotos" type="file" accept="image/*" multiple></div>
+  <div id="photoPreview" class="small muted" style="margin-top:10px">Noch keine Fotos ausgewählt.</div>
+  <div class="grid2" style="margin-top:12px">
+    <div class="field"><label>Teigtemperatur (°C, falls bekannt)</label><input id="photoDoughTemp" type="number" min="0" max="45" placeholder="z. B. 22"></div>
+    <div class="field"><label>Seit Beginn der Gärung (Stunden)</label><input id="photoElapsed" type="number" min="0" max="120" placeholder="z. B. 18"></div>
+    <div class="field"><label>Kühlschranktemperatur (°C)</label><input id="photoFridgeTemp" type="number" min="-5" max="20" placeholder="z. B. 5"></div>
+    <div class="field"><label>Gärort aktuell</label><select id="photoLocation"><option value="Kühlschrank">Kühlschrank</option><option value="Raumtemperatur" selected>Raumtemperatur</option><option value="Kühlschrank und Raumtemperatur">Kombiniert</option></select></div>
+  </div>
+  <div class="actions"><button class="btn" id="analyzePhotos">Fotos analysieren</button></div>
+  <div id="photoAnalysisResult" class="note" aria-live="polite">Die Analyse benötigt einen unterstützten Server mit konfiguriertem KI-API-Schlüssel.</div>
+  <p class="small muted">Ein Foto misst weder Teigtemperatur noch Glutenstruktur oder Hefetätigkeit direkt. Die Bilder werden zur Analyse an den App-Server und den KI-Anbieter übertragen.</p>
+</div>
 <div class="card">
   <div class="cardhead"><h3>Pizza-Fingerprint · Lernsystem</h3><span class="pill">nur auf diesem Gerät</span></div>
   <p class="muted small">Speichere dein Ergebnis mit den wichtigsten Backparametern. Beim nächsten Mal kannst du gezielt eine Stellschraube verändern, statt alles gleichzeitig anzupassen.</p>
@@ -124,7 +139,39 @@ function planText(){const r=dough(),items=aggregate();return (state.planName||'P
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
-$('coachAssess').onclick=coachAssess;$('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');
+
+// Fotoanalyse: Bilder werden lokal verkleinert und erst nach Klick an /api/analyze-dough gesendet.
+let selectedDoughPhotos=[];
+$('doughPhotos').addEventListener('change',()=>{
+ selectedDoughPhotos=[...($('doughPhotos').files||[])].slice(0,3);
+ $('photoPreview').textContent=selectedDoughPhotos.length?selectedDoughPhotos.map((f,i)=>(i+1)+'. '+f.name+' ('+Math.max(1,Math.round(f.size/1024))+' KB)').join(' · '):'Noch keine Fotos ausgewählt.';
+ if(($('doughPhotos').files||[]).length>3)toast('Es werden höchstens 3 Fotos verwendet');
+});
+async function compressPhoto(file){
+ if(!file.type.startsWith('image/'))throw new Error('Bitte nur Bilddateien auswählen.');
+ const source=await new Promise((resolve,reject)=>{const reader=new FileReader();reader.onload=()=>resolve(reader.result);reader.onerror=()=>reject(new Error('Foto konnte nicht gelesen werden.'));reader.readAsDataURL(file)});
+ const img=await new Promise((resolve,reject)=>{const image=new Image();image.onload=()=>resolve(image);image.onerror=()=>reject(new Error('Bildformat wird nicht unterstützt.'));image.src=source});
+ const scale=Math.min(1,1280/Math.max(img.width,img.height));const canvas=document.createElement('canvas');canvas.width=Math.round(img.width*scale);canvas.height=Math.round(img.height*scale);
+ canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);
+ return canvas.toDataURL('image/jpeg',0.78);
+}
+$('analyzePhotos').onclick=async()=>{
+ const button=$('analyzePhotos'),result=$('photoAnalysisResult');
+ if(!selectedDoughPhotos.length){result.textContent='Bitte wähle zuerst mindestens ein Teigfoto aus.';return}
+ button.disabled=true;result.textContent='Fotos werden vorbereitet und analysiert …';
+ try{
+  const images=[];for(const file of selectedDoughPhotos.slice(0,3))images.push(await compressPhoto(file));
+  const payload={images,context:{flour:flourProfiles[state.flour]?.name||state.flour,fermentationHours:state.hours,hydration:state.hydration,method:state.method,roomTemperature:state.roomTemp,fridgeTemperature:$('photoFridgeTemp').value||state.fridgeTemp,doughTemperature:$('photoDoughTemp').value||null,elapsedHours:$('photoElapsed').value||null,location:$('photoLocation').value,when:$('coachWhen').value}};
+  const response=await fetch('/api/analyze-dough',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||('Analyse nicht verfügbar (HTTP '+response.status+').'));
+  if(!data.analysis)throw new Error('Der Server hat keine Analyse zurückgegeben.');
+  result.innerHTML='<strong>Fotoanalyse</strong><br>'+escapeHtml(data.analysis).replace(/\n/g,'<br>');
+ }catch(error){
+  result.textContent=error.message==='Failed to fetch'?'Der Fotoanalyse-Server ist nicht erreichbar. Die Funktion benötigt ein Deployment mit /api/analyze-dough und einen gesetzten OPENAI_API_KEY.':error.message;
+ }finally{button.disabled=false}
+};
+\n$('coachAssess').onclick=coachAssess;$('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{toast('Pizzatag-Plan abgeschlossen');copy(planText(),'Gesamtplan kopiert')};
 $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
 function init(){syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
