@@ -96,6 +96,12 @@ h2{font-size:24px;letter-spacing:-.4px}.intro{font-size:12px;margin-bottom:15px}
 @media(min-width:700px){.app{max-width:720px;padding-top:20px}.top{margin:-20px -20px 18px;padding:15px 20px}.home-hero{height:300px}.home-actions{grid-template-columns:1fr 1fr}.home-tile{min-height:78px}.pizza-grid{grid-template-columns:1fr 1fr}.pizza{display:flex;min-height:0}.pizza-photo{width:100%;height:auto;aspect-ratio:1.55/1;min-height:0;border-right:0;border-bottom:1px solid #263139}.pizza-content{padding:12px}}
 @media(max-width:380px){.app{padding-left:9px;padding-right:9px}.home-hero{height:230px}.step{min-width:51px;font-size:10px}.pizza{grid-template-columns:98px minmax(0,1fr)}.pizza-photo{width:98px;min-height:106px}.pizza-content{padding:8px}}
 
+
+/* Teig SOS dedicated three-step mobile flow */
+.sos-overlay{position:fixed;inset:0;z-index:1000;display:flex;align-items:stretch;justify-content:center;background:#030709;padding:0;overflow:auto}.sos-overlay.hidden{display:none}.sos-screen{width:100%;max-width:520px;min-height:100dvh;display:flex;flex-direction:column;background:#030709;color:#f8f9f9;padding:0 16px calc(14px + env(safe-area-inset-bottom));overflow:auto}.sos-top{height:64px;flex-shrink:0;display:grid;grid-template-columns:40px 1fr 40px;align-items:center;gap:8px}.sos-back,.sos-help{border:0;background:transparent;color:#f5f6f6;font-size:30px;line-height:1;padding:3px}.sos-help{font-size:26px}.sos-brand{text-align:center;font-size:14px;font-weight:850;letter-spacing:.7px}.sos-cover{height:190px;flex-shrink:0;display:flex;align-items:flex-start;padding:8px 4px 16px;background:linear-gradient(0deg,#030709 0%,rgba(3,7,9,.3) 45%,rgba(3,7,9,.5) 100%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1000&q=85') center 62%/cover;border-radius:8px;margin-bottom:8px}.sos-cover h2{font-size:30px;margin:0 0 3px;letter-spacing:-.5px}.sos-cover p{margin:0;font-size:14px;color:#e2e5e6}.sos-progress{display:grid;grid-template-columns:1fr 1fr 1fr;align-items:start;gap:0;margin:0 2px 22px}.sos-progress-step{display:flex;align-items:center;flex-direction:column;gap:6px;color:#aab2b7;font-size:11px;text-align:center}.sos-progress-step b{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:#20272c;color:#f6f7f7;font-size:15px;border:2px solid #263036}.sos-progress-step.active b{background:var(--red);border-color:var(--red);color:#fff}.sos-progress-step.done b{background:#61c66e;border-color:#61c66e;color:#071009}.sos-progress i{height:3px;background:linear-gradient(90deg,#ff343f,#333b40);margin:18px -17px 0;z-index:0}.sos-progress-step{position:relative;z-index:1}.sos-stage h3{font-size:22px;line-height:1.2;margin:0 0 5px}.sos-question{font-size:14px;color:#d6dcdf;margin:0 0 16px}.sos-options{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;margin-bottom:22px}.sos-option{min-width:0;border:2px solid transparent;border-radius:13px;padding:0 0 7px;background:#0e1519;color:#f5f6f6;overflow:visible;position:relative;font-size:11px;line-height:1.3;font-weight:600}.sos-option img{display:block;width:100%;aspect-ratio:1/1;object-fit:cover;border-radius:9px;border:1px solid #29353a;background:#11191d}.sos-option span{display:block;padding:7px 2px 0;min-height:32px}.sos-option.selected{border-color:var(--red);background:#17191a;box-shadow:0 0 0 1px rgba(255,52,63,.25)}.sos-option.selected:after{content:'✓';position:absolute;right:-4px;top:-7px;width:24px;height:24px;display:grid;place-items:center;border-radius:50%;background:var(--red);font-size:14px;font-weight:900;color:white}.sos-subheading{margin-top:8px!important}.sos-when{margin:4px 0 20px}.sos-when label{display:block;margin-bottom:7px}.sos-when select{width:100%;padding:12px;background:#11191e;color:white;border:1px solid #2b383e;border-radius:11px}.sos-footer{margin-top:auto;padding-top:12px}.sos-footer .btn{width:100%;min-height:54px;border-radius:30px;font-size:16px;box-shadow:0 4px 14px rgba(255,52,63,.18)}.sos-result{border:1px solid #27533b;background:linear-gradient(145deg,#0c2718,#10191a);border-radius:14px;padding:17px;margin-bottom:12px}.sos-result h3{font-size:18px}.sos-result p{font-size:13px;line-height:1.55;color:#e3e9e5}.sos-result .sos-tip{border-radius:10px;background:#241f16;padding:12px;margin-top:12px;color:#ffe1a8}.sos-outline{width:100%;border:1px solid #334148;background:#0c1418;color:#f2f5f6;padding:13px;border-radius:24px;margin:5px 0}.sos-stage.hidden{display:none}
+@media(max-height:760px){.sos-cover{height:140px}.sos-progress{margin-bottom:15px}.sos-stage h3{font-size:20px}.sos-options{gap:6px;margin-bottom:15px}.sos-option{font-size:10px}}
+@media(min-width:600px){.sos-screen{border-left:1px solid #253139;border-right:1px solid #253139}.sos-cover{height:220px}.sos-option img{aspect-ratio:1.05/1}}
+
 </style></head>
 <body><div class="app">
 <header class="top"><div class="brand"><div class="logo">🍕</div><div><div class="eyebrow">Dein persönlicher Pizza-Assistent</div><h1>Pizza Day</h1></div></div><div style="display:flex;gap:8px;align-items:center"><button class="btn secondary" id="openDoughSos">Teig SOS</button><button class="iconbtn" id="reset" title="Plan zurücksetzen" aria-label="Plan zurücksetzen">↻</button></div></header>
@@ -138,27 +144,44 @@ h2{font-size:24px;letter-spacing:-.4px}.intro{font-size:12px;margin-bottom:15px}
 </div>
 <div class="actions"><button class="btn secondary back">← Einkauf</button><button class="btn" id="finish">Plan abschließen</button></div></section>
 </div>
-<!-- Teig SOS ist ein eigenständiges Werkzeug und kein Schritt im Pizzatag-Workflow. -->
+<!-- Teig SOS: eigenständiger, dreistufiger Assistent im Stil des Referenzentwurfs -->
 <div class="sos-overlay hidden" id="doughSosOverlay" role="dialog" aria-modal="true" aria-labelledby="doughSosTitle">
-  <div class="sos-panel">
-    <div class="cardhead"><div><div class="eyebrow">Soforthilfe</div><h2 id="doughSosTitle">Teig SOS</h2></div><button class="iconbtn" id="closeDoughSos" aria-label="Teig SOS schließen">×</button></div>
-    <p class="muted small">Wähle alle Beobachtungen aus, die auf deinen Teig zutreffen. Du erhältst eine gemeinsame Einschätzung und konkrete nächste Schritte – ohne Fotoanalyse.</p>
-    <div class="field"><label>Volumen und Form</label><div class="checkgrid">
-      <label class="checkitem"><input type="checkbox" name="doughTrait" value="rise_little"> Kaum aufgegangen</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="rise_some"> Sichtbar gewachsen (ca. 30–70 %)</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="rise_double"> Ungefähr verdoppelt</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="collapse"> Fällt zusammen / sackt ab</label>
-    </div></div>
-    <div class="field"><label>Oberfläche und Blasen</label><div class="checkgrid">
-      <label class="checkitem"><input type="checkbox" name="doughTrait" value="few_bubbles"> Kaum sichtbare Blasen</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="some_bubbles"> Einige kleine Blasen</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="many_bubbles"> Viele Blasen</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="wrinkled"> Oberfläche faltig oder eingefallen</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="smooth"> Glatte, gespannte Oberfläche</label>
-    </div></div>
-    <div class="field"><label>Beim Anfassen</label><div class="checkgrid">
-      <label class="checkitem"><input type="checkbox" name="doughTrait" value="tight"> Straff, zieht sich zurück</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="elastic"> Elastisch und gut formbar</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="soft"> Weich, luftig und entspannt</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="sticky"> Sehr klebrig / schmiert</label><label class="checkitem"><input type="checkbox" name="doughTrait" value="fragile"> Sehr weich, reißt leicht</label>
-    </div></div>
-    <div class="grid2"><div class="field"><label>Wann willst du backen?</label><select id="sosWhen"><option value="soon">In den nächsten 1–2 Stunden</option><option value="later" selected>In 3–5 Stunden</option><option value="tomorrow">Erst morgen oder später</option></select></div><div class="field"><label>Zusätzliche Beobachtung (optional)</label><textarea id="doughTraitNote" rows="2" placeholder="z. B. Teigling läuft breit, Rand hält gut Gas ..."></textarea></div></div>
-    <div class="actions"><button class="btn" id="analyzeTraits">Teig einschätzen</button><button class="btn secondary" id="clearTraits">Zurücksetzen</button></div>
-    <div id="traitAnalysisResult" class="note" aria-live="polite">Wähle deine Beobachtungen aus und starte die Einschätzung.</div>
-    <p class="small muted">Die Einschätzung ist eine Orientierung, keine Messung. Temperatur, Mehl und Gärverlauf beeinflussen die Teigreife.</p>
+ <div class="sos-screen">
+  <header class="sos-top"><button class="sos-back" id="sosBack" aria-label="Zurück">←</button><div class="sos-brand">🍕 PIZZA APP</div><button class="sos-help" id="closeDoughSos" aria-label="Teig SOS schließen">×</button></header>
+  <div class="sos-cover"><div><h2 id="doughSosTitle">Teig SOS</h2><p>Schnelle Hilfe für deinen Teig.</p></div></div>
+  <div class="sos-progress" aria-label="Teig SOS Fortschritt">
+   <div class="sos-progress-step active" data-progress="1"><b>1</b><span>Merkmale</span></div><i></i><div class="sos-progress-step" data-progress="2"><b>2</b><span>Ziel</span></div><i></i><div class="sos-progress-step" data-progress="3"><b>3</b><span>Ergebnis</span></div>
   </div>
+  <div class="sos-stage" data-sos-stage="1">
+   <h3>1. Volumen</h3><p class="sos-question">Wie stark ist dein Teig aufgegangen?</p>
+   <div class="sos-options sos-volume">
+    <button class="sos-option" data-sos-group="volume" data-sos-value="little"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=360&q=85" alt="Pizzateig mit wenig Volumenzunahme"><span>Kaum</span></button>
+    <button class="sos-option" data-sos-group="volume" data-sos-value="some"><img src="https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=360&q=85" alt="Pizzateig etwas aufgegangen"><span>Etwas<br>(30–70 %)</span></button>
+    <button class="sos-option" data-sos-group="volume" data-sos-value="double"><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=360&q=85" alt="Gut aufgegangener Pizzateig"><span>Ungefähr<br>verdoppelt</span></button>
+    <button class="sos-option" data-sos-group="volume" data-sos-value="fallen"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=360&q=85" alt="Weicher Teigling"><span>Fällt<br>zusammen</span></button>
+   </div>
+  </div>
+  <div class="sos-stage hidden" data-sos-stage="2">
+   <h3>2. Oberfläche & Blasen</h3><p class="sos-question">Wie sieht die Oberfläche aus?</p>
+   <div class="sos-options">
+    <button class="sos-option" data-sos-group="surface" data-sos-value="smooth"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=360&q=85" alt="Glatte Teigoberfläche"><span>Glatt</span></button>
+    <button class="sos-option" data-sos-group="surface" data-sos-value="few"><img src="https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=360&q=85" alt="Wenige kleine Blasen"><span>Einige<br>kleine Blasen</span></button>
+    <button class="sos-option" data-sos-group="surface" data-sos-value="many"><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=360&q=85" alt="Teig mit sichtbaren Blasen"><span>Viele<br>Blasen</span></button>
+    <button class="sos-option" data-sos-group="surface" data-sos-value="collapsed"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=360&q=85" alt="Eingefallener Teig"><span>Faltig oder<br>eingefallen</span></button>
+   </div>
+   <h3 class="sos-subheading">3. Teiggefühl</h3><p class="sos-question">Wie fühlt sich der Teig an?</p>
+   <div class="sos-options">
+    <button class="sos-option" data-sos-group="feel" data-sos-value="tight"><img src="https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=360&q=85" alt="Straffer Teig"><span>Straff</span></button>
+    <button class="sos-option" data-sos-group="feel" data-sos-value="elastic"><img src="https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=360&q=85" alt="Elastischer Teig"><span>Elastisch</span></button>
+    <button class="sos-option" data-sos-group="feel" data-sos-value="soft"><img src="https://images.unsplash.com/photo-1579751626657-72bc17010498?auto=format&fit=crop&w=360&q=85" alt="Weicher luftiger Teig"><span>Weich und luftig</span></button>
+    <button class="sos-option" data-sos-group="feel" data-sos-value="sticky"><img src="https://images.unsplash.com/photo-1553909489-cd47e0ef937f?auto=format&fit=crop&w=360&q=85" alt="Klebriger Teig"><span>Sehr klebrig</span></button>
+   </div>
+   <div class="field sos-when"><label for="sosWhen">Wann willst du backen?</label><select id="sosWhen"><option value="soon">In den nächsten 1–2 Stunden</option><option value="later" selected>In 3–5 Stunden</option><option value="tomorrow">Erst morgen oder später</option></select></div>
+  </div>
+  <div class="sos-stage hidden" data-sos-stage="3"><div id="sosResultCard" class="sos-result"><h3>Deine Einschätzung</h3><p>Wähle deine Beobachtungen aus.</p></div><button class="sos-outline" id="sosRestart">Erneut analysieren</button><button class="sos-outline" id="sosOverview">Zur Übersicht</button></div>
+  <div class="sos-footer"><button class="btn" id="sosNext">Weiter →</button></div>
+ </div>
 </div>
-
 <nav class="nav" aria-label="Hauptnavigation">
   <div class="navinner">
     <button class="tab active" data-tab="home"><span>⌂</span>Home</button>
@@ -245,43 +268,26 @@ document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
 
-// Teig SOS kombiniert Teigmerkmale und Backzeitpunkt in einer einzigen Einschätzung.
-function analyzeDoughTraits(){
- const result=$('traitAnalysisResult');if(!result)return;
- const traits=[...document.querySelectorAll('input[name="doughTrait"]:checked')].map(el=>el.value);
- const note=$('doughTraitNote').value.trim(), when=$('sosWhen').value;
- if(!traits.length){$('traitAnalysisResult').textContent='Bitte wähle mindestens ein Merkmal aus.';return}
- const has=x=>traits.includes(x);
- let title='Noch nicht eindeutig – weiter beobachten.';
- let advice='Lass den Teig abgedeckt und prüfe Volumen, Blasen und Entspannung in 30–60 Minuten erneut.';
- let next='Danach erneut einschätzen, bevor du Mehl, Wasser oder Hefe veränderst.';
- if(has('collapse')||has('wrinkled')||(has('rise_double')&&has('fragile'))){
-  title='Möglicherweise überreif.';advice='Der Teig könnte bereits sehr weit gegärt sein. Behandle ihn schonend, vermeide starkes Entgasen und backe eher früher, wenn er deutlich zusammenfällt.';next='Für den nächsten Ansatz Gärzeit oder Hefemenge leicht reduzieren – nur eine Stellschraube auf einmal.';
- }else if(has('rise_little')&&(has('few_bubbles')||has('tight')||has('smooth'))){
-  title='Wahrscheinlich noch nicht ausreichend gereift.';advice='Die geringe Volumenzunahme zusammen mit wenigen Blasen oder straffem Teig spricht dafür, dass er noch Zeit braucht.';next='Abgedeckt bei moderater Temperatur weitergehen lassen und nach 30–60 Minuten erneut prüfen.';
- }else if((has('rise_some')||has('rise_double'))&&(has('some_bubbles')||has('many_bubbles'))&&(has('elastic')||has('soft'))&&!has('collapse')){
-  title='Gute Entwicklung – wahrscheinlich bereit zum Formen.';advice='Volumenzunahme, Blasen und ein entspannter Teig passen zu einer guten Gare. Öffne den Teigling behutsam.';next='Wenn er sich stark zurückzieht, gönne ihm weitere 15–20 Minuten Ruhe. Beim Formen das Gas im Rand erhalten.';
- }else if(has('tight')){
-  title='Der Teig wirkt noch zu straff.';advice='Lass ihn abgedeckt 15–30 Minuten entspannen und versuche es erneut. Nicht mit Kraft auseinanderziehen.';next='Bei weiterem Zurückziehen nochmals kurz ruhen lassen.';
- }else if(has('sticky')&&!has('collapse')){
-  title='Klebrigkeit allein erlaubt keine Reifeaussage.';advice='Prüfe zusätzlich Volumen, Blasen und ob der Teig noch Spannung hält. Arbeite mit leicht bemehlten Händen.';next='Ändere nicht vorschnell die Hydration; Klebrigkeit kann verschiedene Ursachen haben.';
- }else if(has('soft')||has('many_bubbles')){
-  title='Aktive Gare erkennbar – Reife noch gegenprüfen.';advice='Weichheit und viele Blasen zeigen Aktivität, beweisen allein aber keine optimale Reife.';next='Achte darauf, ob der Teig noch Spannung hält oder bereits breitläuft und zusammenfällt.';
- }
- if(has('rise_little')&&has('rise_double')){title='Angaben widersprechen sich';advice='„Kaum gewachsen“ und „verdoppelt“ passen nicht zusammen. Prüfe die Auswahl.';next='Korrigiere die Merkmale und starte die Einschätzung erneut.'}
- if(when==='tomorrow'&&!has('collapse')){advice+=' Da du erst später backen willst, stelle den Teig kühl, um die Gärung zu bremsen, und kontrolliere ihn regelmäßig.';next+=' Plane ausreichend Zeit zum Temperieren vor dem Formen ein.'}
- else if(when==='soon'&&(title.includes('nicht ausreichend')||title.includes('straff'))){next+=' Wenn du bald backen musst, gib ihm die verfügbare Ruhezeit; er lässt sich sonst eventuell schwerer öffnen.'}
- const parts=['<strong>'+escapeHtml(title)+'</strong><br>'+escapeHtml(advice),'<br><strong>Nächster Schritt:</strong> '+escapeHtml(next)];
- if(note)parts.push('<br><strong>Zusatznotiz:</strong> '+escapeHtml(note));
- parts.push('<br><small>Orientierung, keine sichere Messung der Teigreife. Temperatur, Mehl und Gärverlauf können die Einschätzung verändern.</small>');
- $('traitAnalysisResult').innerHTML=parts.join('');
-}
-$('analyzeTraits').addEventListener('click',analyzeDoughTraits);
-$('clearTraits').addEventListener('click',()=>{document.querySelectorAll('input[name="doughTrait"]').forEach(el=>el.checked=false);$('doughTraitNote').value='';$('sosWhen').value='later';$('traitAnalysisResult').textContent='Wähle deine Beobachtungen aus und starte die Einschätzung.'});
+// Teig SOS: drei Schritte, Bildauswahl und konkrete Einschätzung
+const sosState={volume:null,surface:null,feel:null,when:'later',step:1};
+function setSosStep(step){sosState.step=Math.max(1,Math.min(3,step));document.querySelectorAll('[data-sos-stage]').forEach(el=>el.classList.toggle('hidden',+el.dataset.sosStage!==sosState.step));document.querySelectorAll('[data-progress]').forEach(el=>{const n=+el.dataset.progress;el.classList.toggle('active',n===sosState.step);el.classList.toggle('done',n<sosState.step);el.querySelector('b').textContent=n<sosState.step?'✓':n});$('sosNext').textContent=sosState.step===3?'Zur Übersicht': 'Weiter →';$('sosNext').style.display=sosState.step===3?'none':'block';$('sosBack').style.visibility=sosState.step===1?'hidden':'visible';}
+document.querySelectorAll('[data-sos-group]').forEach(btn=>btn.addEventListener('click',()=>{const group=btn.dataset.sosGroup;sosState[group]=btn.dataset.sosValue;document.querySelectorAll('[data-sos-group="'+group+'"]').forEach(other=>other.classList.toggle('selected',other===btn));}));
+function renderSosResult(){const {volume,surface,feel,when}=sosState;let title='Dein Teig entwickelt sich – prüfe die Reife noch einmal.',body='Die Merkmale allein sind nicht eindeutig. Beobachte, ob der Teig noch Spannung hält und sichtbar Luft enthält.',tip='Lass ihn abgedeckt und prüfe in 30–60 Minuten erneut.';
+if(volume==='fallen'||surface==='collapsed'){title='Dein Teig könnte überreif sein.';body='Eine eingefallene Form oder faltige Oberfläche kann darauf hindeuten, dass der Teig seine Spannung verliert. Behandle ihn vorsichtig und vermeide starkes Entgasen.';tip='Wenn du bald backst, forme ihn schonend und backe eher früher. Für den nächsten Ansatz kannst du Gärzeit oder Hefemenge leicht reduzieren.'}
+else if(volume==='little'&&(surface==='smooth'||surface==='few'||feel==='tight')){title='Dein Teig braucht wahrscheinlich noch Zeit.';body='Wenig Volumenzunahme zusammen mit einer glatten Oberfläche oder straffem Teig spricht dafür, dass die Gare noch nicht weit genug ist.';tip='Lass den Teig abgedeckt bei moderater Raumtemperatur weitergehen und kontrolliere ihn nach 30–60 Minuten erneut.'}
+else if((volume==='some'||volume==='double')&&(surface==='many'||surface==='few')&&(feel==='elastic'||feel==='soft')){title='Dein Teig ist vermutlich optimal entwickelt.';body='Die Volumenzunahme, sichtbare Blasen und ein elastisches oder luftiges Teiggefühl passen zu einer guten Gare.';tip='Jetzt formen und dabei das Gas im Rand erhalten. Wenn der Teig sich stark zurückzieht, gönne ihm weitere 15–20 Minuten Ruhe.'}
+else if(feel==='tight'){title='Dein Teig ist noch zu straff.';body='Ein straffer Teig zieht sich beim Formen zurück und lässt sich nur schwer öffnen.';tip='Lass ihn abgedeckt 15–30 Minuten entspannen. Nicht mit Kraft auseinanderziehen.'}
+else if(feel==='sticky'){title='Klebrigkeit allein sagt wenig über die Reife aus.';body='Prüfe zusätzlich Volumenzunahme und Blasen. Ein reifer Teig kann weich sein, sollte aber nicht völlig seine Struktur verlieren.';tip='Arbeite mit leicht bemehlten Händen und gib nicht vorschnell zusätzliches Mehl in den Teig.'}
+if(when==='tomorrow'&&volume!=='fallen'&&surface!=='collapsed'){tip+=' Da du erst morgen backen willst, stelle den Teig kühl, um die Gärung zu bremsen. Kontrolliere ihn weiterhin.'}
+$('sosResultCard').innerHTML='<h3>'+title+'</h3><p>'+body+'</p><div class="sos-tip"><strong>Empfehlung</strong><br>'+tip+'</div><p><small>Orientierung statt Messung: Temperatur, Mehl und Gärverlauf beeinflussen die Teigreife.</small></p>';}
+$('sosNext').onclick=()=>{if(sosState.step===1){if(!sosState.volume){toast('Bitte wähle aus, wie stark der Teig aufgegangen ist.');return}setSosStep(2);return}if(sosState.step===2){if(!sosState.surface||!sosState.feel){toast('Bitte wähle Oberfläche und Teiggefühl aus.');return}sosState.when=$('sosWhen').value;renderSosResult();setSosStep(3)}};
+$('sosBack').onclick=()=>setSosStep(sosState.step-1);
+function resetSos(){sosState.volume=sosState.surface=sosState.feel=null;sosState.when='later';document.querySelectorAll('.sos-option').forEach(b=>b.classList.remove('selected'));$('sosWhen').value='later';setSosStep(1)}
+$('sosRestart').onclick=resetSos;$('sosOverview').onclick=()=>{$('closeDoughSos').click();resetSos()};
 $('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{toast('Pizzatag-Plan abgeschlossen');copy(planText(),'Gesamtplan kopiert')};
 $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
 function init(){view='home';syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
-const sosOverlay=$('doughSosOverlay');function openSos(){sosOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}$('openDoughSos').onclick=openSos;$('homeSos').onclick=openSos;$('closeDoughSos').onclick=()=>{sosOverlay.classList.add('hidden');document.body.style.overflow=''};sosOverlay.addEventListener('click',e=>{if(e.target===sosOverlay){sosOverlay.classList.add('hidden');document.body.style.overflow=''}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sosOverlay.classList.contains('hidden'))$('closeDoughSos').click()});
+const sosOverlay=$('doughSosOverlay');function openSos(){resetSos();sosOverlay.classList.remove('hidden');document.body.style.overflow='hidden'}$('openDoughSos').onclick=openSos;$('homeSos').onclick=openSos;$('closeDoughSos').onclick=()=>{sosOverlay.classList.add('hidden');document.body.style.overflow=''};sosOverlay.addEventListener('click',e=>{if(e.target===sosOverlay){sosOverlay.classList.add('hidden');document.body.style.overflow=''}});document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!sosOverlay.classList.contains('hidden'))$('closeDoughSos').click()});
 init();
 </script></body></html>
