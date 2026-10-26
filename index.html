@@ -386,7 +386,7 @@ const sosChoices={volume:'some',bubbles:null,feel:null,when:'later'};
 function resetSos(){Object.assign(sosChoices,{volume:'some',bubbles:null,feel:null,when:'later'});document.querySelectorAll('[data-sos-group]').forEach(b=>b.classList.toggle('selected',sosChoices[b.dataset.sosGroup]===b.dataset.sosValue));$('sosResultCard').classList.add('hidden');$('sosResultCard').innerHTML='';$('sosNext').textContent='Prüfen →';}
 function openSos(){resetSos();sosOverlay.classList.remove('hidden');document.body.style.overflow='hidden';}
 function closeSos(){sosOverlay.classList.add('hidden');document.body.style.overflow='';}
-$('openDoughSos').onclick=openSos;$('homeSos').onclick=openSos;$('closeDoughSos').onclick=closeSos;$('sosBack').onclick=closeSos;$('sosOverview').onclick=closeSos;
+if($('openDoughSos'))$('openDoughSos').onclick=openSos;$('homeSos').onclick=openSos;$('closeDoughSos').onclick=closeSos;$('sosBack').onclick=closeSos;$('sosOverview').onclick=closeSos;
 document.querySelectorAll('[data-sos-group]').forEach(b=>b.addEventListener('click',()=>{const g=b.dataset.sosGroup;sosChoices[g]=b.dataset.sosValue;document.querySelectorAll('[data-sos-group="'+g+'"]').forEach(x=>x.classList.toggle('selected',x===b));}));
 function assessDough(){
  const {volume,bubbles,feel,when}=sosChoices;
