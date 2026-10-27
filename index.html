@@ -663,8 +663,12 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
       <h3>Teigstatus</h3>
       <div class="dough-status-main"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dough-status-copy"><strong id="homeDoughTitle">Kein Teig geplant</strong><b id="homeDoughDetail">Plane einen Teig</b></div></div>
       <div id="homeDoughCountdown" class="dough-countdown" style="display:none" aria-live="polite"></div>
-      <div class="dough-progress" style="display:none"><span id="homeDoughProgress"></span></div>
-      <div class="dough-stages" style="display:none"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
+      <div class="dough-progress-wrap" id="doughProgressWrap" style="display:none">
+        <div class="dough-progress-meta"><strong id="homeProgressLabel">Teigplanung abgeschlossen</strong><span id="homeProgressPercent">0 %</span></div>
+        <div class="dough-progress"><span id="homeDoughProgress"></span></div>
+        <p class="dough-progress-note" id="homeProgressNote">Der Timer beginnt, sobald du die Stockgare bestätigst.</p>
+        <div class="dough-progress-times"><span><b>Teigstart</b><small id="homeMixTime">Zeitplan folgt</small></span><span><b>Stückgare</b><small id="homeProofTime">geplant</small></span><span><b>Backbereit</b><small id="homeBakeStageTime">Backzeit</small></span></div>
+      </div>
       <button class="dashboard-primary" id="homePlanButton">Plane einen Teig <span aria-hidden="true">→</span></button>
       <button type="button" class="dashboard-primary" id="transferDoughToMonitor" style="display:none;margin-top:8px" onclick="transferDoughToMonitor()">Geplanten Teig in den Reife-Monitor übernehmen <span aria-hidden="true">→</span></button>
       <button type="button" class="dashboard-primary" id="startDoughStatus" style="display:none;margin-top:8px">Teig ist jetzt in der Stockgare</button>
@@ -881,8 +885,7 @@ function renderHomeDashboard(){
    }
   }
  }
- $('homeDoughProgress').parentElement.style.display=enabled&&hasPlan?'':'none';
- document.querySelector('.dough-stages').style.display=enabled&&hasPlan?'':'none';
+ $('doughProgressWrap').style.display=enabled&&hasPlan?'':'none';
  $('transferDoughToMonitor').style.display='none';
  $('startDoughStatus').style.display=enabled&&hasPlan&&transferred&&!doughStarted?'':'none';
  $('toggleDoughStatus').style.display=enabled&&hasPlan&&doughStarted?'':'none';
@@ -896,13 +899,16 @@ function renderHomeDashboard(){
    proofLabel=now.getTime()>=proofMs?'Stückgare läuft':dateFmt(new Date(proofMs))+' · '+fmt(new Date(proofMs));
    bakeLabel=now.getTime()>=endMs?'Teig reif':dateFmt(new Date(endMs))+' · '+fmt(new Date(endMs));
  }
- $('homeDoughProgress').style.width=Math.round(progress*100)+'%';
+ const progressPct=Math.round(progress*100);
+ $('homeDoughProgress').style.width=progressPct+'%';
+ $('homeProgressPercent').textContent=progressPct+' %';
+ $('homeProgressLabel').textContent=!hasPlan?'Noch keine Planung':(!doughStarted?'Bereit zum Start':(stage===1?'Stockgare läuft':stage===2?'Stückgare läuft':'Backbereit'));
+ $('homeProgressNote').textContent=!hasPlan?'Lege zuerst deine Teigplanung fest.':(!doughStarted?'Der Timer beginnt, sobald du „Teig ist jetzt in der Stockgare“ bestätigst.':(stage===1?'Der Teig reift. Die Anzeige orientiert sich an deiner geplanten Gesamtgärzeit.':stage===2?'Die geplante Stückgare hat begonnen. Prüfe den Teig zusätzlich nach Volumen und Gefühl.':'Die geplante Gärzeit ist erreicht. Prüfe vor dem Backen die tatsächliche Teigreife.'));
  $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
- [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
  $('homeDoughStatusCard').style.display=enabled?'':'none';
  $('homePlanButton').innerHTML=(!hasPlan?'Plane einen Teig':(doughStarted?'Zeitplan ansehen':'Plan bearbeiten'))+' <span aria-hidden="true">→</span>';
 
- if(!hasPlan){$('homeDoughProgress').style.width='0%';[['homeStageMix'],['homeStageProof'],['homeStageBake']].forEach(([id])=>{const el=$(id);el.classList.remove('done','current')});}
+ if(!hasPlan){$('homeDoughProgress').style.width='0%';$('homeProgressPercent').textContent='0 %';}
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
@@ -1031,16 +1037,17 @@ init();
 .dough-status-copy strong{font-family:Lora,Georgia,serif;font-size:14px;color:#493021}
 .dough-countdown{margin:14px 0 16px;padding:12px 14px;border-radius:14px;background:#f1dfbd;color:#563b28;font-weight:700;line-height:1.4}.dough-countdown strong{display:block;font-size:1.08em}.dough-countdown small{display:block;font-weight:500;margin-top:3px}
 .dough-status-copy b{font-family:Lora,Georgia,serif;font-size:25px;line-height:1.1;color:#251c16}
-.dough-progress{height:13px;border-radius:99px;background:#efd9b6;overflow:hidden;margin:0 1px 14px}
-.dough-progress span{display:block;width:0;height:100%;border-radius:99px;background:#586d3b;transition:width .3s ease}
-.dough-stages{display:grid;grid-template-columns:1fr 14px 1fr 14px 1fr;align-items:start;text-align:center;margin:0 0 15px}
-.dough-stages>div{display:flex;align-items:center;flex-direction:column;min-width:0}
-.dough-stages>div>span{display:grid;place-items:center;width:27px;height:27px;border:2px solid #bc8d61;border-radius:50%;color:#bc8d61;background:#fff7e8;font-size:15px;font-weight:800;margin-bottom:6px}
-.dough-stages>div.done>span{background:#50643a;border-color:#50643a;color:white}
-.dough-stages>div.current>span{border:2px solid #b43a22;outline:2px solid #e4b49c;outline-offset:2px;color:#b43a22}
-.dough-stages>i{height:2px;background:#c5a27b;margin-top:13px}
-.dough-stages>div strong{font-family:Lora,Georgia,serif;font-size:11px;line-height:1.2;color:#493021}
-.dough-stages>div small{font-size:10px;color:#80664f;line-height:1.25;margin-top:4px}
+.dough-progress-wrap{margin:4px 0 17px;padding:14px 15px 12px;background:#fff7e8;border:1px solid #e4cba5;border-radius:16px}
+.dough-progress-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:9px;color:#493021}
+.dough-progress-meta strong{font-family:Lora,Georgia,serif;font-size:14px;line-height:1.25}
+.dough-progress-meta span{font-size:13px;font-weight:800;color:#b43a22;white-space:nowrap}
+.dough-progress{height:12px;border-radius:99px;background:#efd9b6;overflow:hidden;margin:0}
+.dough-progress span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,#b43a22,#d78647);transition:width .35s ease}
+.dough-progress-note{margin:9px 0 12px;color:#80664f;font-size:12px;line-height:1.4}
+.dough-progress-times{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;border-top:1px solid #ead7b9;padding-top:10px}
+.dough-progress-times span{display:flex;flex-direction:column;min-width:0;gap:3px}
+.dough-progress-times b{font-size:11px;color:#493021}
+.dough-progress-times small{font-size:11px;line-height:1.3;color:#80664f;overflow-wrap:anywhere}
 .dashboard-primary{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:0;border-radius:14px;background:#b43a22;color:#fff8e9;font-family:Lora,Georgia,serif;font-weight:700;font-size:14px}
 .dashboard-primary span,.dashboard-link span{font-size:19px}
 .home-pizza-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
