@@ -673,11 +673,11 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
     
 
   </section>
-  <div class="home-actions">
-    <button class="home-tile" data-goto="0"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><rect x="7" y="10" width="34" height="31" rx="3"/><path d="M15 6v9M33 6v9M7 19h34"/><path d="M24 24v11M18.5 29.5h11"/></svg></span><span><strong>Pizzatag planen</strong><small>Teig, Zeitplan und Mengen</small></span><b>›</b></button>
-    <button class="home-tile" data-goto="2"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10c7-3 13-1 18 4v29c-5-5-11-7-18-4z"/><path d="M42 10c-7-3-13-1-18 4v29c5-5 11-7 18-4z"/><path d="M12 17c3 0 6 1 8 3M12 23c3 0 6 1 8 3M36 17c-3 0-6 1-8 3M36 23c-3 0-6 1-8 3"/><path d="M24 14v29"/></svg></span><span><strong>Rezepte</strong><small>Bewährte Rezepte</small></span><b>›</b></button>
-    <button class="home-tile" data-goto="3"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 7h6l5 25h23l5-18H12"/><path d="M17 20h22M20 26h17"/><circle cx="19" cy="39" r="2.5"/><circle cx="36" cy="39" r="2.5"/></svg></span><span><strong>Einkaufsliste</strong><small>Zutaten automatisch</small></span><b>›</b></button>
-    <button class="home-tile" data-goto="4"><span class="tile-icon fire"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M26 3c2 10-8 12-5 21 2-2 5-5 5-9 9 7 14 14 10 23-3 7-9 9-14 7C9 42 8 31 14 22c2-3 4-5 7-8-1 8 0 11 2 13C28 20 24 12 26 3z" fill="currentColor" stroke="none"/></svg></span><span><strong>Backtag</strong><small>Schritt für Schritt</small></span><b>›</b></button>
+  <div class="ciao-strands">
+    <p class="ciao-strands-label">WAS MÖCHTEST DU MACHEN?</p>
+    <button class="ciao-strand-card dough-strand" data-goto="0"><span class="strand-symbol">01</span><span class="strand-icon">◉</span><span class="strand-copy"><strong>Teig ansetzen</strong><small>Teigmenge, Rezeptur und Gärzeiten festlegen</small><em>Planung & Teigstudio</em></span><b class="strand-arrow">↗</b></button>
+    <button class="ciao-strand-card recipe-strand" data-goto="2"><span class="strand-symbol">02</span><span class="strand-icon">✳</span><span class="strand-copy"><strong>Rezepte & Einkauf</strong><small>Pizzen auswählen und Zutaten als Einkaufsliste bündeln</small><em>Rezepte · Einkaufsliste</em></span><b class="strand-arrow">↗</b></button>
+    <button class="ciao-strand-card bake-strand" data-goto="4"><span class="strand-symbol">03</span><span class="strand-icon">♨</span><span class="strand-copy"><strong>Backtag</strong><small>Deinen Ablauf ansehen und Pizza für Pizza backen</small><em>Timing · Backablauf</em></span><b class="strand-arrow">↗</b></button>
     <button class="home-tile teig-doc" id="homeSos"><span class="tile-icon first-aid" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="5" y="5" width="38" height="38" rx="9" fill="currentColor" stroke="none"/><path d="M20 12h8v8h8v8h-8v8h-8v-8h-8v-8h8z" fill="#fff7eb" stroke="none"/></svg></span><span><strong>Teig-Doc</strong><small>Erste Hilfe für deinen Teig</small></span><b>›</b></button>
   </div>
 </section>
@@ -734,15 +734,13 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
   </div>
  </div>
 </div>
-<nav class="nav" aria-label="Hauptnavigation">
+<nav class="nav ciao-main-nav" aria-label="Hauptnavigation">
   <div class="navinner">
-    <button class="tab active" data-tab="home"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Home</button>
-    <button class="tab" data-tab="plan"><span><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M8 2v4M16 2v4M4 9h16M8 13h2M14 13h2M8 17h2M14 17h2"/></svg></span>Plan</button>
-    <button class="tab" data-tab="recipes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h6"/></svg></span>Rezepte</button>
-    <button class="tab" data-tab="shop"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 4h2l2.2 11.2a2 2 0 0 0 2 1.6h8.9a2 2 0 0 0 1.9-1.4L22 8H6"/><circle cx="10" cy="20" r="1"/><circle cx="18" cy="20" r="1"/></svg></span>Einkauf</button>
+    <button class="tab active" data-tab="home"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></span>Start</button>
+    <button class="tab" data-tab="dough"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 13c-2-2 0-6 4-7 2-3 7-2 8 1 4 1 4 6 1 8-1 4-6 5-9 3-4 1-6-2-4-5Z"/><path d="M8 11c1-1 2-1 3-1M14 15c1 0 2-1 2-2"/></svg></span>Teig</button>
+    <button class="tab" data-tab="recipes"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 4h14v16H5zM8 8h8M8 12h8M8 16h6"/></svg></span>Rezepte & Einkauf</button>
     <button class="tab" data-tab="bake"><span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3c-1 3-4 4-4 8a4 4 0 0 0 8 0c0-2-1-3-2-4 0 3-2 3-2 5"/><path d="M5 16a8 8 0 1 0 14 0"/></svg></span>Backtag</button>
   </div>
-  <div class="legacy-nav" aria-hidden="true"><span id="navStatus">Schritt 1 von 5 · Plan</span><button id="navBack">Zurück</button><button id="navNext">Weiter →</button></div>
 </nav><div class="toast" id="toast"></div>
 <script>
 const $=id=>document.getElementById(id),fmt=n=>new Intl.NumberFormat('de-DE',{maximumFractionDigits:1}).format(n),grams=n=>fmt(n)+' g',dateFmt=d=>new Intl.DateTimeFormat('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'}).format(d),timeFmt=d=>new Intl.DateTimeFormat('de-DE',{hour:'2-digit',minute:'2-digit'}).format(d);
@@ -769,7 +767,7 @@ function countsTotal(){return pizzas.reduce((n,p)=>n+Math.max(0,Math.floor(+stat
 function dough(){const n=countsTotal()||recommended(),ball=+state.ball,h=+state.hydration/100,s=+state.salt/100,o=(state.doughStyle==='waldi'?2:(+state.oil||0))/100,hours=+state.hours,room=+state.roomTemp,fridge=+state.fridgeTemp,waterT=+state.waterTemp;let dryPct=.18*Math.sqrt(24/hours)*Math.pow(2,(21-room)/10)*Math.pow(2,(10-waterT)/30);if(state.method==='cold')dryPct*=.75;if(state.method==='room')dryPct*=1.35;dryPct=Math.max(.015,Math.min(.5,dryPct));const baselineFreshPct=state.doughStyle==='waldi'?.2:state.doughStyle==='teichner'?.3:null,baselineHours=state.doughStyle==='waldi'?42:48,profileFreshPct=baselineFreshPct===null?null:baselineFreshPct*Math.sqrt(baselineHours/Math.max(1,hours))*Math.pow(2,(21-room)/10)*Math.pow(2,(10-waterT)/30)*(state.method==='cold'?1:.75),yp=profileFreshPct!==null?(profileFreshPct/100)*(state.yeastType==='fresh'?1:1/3):dryPct/100*(state.yeastType==='fresh'?3:1),flour=n*ball/(1+h+s+o+yp),water=flour*h,salt=flour*s,oil=flour*o,yeast=flour*yp;return {n,ball,total:n*ball,flour,water,salt,oil,yeast,hours,dryPct,profile:flourProfiles[state.flour],h:state.hydration,saltPct:state.salt,yeastType:state.yeastType}}
 function aggregate(){const totals={};for(const p of pizzas){const n=Math.max(0,Math.floor(+state.counts[p.id]||0));if(!n)continue;for(const [name,amount,unit,key] of p.items){const k=key+'|'+unit;totals[k]=(totals[k]||0)+amount*n}}return Object.entries(totals).map(([k,amount])=>{const [key,unit]=k.split('|');return {key,unit,amount,name:(packageInfo[key]||{}).name||key,pack:packageInfo[key]||null}}).sort((a,b)=>a.name.localeCompare(b.name,'de'))}
 function checkedItem(id,title,detail){return '<label class="item '+(checks[id]?'done':'')+'"><input type="checkbox" data-check="'+id+'" '+(checks[id]?'checked':'')+'><main>'+title+(detail?'<small>'+detail+'</small>':'')+'</main></label>'}
-function renderStepper(){document.querySelectorAll('.step').forEach(b=>{const n=+b.dataset.step;b.classList.toggle('active',n===state.step);b.classList.toggle('done',n<state.step)});document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',view==='workflow'&&p.id==='page'+state.step));$('homeScreen').classList.toggle('active',view==='home');document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===({home:'home',0:'plan',1:'plan',2:'recipes',3:'shop',4:'bake'}[view==='home'?'home':state.step])));$('stepper').style.display=view==='home'?'none':'flex';$('navStatus').textContent='Schritt '+(state.step+1)+' von 5 · '+['Plan','Teigstudio','Pizzakarte','Einkauf','Backtag'][state.step];$('navBack').disabled=state.step===0;$('navNext').textContent=state.step===4?'Fertig ✓':'Weiter →';window.scrollTo({top:0,behavior:'smooth'})}
+function renderStepper(){document.querySelectorAll('.step').forEach(b=>{const n=+b.dataset.step;b.classList.toggle('active',n===state.step);b.classList.toggle('done',n<state.step)});document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',view==='workflow'&&p.id==='page'+state.step));$('homeScreen').classList.toggle('active',view==='home');const activeTab=view==='home'?'home':(state.step<=1?'dough':(state.step<=3?'recipes':'bake'));document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===activeTab));$('stepper').style.display='none';const legacy=$('navStatus');if(legacy)legacy.textContent='';window.scrollTo({top:0,behavior:'smooth'})}
 function go(step){const previousStep=state.step;view='workflow';state.step=Math.max(0,Math.min(4,step));try{if(state.step>=2&&previousStep===1){localStorage.setItem('pdc-dough-plan-complete-v1','1')}}catch(e){}save();renderStepper();if(state.step===3)renderShopping();if(state.step===4)renderBakeDay();if(typeof renderHomeDashboard==='function')renderHomeDashboard()}
 const pizzaImages={
  margherita:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1000&q=85',
@@ -913,7 +911,7 @@ function planText(){const r=dough(),items=aggregate();return (state.planName||'P
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
 $('homePlanButton').addEventListener('click',()=>go(0));$('startDoughStatus').addEventListener('click',startDoughStatus);$('toggleDoughStatus').addEventListener('click',resetDoughStatus);
-document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({plan:0,recipes:2,shop:3,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({dough:0,recipes:2,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];
 $('monitorEnabled').checked=!!state.monitorEnabled;$('monitorEnabled').addEventListener('change',()=>{state.monitorEnabled=$('monitorEnabled').checked;save();renderHomeDashboard();toast(state.monitorEnabled?'Teig-Monitor für die Startseite aktiviert':'Teig-Monitor auf der Startseite ausgeblendet')});fields.forEach(id=>{const el=$(id);el.value=state[id]??el.value;el.addEventListener('input',()=>{state[id]=el.type==='number'||el.type==='range'?+el.value:el.value;if(id==='flour'&&flourProfiles[state.flour]){state.hydration=flourProfiles[state.flour].hydration;$('hydration').value=state.hydration}if(id==='hydration')state.hydration=+el.value;if(id==='salt')state.salt=+el.value;if(['guests','perGuest','reserve','bakeDate','bakeTime'].includes(id)){state[id]=id==='guests'?Math.max(1,+el.value||1):el.value;if(['guests','perGuest','reserve'].includes(id)){state.menuTouched=false;syncAutoCounts()}}refresh()})});
 document.querySelectorAll('#page1 input[type=range]').forEach(el=>el.addEventListener('input',()=>{state[el.id]=+el.value;refresh()}));
@@ -1183,5 +1181,26 @@ body{overflow-x:hidden!important}
 #doughSosOverlay .sos-footer .btn.secondary{background:#fff8e9!important;border:1px solid #d7b88e!important;color:#7e5137!important}
 #doughSosOverlay .sos-result-status,#doughSosOverlay .sos-result-tip,#doughSosOverlay .sos-result{background:#fff5e4!important;border-color:#dfc6a3!important;color:#43291f!important}
 @media(max-width:560px){#doughSosOverlay .sos-screen{padding-left:14px!important;padding-right:14px!important}#doughSosOverlay .sos-top{margin-left:-14px!important;margin-right:-14px!important;padding-left:10px!important;padding-right:10px!important}#doughSosOverlay .sos-cover{height:145px!important;min-height:145px!important;padding:16px!important}#doughSosOverlay .sos-progress{margin-bottom:18px!important}#doughSosOverlay .sos-timing-list .sos-option{min-height:66px!important;padding:12px 14px!important}#doughSosOverlay .sos-footer{position:sticky!important;bottom:calc(-1 * env(safe-area-inset-bottom))!important;margin-top:auto!important}}
+
+
+/* Three independent user journeys: dough, recipes & shopping, bake day */
+.ciao-main-nav .navinner{display:grid!important;grid-template-columns:.68fr .78fr 1.55fr .85fr!important;gap:3px!important}
+.ciao-main-nav .tab{min-width:0!important;font-size:10px!important;white-space:normal!important;line-height:1.15!important;padding:8px 3px!important;gap:5px!important}
+.ciao-main-nav .tab span{width:21px!important;height:21px!important}
+.ciao-main-nav .tab.active{background:#f0dfc4!important;color:#a92f16!important;border-radius:14px!important}
+.ciao-strands{display:grid;gap:11px;margin:8px 0 17px}
+.ciao-strands-label{font-size:10px!important;letter-spacing:1.8px!important;font-weight:850;color:#8b7058!important;margin:0 0 1px 4px!important}
+.ciao-strand-card{position:relative;display:grid;grid-template-columns:27px 46px minmax(0,1fr) 22px;align-items:center;gap:11px;width:100%;min-height:112px;padding:15px 13px;border:1px solid #e3cba7;border-radius:22px;text-align:left;color:#43291f;background:linear-gradient(115deg,#fff8e9,#f6e7cd);box-shadow:0 8px 24px #6b41120a;overflow:hidden}
+.ciao-strand-card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#c17b37}
+.ciao-strand-card.recipe-strand:before{background:#a92f16}.ciao-strand-card.bake-strand:before{background:#526b3f}
+.strand-symbol{align-self:start;font-size:10px;letter-spacing:1px;color:#a58a6b;font-weight:850;padding-top:3px}
+.strand-icon{width:43px;height:43px;display:grid;place-items:center;border-radius:15px;background:#f0dfc3;color:#a92f16;font-size:25px}
+.recipe-strand .strand-icon{background:#f3ddc7;color:#ad391f}.bake-strand .strand-icon{background:#e5e8d6;color:#526b3f}
+.strand-copy{display:grid;gap:4px;min-width:0}.strand-copy strong{font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.15}.strand-copy small{font-size:11px;line-height:1.45;color:#80664f}.strand-copy em{font-style:normal;font-size:9px;letter-spacing:.5px;font-weight:800;text-transform:uppercase;color:#a17a51;margin-top:3px}
+.strand-arrow{font-size:20px;color:#a92f16;font-weight:500;justify-self:end}
+.ciao-strand-card:active{transform:scale(.99)}
+#stepper,.legacy-nav{display:none!important}
+@media(min-width:600px){.ciao-strands{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ciao-strand-card{grid-template-columns:1fr auto;grid-template-rows:auto 1fr;align-items:start;min-height:210px;padding:22px}.strand-symbol{grid-column:1}.strand-icon{grid-column:2;grid-row:1;width:48px;height:48px}.strand-copy{grid-column:1/3;grid-row:2;align-self:end}.strand-copy strong{font-size:22px}.strand-copy small{font-size:13px}.strand-arrow{position:absolute;right:20px;bottom:22px}.ciao-main-nav .tab{font-size:12px!important}}
+@media(max-width:370px){.ciao-main-nav .tab{font-size:9px!important}.ciao-strand-card{grid-template-columns:20px 38px minmax(0,1fr) 16px;gap:8px;padding:12px 10px}.strand-icon{width:37px;height:37px}.strand-copy strong{font-size:17px}}
 
 </style>
