@@ -922,7 +922,7 @@ $('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learni
 function reminderShoppingText(){const r=dough(),rows=[];const flour=r.flour,salt=r.salt,yeast=r.yeast,oil=r.oil;rows.push('Mehl – '+grams(flour));rows.push('Salz – '+grams(salt));rows.push((state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' – '+grams(yeast));if(oil>0)rows.push('Olivenöl – '+grams(oil));aggregate().forEach(x=>{const reserve=x.unit==='g'&&x.key!=='San-Marzano-Dose'?1.1:1;const amount=x.amount*reserve;let qty=x.unit==='Blätter'?fmt(x.amount)+' Blätter':grams(amount);if(x.key==='San-Marzano-Dose')qty=grams(amount);rows.push(x.name+' – '+qty)});return [...new Set(rows)].join('\n')}function sendToReminders(){const text=reminderShoppingText();if(!text.trim()){toast('Keine Zutaten zum Übertragen');return}const url='shortcuts://run-shortcut?name='+encodeURIComponent('Ciao Einkauf übertragen')+'&input=text&text='+encodeURIComponent(text);window.location.href=url;toast('Kurzbefehl wird geöffnet')}
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('sendReminders').onclick=sendToReminders;$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{copy(planText(),'Gesamtplan kopiert');view='home';renderStepper();toast('Pizzatag-Plan abgeschlossen')};
 $('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');localStorage.removeItem('pdc-dough-monitor-plan-v1');localStorage.removeItem('pdc-dough-plan-complete-v1');localStorage.removeItem('pdc-dough-status-started-v1');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
-function init(){view='home';syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if(!window.doughMonitorRefresh){window.doughMonitorRefresh=setInterval(()=>{try{if(localStorage.getItem('pdc-dough-status-started-v1'))renderHomeDashboard()}catch(e){}},60000)}if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
+function init(){view='home';state.step=0;syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if(!window.doughMonitorRefresh){window.doughMonitorRefresh=setInterval(()=>{try{if(localStorage.getItem('pdc-dough-status-started-v1'))renderHomeDashboard()}catch(e){}},60000)}if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 const sosOverlay=$('doughSosOverlay');
 const sosChoices={volume:'some',bubbles:null,feel:null,when:'later'};
 let sosStage=1;function showSosStage(n){sosStage=n;document.querySelectorAll('[data-sos-stage]').forEach(s=>s.classList.toggle('hidden',+s.dataset.sosStage!==n));$('sosResultView').classList.toggle('hidden',n!==4);document.querySelectorAll('[data-sos-step-indicator]').forEach(s=>{const k=+s.dataset.sosStepIndicator;s.classList.toggle('active',k===Math.min(n,3));s.classList.toggle('done',k<Math.min(n,3));s.querySelector('b').textContent=k<Math.min(n,3)?'✓':k});sosOverlay.scrollTop=0;}function resetSos(){sosStage=1;Object.assign(sosChoices,{volume:'double',bubbles:'large',feel:'elastic',when:'soon'});document.querySelectorAll('[data-sos-group]').forEach(b=>b.classList.toggle('selected',sosChoices[b.dataset.sosGroup]===b.dataset.sosValue));$('sosResultCard').innerHTML='';$('sosNotes').value='';showSosStage(1);}
@@ -1202,5 +1202,41 @@ body{overflow-x:hidden!important}
 #stepper,.legacy-nav{display:none!important}
 @media(min-width:600px){.ciao-strands{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ciao-strand-card{grid-template-columns:1fr auto;grid-template-rows:auto 1fr;align-items:start;min-height:210px;padding:22px}.strand-symbol{grid-column:1}.strand-icon{grid-column:2;grid-row:1;width:48px;height:48px}.strand-copy{grid-column:1/3;grid-row:2;align-self:end}.strand-copy strong{font-size:22px}.strand-copy small{font-size:13px}.strand-arrow{position:absolute;right:20px;bottom:22px}.ciao-main-nav .tab{font-size:12px!important}}
 @media(max-width:370px){.ciao-main-nav .tab{font-size:9px!important}.ciao-strand-card{grid-template-columns:20px 38px minmax(0,1fr) 16px;gap:8px;padding:12px 10px}.strand-icon{width:37px;height:37px}.strand-copy strong{font-size:17px}}
+
+
+/* HOTFIX: restore the start dashboard and enforce readable Ciao light palette */
+:root{color-scheme:light!important;--bg:#fbf1dd!important;--panel:#fff8e9!important;--panel2:#f3e4c9!important;--line:#dfc6a3!important;--text:#43291f!important;--muted:#80664f!important;--red:#ad351e!important;--red2:#b84a2c!important;--green:#526b3f!important;--gold:#b07a3f!important}
+html,body{background:#fbf1dd!important;color:#43291f!important}
+body{color:#43291f!important}
+.app{color:#43291f!important}
+.top{background:transparent!important}
+.brand h1,.brand-sub,h1,h2,h3,h4,p,label,strong,small{ text-shadow:none }
+.brand h1{color:#a93620!important}.brand-sub{color:#80664f!important}
+.iconbtn{background:#fff8e9!important;border-color:#dfc6a3!important;color:#a93620!important}
+.nav{background:rgba(255,248,233,.97)!important;border-top:1px solid #dfc6a3!important;box-shadow:0 -8px 24px #5b36120b!important}
+.ciao-main-nav .tab{color:#80664f!important}
+.ciao-main-nav .tab.active{color:#a92f16!important;background:#f0dfc4!important}
+.page,.page h2,.page h3,.page p,.page label,.page strong,.page small,.page span{color:inherit}
+.page .intro,.page .muted,.page .field label,.page .choice small,.page .item small{color:#80664f!important}
+.page .card{background:#fff8e9!important;border-color:#dfc6a3!important;color:#43291f!important}
+.page .field input:not([type=range]),.page .field select,.page .field textarea,.page .choice select,.page .qty{background:#fffaf0!important;border-color:#dfc6a3!important;color:#43291f!important;-webkit-text-fill-color:#43291f!important}
+.page .btn.secondary{background:#fff8e9!important;border-color:#d7b88e!important;color:#7e5137!important}
+.page .tag,.page .pill{background:#f0dfc4!important;color:#89552d!important}
+.page .note{background:#f4e5ca!important;border-color:#dfc6a3!important;color:#62442e!important}
+.page .choice,.page .item,.page .pizza{border-color:#e7d4b5!important}
+.page .table td,.page .table th{border-color:#e7d4b5!important;color:#43291f!important}
+.ciao-strands{display:grid!important}
+#homeScreen{display:none}
+#homeScreen.active{display:block!important;visibility:visible!important;opacity:1!important}
+#page0.active,#page1.active,#page2.active,#page3.active,#page4.active{display:block}
+.ciao-home-hero{color:#43291f!important}
+.ciao-home-hero h2,.ciao-home-hero p,.ciao-home-hero .ciao-kicker{color:inherit!important}
+.ciao-home-hero p{color:#80664f!important}
+.ciao-strand-card{color:#43291f!important}
+.ciao-strand-card .strand-copy strong{color:#43291f!important}
+.ciao-strand-card .strand-copy small{color:#70543e!important}
+.ciao-strand-card .strand-copy em{color:#89552d!important}
+.ciao-strand-card .strand-symbol{color:#8d7155!important}
+@media(max-width:560px){.app{padding:14px 13px 100px!important}.home-screen .dashboard-card{color:#43291f!important}}
 
 </style>
