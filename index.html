@@ -857,7 +857,7 @@ function renderHomeDashboard(){
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
  $('homeDoughStatusCard').style.display='';
  $('homePlanButton').innerHTML=(!hasPlan?'Plane einen Teig':(doughStarted?'Zeitplan ansehen':'Plan bearbeiten'))+' <span aria-hidden="true">→</span>';
- $('homePlanButton').onclick=()=>{view='workflow';renderStepper();go(0)};
+
  if(!hasPlan){$('homeDoughProgress').style.width='0%';[['homeStageMix'],['homeStageProof'],['homeStageBake']].forEach(([id])=>{const el=$(id);el.classList.remove('done','current')});}
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
