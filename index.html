@@ -841,8 +841,8 @@ function renderHomeDashboard(){
  let doughStartedAt=null,planComplete=false;try{const savedStart=localStorage.getItem('pdc-dough-status-started-v1');if(savedStart)doughStartedAt=new Date(savedStart);planComplete=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
  const hasPlan=planComplete;
  const doughStarted=hasPlan&&!!doughStartedAt&&!Number.isNaN(doughStartedAt.getTime());
- $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
- $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
+ if($('homeBakeDate'))$('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
+ if($('homeGuests'))$('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
  $('homeDoughTitle').textContent=!hasPlan?'Kein Teig geplant':(doughStarted?'Teigreife läuft':'Teigreife noch nicht gestartet');
  $('homeDoughDetail').textContent=!hasPlan?'Plane einen Teig':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
  $('homeDoughProgress').parentElement.style.display=hasPlan?'':'none';
