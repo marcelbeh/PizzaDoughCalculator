@@ -661,11 +661,11 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
     <div class="dashboard-heading"><h2>Dein Pizzatag</h2><p>Alles bereit für großartige Pizza.</p><span class="dashboard-leaf" aria-hidden="true">✦</span></div>
     <div class="dashboard-card dough-status" id="homeDoughStatusCard">
       <h3>Teigstatus</h3>
-      <div class="dough-status-main"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dough-status-copy"><strong id="homeDoughTitle">Teigreife geplant</strong><b id="homeDoughDetail">48 Stunden</b></div></div>
-      <div class="dough-progress"><span id="homeDoughProgress"></span></div>
-      <div class="dough-stages"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
-      <button class="dashboard-primary" id="homePlanButton">Zeitplan ansehen <span aria-hidden="true">→</span></button>
-      <button type="button" class="dashboard-link" id="toggleDoughStatus" style="display:block!important">Teigreife zurücksetzen</button>
+      <div class="dough-status-main"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dough-status-copy"><strong id="homeDoughTitle">Kein Teig geplant</strong><b id="homeDoughDetail">Starte mit „Pizzatag planen“</b></div></div>
+      <div class="dough-progress" style="display:none"><span id="homeDoughProgress"></span></div>
+      <div class="dough-stages" style="display:none"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
+      <button class="dashboard-primary" id="homePlanButton">Pizzatag planen <span aria-hidden="true">→</span></button>
+      <button type="button" class="dashboard-link" id="toggleDoughStatus" style="display:none">Teigreife zurücksetzen</button>
     </div>
     
 
@@ -713,11 +713,11 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
 </div>
 <div class="actions"><button class="btn secondary back">← Einkauf</button><button class="btn" id="finish">Plan abschließen</button></div></section>
 </div>
-<!-- Teigretter: interaktive Vorschau -->
+<!-- Teig-Doc: interaktiver Erste-Hilfe-Assistent -->
 <div class="sos-overlay hidden" id="doughSosOverlay" role="dialog" aria-modal="true" aria-labelledby="doughSosTitle">
  <div class="sos-screen">
-  <header class="sos-top"><button class="sos-back" id="sosBack" aria-label="Zurück">←</button><div class="sos-brand">PIZZA DAY / TEIG SOS</div><button class="sos-help" id="closeDoughSos" aria-label="Teigretter schließen">×</button></header>
-  <div class="sos-cover"><div><h2 id="doughSosTitle">Teigretter</h2><p>Schnelle Hilfe für deinen Teig.</p></div></div>
+  <header class="sos-top"><button class="sos-back" id="sosBack" aria-label="Zurück">←</button><div class="sos-brand">CIAO! / TEIG-DOC</div><button class="sos-help" id="closeDoughSos" aria-label="Teig-Doc schließen">×</button></header>
+  <div class="sos-cover"><div><h2 id="doughSosTitle">Teig-Doc</h2><p>Erste Hilfe für deinen Teig.</p></div></div>
   <div class="sos-form">
    <div class="sos-progress" aria-label="Fortschritt"><div class="sos-progress-step active" data-sos-step-indicator="1"><b>✓</b><span>Merkmale</span></div><i></i><div class="sos-progress-step" data-sos-step-indicator="2"><b>2</b><span>Ziel</span></div><i></i><div class="sos-progress-step" data-sos-step-indicator="3"><b>3</b><span>Ergebnis</span></div></div>
    <section class="sos-stage" data-sos-stage="1"><h3>1. Volumen</h3><p class="sos-question">Wie stark ist dein Teig aufgegangen?</p><div class="sos-options">
@@ -831,6 +831,7 @@ function renderHomeDashboard(){
  $('homeDoughDetail').textContent=!hasPlan?'Starte mit „Pizzatag planen“':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
  $('homeDoughProgress').parentElement.style.display=hasPlan?'':'none';
  document.querySelector('.dough-stages').style.display=hasPlan?'':'none';
+ $('toggleDoughStatus').style.display=hasPlan?'':'none';
  let progress=0,stage=0,mixLabel=hasPlan?'Plan & Teigstudio abschließen':'Noch kein Plan vorhanden',proofLabel=hasPlan?'wartet auf Start':'wird nach der Planung angezeigt',bakeLabel=hasPlan?(date?(state.bakeTime||'18:30'):'Backzeit'):'wird nach der Planung angezeigt';
  if(doughStarted){
    const startMs=doughStartedAt.getTime(),endMs=startMs+doughHours*3600000,proofHours=Math.max(1,+state.proof||4),proofMs=Math.max(startMs,endMs-proofHours*3600000);
@@ -846,6 +847,7 @@ function renderHomeDashboard(){
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
  $('homeDoughStatusCard').style.display='';
  $('homePlanButton').innerHTML=(!hasPlan?'Pizzatag planen':(doughStarted?'Zeitplan ansehen':'Plan & Teigstudio starten'))+' <span aria-hidden="true">→</span>';
+ if(!hasPlan){$('homeDoughProgress').style.width='0%';[['homeStageMix'],['homeStageProof'],['homeStageBake']].forEach(([id])=>{const el=$(id);el.classList.remove('done','current')});}
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
@@ -1038,4 +1040,35 @@ body{overflow-x:hidden!important}
 .home-tile.teig-doc strong,.home-tile.teig-doc small,.home-tile.teig-doc>b{color:#fff!important}
 .home-tile.teig-doc .tile-icon.first-aid{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border-radius:10px;background:#fff!important;color:#c62828!important;border:1px solid #ffd4c9}
 .home-tile.teig-doc .tile-icon.first-aid svg{width:31px;height:31px;filter:none}
+
+/* Final Teig-Doc / Dashboard overrides: warm Ciao! palette, no stale planned defaults. */
+:root{color-scheme:light!important;--bg:#f7ecd7!important;--panel:#fff6e6!important;--panel2:#f1dfc1!important;--line:#e2c9a2!important;--text:#493021!important;--muted:#80664f!important;--red:#b43a22!important;--red2:#c74a2d!important;--green:#294f35!important;--gold:#d8b987!important}
+.sos-overlay{position:fixed!important;inset:0!important;z-index:1000!important;display:flex!important;align-items:stretch!important;justify-content:center!important;padding:0!important;overflow:auto!important;background:rgba(74,47,29,.48)!important;backdrop-filter:blur(5px)!important;-webkit-backdrop-filter:blur(5px)!important}
+.sos-overlay.hidden{display:none!important}
+.sos-screen{width:min(780px,100%)!important;max-width:780px!important;min-height:100dvh!important;margin:0 auto!important;padding:0 18px calc(24px + env(safe-area-inset-bottom))!important;background:linear-gradient(155deg,#fff7e8 0%,#f6e7cc 100%)!important;color:#493021!important;border:1px solid #e2c9a2!important;border-radius:0!important;box-shadow:0 18px 60px #3b241d24!important;overflow-y:auto!important}
+.sos-top{position:sticky!important;top:0!important;z-index:3!important;display:grid!important;grid-template-columns:42px 1fr 42px!important;align-items:center!important;gap:10px!important;min-height:58px!important;margin:0 -18px 14px!important;padding:8px 14px!important;background:rgba(255,247,232,.96)!important;border-bottom:1px solid #e2c9a2!important;color:#493021!important;backdrop-filter:blur(10px)!important}
+.sos-brand{color:#80664f!important;font-size:11px!important;letter-spacing:1.4px!important;font-weight:800!important;text-align:center!important}
+.sos-back,.sos-help{display:grid!important;place-items:center!important;width:40px!important;height:40px!important;border:1px solid #dfc49a!important;border-radius:50%!important;background:#fff8e9!important;color:#a73520!important;font-size:26px!important}
+.sos-cover{height:175px!important;min-height:175px!important;display:flex!important;align-items:flex-end!important;padding:20px!important;margin:0 0 20px!important;border:1px solid #e2c9a2!important;border-radius:18px!important;background-image:linear-gradient(0deg,rgba(54,32,19,.82) 0%,rgba(54,32,19,.08) 100%),url('https://images.unsplash.com/photo-1586444248902-2f64eddc13df?auto=format&fit=crop&w=1000&q=85')!important;background-position:center 60%!important;background-size:cover!important;color:#fff8e9!important}
+.sos-cover h2{font-family:Lora,Georgia,serif!important;font-size:clamp(28px,5vw,38px)!important;line-height:1.08!important;margin:0 0 5px!important;color:#fff8e9!important;letter-spacing:-.5px!important}
+.sos-cover p{font-size:14px!important;line-height:1.4!important;color:#fff1dc!important;margin:0!important}
+.sos-form{padding:0 0 10px!important}
+.sos-progress-step span{color:#80664f!important}
+.sos-progress-step b{background:#f0dfc1!important;border:1px solid #dfc49a!important;color:#795139!important}
+.sos-progress-step.active b,.sos-progress-step.done b{background:#b43a22!important;border-color:#b43a22!important;color:#fff8e9!important}
+.sos-progress>i{background:#d9bd93!important}
+.sos-stage h3{font-family:Lora,Georgia,serif!important;font-size:22px!important;line-height:1.25!important;color:#493021!important;margin:0 0 7px!important}
+.sos-question{color:#80664f!important}
+.sos-option{background:#fff8e9!important;border:1px solid #e2c9a2!important;color:#493021!important;box-shadow:0 4px 12px #74451a0a!important}
+.sos-option b,.sos-option small{color:#493021!important}
+.sos-option.selected{border:2px solid #b43a22!important;background:#fff0d9!important;box-shadow:0 0 0 2px #b43a2215!important}
+.sos-option.selected:after{background:#b43a22!important;color:#fff8e9!important}
+.sos-option .sos-art{background:#f2e2c7!important}
+.sos-timing-list .sos-option{background:#fff8e9!important}
+.sos-stage input,.sos-stage select,.sos-stage textarea{background:#fffaf0!important;border:1px solid #dfc49a!important;color:#493021!important;border-radius:11px!important}
+.sos-stage label{color:#795139!important}
+.sos-stage .btn{width:100%!important;min-height:54px!important;border:1px solid #a52e1a!important;border-radius:999px!important;background:#b43a22!important;color:#fff8e9!important;font-weight:800!important;box-shadow:0 5px 14px #b43a2222!important}
+.sos-stage .btn.secondary{background:#fff8e9!important;color:#795139!important;border:1px solid #dfc49a!important;box-shadow:none!important}
+.sos-result,.sos-result-status{background:#fff8e9!important;border-color:#e2c9a2!important;color:#493021!important}
+@media(max-width:480px){.sos-screen{padding-left:12px!important;padding-right:12px!important}.sos-top{margin-left:-12px!important;margin-right:-12px!important}.sos-cover{height:165px!important;min-height:165px!important}.sos-option{color:#493021!important}}
 </style>
