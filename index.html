@@ -890,6 +890,11 @@ function renderHomeDashboard(){
  $('startDoughStatus').style.display=enabled&&hasPlan&&transferred&&!doughStarted?'':'none';
  $('toggleDoughStatus').style.display=enabled&&hasPlan&&doughStarted?'':'none';
  let progress=0,stage=0,mixLabel=hasPlan?'Plan & Teigstudio abschließen':'Noch kein Plan vorhanden',proofLabel=hasPlan?'wartet auf Start':'wird nach der Planung angezeigt',bakeLabel=hasPlan?(date?(activePlan.bakeTime||'18:30'):'Backzeit'):'wird nach der Planung angezeigt';
+ if(hasPlan&&date){
+   const plannedBake=new Date(date+'T'+(activePlan.bakeTime||'18:30')+':00');
+   const plannedMix=new Date(plannedBake.getTime()-doughHours*3600000);
+   mixLabel=plannedMix.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'})+' · '+plannedMix.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+ }
  if(doughStarted){
    const startMs=doughStartedAt.getTime(),endMs=startMs+doughHours*3600000,proofHours=Math.max(1,+activePlan.proof||4),proofMs=Math.max(startMs,endMs-proofHours*3600000);
    progress=Math.max(0,Math.min(1,(now.getTime()-startMs)/(doughHours*3600000)));
