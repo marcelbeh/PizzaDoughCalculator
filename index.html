@@ -822,13 +822,16 @@ function resetDoughStatus(){
 function renderHomeDashboard(){
  const date=state.bakeDate, now=new Date();
  const doughHours=Math.max(1,+state.hours||48), guests=Math.max(1,+state.guests||1);
+ const hasPlan=!!dashboardPlan;
  let doughStartedAt=null;try{const savedStart=localStorage.getItem('pdc-dough-status-started-v1');if(savedStart)doughStartedAt=new Date(savedStart)}catch(e){}
- const doughStarted=!!doughStartedAt&&!Number.isNaN(doughStartedAt.getTime());
+ const doughStarted=hasPlan&&!!doughStartedAt&&!Number.isNaN(doughStartedAt.getTime());
  $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
- $('homeDoughTitle').textContent=doughStarted?'Teigreife läuft':'Teigreife noch nicht gestartet';
- $('homeDoughDetail').textContent=doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio';
- let progress=0,stage=0,mixLabel='Plan & Teigstudio abschließen',proofLabel='wartet auf Start',bakeLabel=date?(state.bakeTime||'18:30'):'Backzeit';
+ $('homeDoughTitle').textContent=!hasPlan?'Kein Teig geplant':(doughStarted?'Teigreife läuft':'Teigreife noch nicht gestartet');
+ $('homeDoughDetail').textContent=!hasPlan?'Starte mit „Pizzatag planen“':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
+ $('homeDoughProgress').parentElement.style.display=hasPlan?'':'none';
+ document.querySelector('.dough-stages').style.display=hasPlan?'':'none';
+ let progress=0,stage=0,mixLabel=hasPlan?'Plan & Teigstudio abschließen':'Noch kein Plan vorhanden',proofLabel=hasPlan?'wartet auf Start':'wird nach der Planung angezeigt',bakeLabel=hasPlan?(date?(state.bakeTime||'18:30'):'Backzeit'):'wird nach der Planung angezeigt';
  if(doughStarted){
    const startMs=doughStartedAt.getTime(),endMs=startMs+doughHours*3600000,proofHours=Math.max(1,+state.proof||4),proofMs=Math.max(startMs,endMs-proofHours*3600000);
    progress=Math.max(0,Math.min(1,(now.getTime()-startMs)/(doughHours*3600000)));
@@ -842,7 +845,7 @@ function renderHomeDashboard(){
  $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
  $('homeDoughStatusCard').style.display='';
- $('homePlanButton').innerHTML=(doughStarted?'Zeitplan ansehen':'Plan & Teigstudio starten')+' <span aria-hidden="true">→</span>';
+ $('homePlanButton').innerHTML=(!hasPlan?'Pizzatag planen':(doughStarted?'Zeitplan ansehen':'Plan & Teigstudio starten'))+' <span aria-hidden="true">→</span>';
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
 function toast(s){$('toast').textContent=s;$('toast').classList.add('show');setTimeout(()=>$('toast').classList.remove('show'),1800)}
