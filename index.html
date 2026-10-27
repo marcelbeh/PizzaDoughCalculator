@@ -1204,20 +1204,20 @@ body{overflow-x:hidden!important}
 .ciao-main-nav .tab.active{background:#f0dfc4!important;color:#a92f16!important;border-radius:14px!important}
 .ciao-strands{display:grid;gap:11px;margin:8px 0 17px}
 .ciao-strands-label{font-size:10px!important;letter-spacing:1.8px!important;font-weight:850;color:#8b7058!important;margin:0 0 1px 4px!important}
-.ciao-strand-card{position:relative;display:grid;grid-template-columns:27px 46px minmax(0,1fr) 22px;align-items:center;gap:11px;width:100%;min-height:112px;padding:15px 13px;border:1px solid #e3cba7;border-radius:22px;text-align:left;color:#43291f;background:linear-gradient(115deg,#fff8e9,#f6e7cd);box-shadow:0 8px 24px #6b41120a;overflow:hidden}
+.ciao-strand-card{position:relative;display:grid;grid-template-columns:58px minmax(0,1fr) 20px;align-items:center;gap:14px;width:100%;min-height:124px;padding:20px 16px 18px 18px;border:1px solid #e3cba7;border-radius:22px;text-align:left;color:#43291f;background:linear-gradient(115deg,#fff8e9,#f6e7cd);box-shadow:0 8px 24px #6b41120a;overflow:hidden}
 .ciao-strand-card:before{content:"";position:absolute;inset:0 auto 0 0;width:4px;background:#c17b37}
 .ciao-strand-card.recipe-strand:before{background:#a92f16}.ciao-strand-card.bake-strand:before{background:#526b3f}
-.strand-symbol{align-self:start;font-size:10px;letter-spacing:1px;color:#a58a6b;font-weight:850;padding-top:3px}
-.strand-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(145deg,#f7e7c8,#ead0a4);color:#a92f16;box-shadow:inset 0 1px 0 #fff9e9,0 4px 10px #6b41120d}
+.strand-symbol{position:absolute;top:9px;left:17px;font-size:9px;letter-spacing:1px;color:#a58a6b;font-weight:850;background:#fff8e9d9;border-radius:6px;padding:2px 4px;line-height:1.2}
+.strand-icon{width:58px;height:58px;display:grid;place-items:center;border-radius:19px;background:linear-gradient(145deg,#f7e7c8,#ead0a4);color:#a92f16;grid-column:1;grid-row:1}
 .strand-icon svg{display:block;width:47px;height:47px;overflow:visible;filter:drop-shadow(0 2px 1px #6b41121c)}
 .recipe-strand .strand-icon{background:linear-gradient(145deg,#f8e3cf,#edc7a8);color:#ad391f}.bake-strand .strand-icon{background:linear-gradient(145deg,#edf0dd,#d9e0c5);color:#526b3f}
 @media(min-width:600px){.strand-icon{width:64px;height:64px}.strand-icon svg{width:52px;height:52px}}
-.strand-copy{display:grid;gap:4px;min-width:0}.strand-copy strong{font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.15}.strand-copy small{font-size:11px;line-height:1.45;color:#80664f}.strand-copy em{font-style:normal;font-size:9px;letter-spacing:.5px;font-weight:800;text-transform:uppercase;color:#a17a51;margin-top:3px}
-.strand-arrow{font-size:20px;color:#a92f16;font-weight:500;justify-self:end}
+.strand-copy{display:grid;gap:5px;min-width:0;grid-column:2;grid-row:1}.strand-copy strong{font-family:Georgia,"Times New Roman",serif;font-size:19px;line-height:1.15}.strand-copy small{font-size:12px;line-height:1.4;color:#80664f}.strand-copy em{font-style:normal;font-size:9px;letter-spacing:.5px;font-weight:800;text-transform:uppercase;color:#a17a51;margin-top:3px}
+.strand-arrow{font-size:22px;color:#a92f16;font-weight:500;justify-self:end;grid-column:3;grid-row:1}
 .ciao-strand-card:active{transform:scale(.99)}
 #stepper,.legacy-nav{display:none!important}
-@media(min-width:600px){.ciao-strands{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ciao-strand-card{grid-template-columns:1fr auto;grid-template-rows:auto 1fr;align-items:start;min-height:210px;padding:22px}.strand-symbol{grid-column:1}.strand-icon{grid-column:2;grid-row:1;width:48px;height:48px}.strand-copy{grid-column:1/3;grid-row:2;align-self:end}.strand-copy strong{font-size:22px}.strand-copy small{font-size:13px}.strand-arrow{position:absolute;right:20px;bottom:22px}.ciao-main-nav .tab{font-size:12px!important}}
-@media(max-width:370px){.ciao-main-nav .tab{font-size:9px!important}.ciao-strand-card{grid-template-columns:20px 38px minmax(0,1fr) 16px;gap:8px;padding:12px 10px}.strand-icon{width:37px;height:37px}.strand-copy strong{font-size:17px}}
+@media(min-width:600px){.ciao-strands{grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}.ciao-strand-card{grid-template-columns:1fr auto;grid-template-rows:auto 1fr;align-items:start;min-height:210px;padding:22px}.strand-symbol{grid-column:1;grid-row:1;position:static;background:none;padding:0}.strand-icon{grid-column:2;grid-row:1;width:48px;height:48px}.strand-copy{grid-column:1/3;grid-row:2;align-self:end}.strand-copy strong{font-size:22px}.strand-copy small{font-size:13px}.strand-arrow{position:absolute;right:20px;bottom:22px}.ciao-main-nav .tab{font-size:12px!important}}
+@media(max-width:370px){.ciao-main-nav .tab{font-size:9px!important}.ciao-strand-card{grid-template-columns:46px minmax(0,1fr) 16px;gap:10px;padding:20px 11px 15px 13px;min-height:112px}.strand-symbol{left:13px;top:7px}.strand-icon{width:46px;height:46px;border-radius:15px}.strand-icon svg{width:38px;height:38px}.strand-copy strong{font-size:17px}.strand-copy small{font-size:11px}.strand-copy em{font-size:8px}}
 
 
 /* HOTFIX: restore the start dashboard and enforce readable Ciao light palette */
