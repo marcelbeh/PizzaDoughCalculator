@@ -662,6 +662,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
     <div class="dashboard-card dough-status" id="homeDoughStatusCard" style="display:none">
       <h3>Teigstatus</h3>
       <div class="dough-status-main"><div class="dough-ball-icon" aria-hidden="true"><svg viewBox="0 0 64 64"><path d="M9 34c-2-9 7-15 14-17 7-8 20-6 25 1 8 3 10 12 6 19-2 10-13 15-23 12-11 3-21-3-22-11z" fill="#e9c18e" stroke="#c99a62" stroke-width="1.5"/><path d="M19 27c3-3 6-4 9-4m8-3c4 0 7 2 9 5M17 37c2 3 5 4 8 4m13 1c3-1 5-3 6-6" fill="none" stroke="#c99a62" stroke-width="2" stroke-linecap="round"/></svg></div><div class="dough-status-copy"><strong id="homeDoughTitle">Kein Teig geplant</strong><b id="homeDoughDetail">Plane einen Teig</b></div></div>
+      <div id="homeDoughCountdown" class="dough-countdown" style="display:none" aria-live="polite"></div>
       <div class="dough-progress" style="display:none"><span id="homeDoughProgress"></span></div>
       <div class="dough-stages" style="display:none"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
       <button class="dashboard-primary" id="homePlanButton">Plane einen Teig <span aria-hidden="true">→</span></button>
@@ -863,6 +864,25 @@ function renderHomeDashboard(){
  if($('homeGuests'))$('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
  $('homeDoughTitle').textContent=!hasPlan?'Kein Teig geplant':(doughStarted?'Teigreife läuft':'Teigreife noch nicht gestartet');
  $('homeDoughDetail').textContent=!hasPlan?'Plane einen Teig':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
+ const countdown=$('homeDoughCountdown');
+ if(countdown){
+  countdown.style.display=enabled&&hasPlan&&!doughStarted?'':'none';
+  if(enabled&&hasPlan&&!doughStarted){
+   if(date){
+    const bakeAt=new Date(date+'T'+(activePlan.bakeTime||'18:30')+':00');
+    const plannedStart=new Date(bakeAt.getTime()-doughHours*3600000);
+    const delta=plannedStart.getTime()-now.getTime(),abs=Math.abs(delta);
+    const days=Math.floor(abs/86400000),hours=Math.floor(abs%86400000/3600000),mins=Math.floor(abs%3600000/60000);
+    const fmt=d=>d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
+    const when=plannedStart.toLocaleDateString('de-DE',{weekday:'short',day:'2-digit',month:'2-digit'})+' · '+fmt(plannedStart);
+    countdown.innerHTML=delta>0?'<strong>Teig ansetzen: '+when+'</strong><small>Noch '+(days?days+' Tg. ':'')+hours+' Std. '+mins+' Min. bis zum geplanten Start</small>':'<strong>Teig jetzt ansetzen – geplanter Start war '+when+'</strong><small>'+ (days?days+' Tg. ':'')+hours+' Std. '+mins+' Min. über dem Zeitplan</small>';
+    countdown.style.background=delta>0?'#f1dfbd':'#f6d8c9';
+   }else{
+    countdown.innerHTML='<strong>Teigstart berechnen</strong><small>Bitte im Pizzatag-Plan ein Backdatum festlegen. Dann zeigt Ciao! die genaue Startuhrzeit und den Countdown an.</small>';
+    countdown.style.background='#f1dfbd';
+   }
+  }
+ }
  $('homeDoughProgress').parentElement.style.display=enabled&&hasPlan?'':'none';
  document.querySelector('.dough-stages').style.display=enabled&&hasPlan?'':'none';
  $('transferDoughToMonitor').style.display='none';
@@ -1009,6 +1029,7 @@ init();
 .dough-ball-icon svg{width:78px;height:68px}
 .dough-status-copy{min-width:0;display:flex;flex-direction:column;gap:3px}
 .dough-status-copy strong{font-family:Lora,Georgia,serif;font-size:14px;color:#493021}
+.dough-countdown{margin:14px 0 16px;padding:12px 14px;border-radius:14px;background:#f1dfbd;color:#563b28;font-weight:700;line-height:1.4}.dough-countdown strong{display:block;font-size:1.08em}.dough-countdown small{display:block;font-weight:500;margin-top:3px}
 .dough-status-copy b{font-family:Lora,Georgia,serif;font-size:25px;line-height:1.1;color:#251c16}
 .dough-progress{height:13px;border-radius:99px;background:#efd9b6;overflow:hidden;margin:0 1px 14px}
 .dough-progress span{display:block;width:0;height:100%;border-radius:99px;background:#586d3b;transition:width .3s ease}
