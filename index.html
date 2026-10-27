@@ -665,6 +665,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
       <div class="dough-progress" style="display:none"><span id="homeDoughProgress"></span></div>
       <div class="dough-stages" style="display:none"><div id="homeStageMix"><span>✓</span><strong>Teig mischen</strong><small id="homeMixTime">Zeitplan folgt</small></div><i></i><div id="homeStageProof"><span>◉</span><strong>Teigreife</strong><small id="homeProofTime">geplant</small></div><i></i><div id="homeStageBake"><span>○</span><strong>Backbereit</strong><small id="homeBakeStageTime">Backzeit</small></div></div>
       <button class="dashboard-primary" id="homePlanButton">Plane einen Teig <span aria-hidden="true">→</span></button>
+      <button type="button" class="dashboard-primary" id="transferDoughToMonitor" style="display:none;margin-top:8px" onclick="transferDoughToMonitor()">Geplanten Teig in den Reife-Monitor übernehmen <span aria-hidden="true">→</span></button>
       <button type="button" class="dashboard-primary" id="startDoughStatus" style="display:none;margin-top:8px">Teig ist jetzt in der Stockgare</button>
       <button type="button" class="dashboard-link" id="toggleDoughStatus" style="display:none">Teigreife zurücksetzen</button>
     </div>
@@ -821,6 +822,17 @@ function resetDoughStatus(){
  renderHomeDashboard();
  toast('Reife-Monitor zurückgesetzt');
 }
+function transferDoughToMonitor(){
+ let planned=false;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
+ if(!planned){toast('Bitte zuerst Plan und Teigstudio abschließen.');return}
+ const snapshot={...state,transferredAt:new Date().toISOString()};
+ try{
+  localStorage.setItem('pdc-dough-monitor-plan-v1',JSON.stringify(snapshot));
+  const check=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null');
+  if(!check||check.hours!==snapshot.hours||check.hydration!==snapshot.hydration){toast('Teigparameter konnten nicht übernommen werden.');return}
+ }catch(e){toast('Teigparameter konnten nicht übernommen werden.');return}
+ renderHomeDashboard();toast('Teigparameter wurden in den Reife-Monitor übernommen.');
+}
 function startDoughStatus(){
  let planned=false;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
  if(!planned){toast('Bitte zuerst Plan und Teigstudio abschließen.');return}
@@ -836,10 +848,12 @@ function startDoughStatus(){
  toast('Reife-Monitor läuft seit '+new Date(saved).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
 }
 function renderHomeDashboard(){
- const date=state.bakeDate, now=new Date();
- const doughHours=Math.max(1,+state.hours||48), guests=Math.max(1,+state.guests||1);
+ let monitorPlan=null;try{monitorPlan=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null')}catch(e){}
+ const activePlan=monitorPlan||state;
+ const date=activePlan.bakeDate, now=new Date();
+ const doughHours=Math.max(1,+activePlan.hours||48), guests=Math.max(1,+activePlan.guests||1);
  let doughStartedAt=null,planComplete=false;try{const savedStart=localStorage.getItem('pdc-dough-status-started-v1');if(savedStart)doughStartedAt=new Date(savedStart);planComplete=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
- const hasPlan=planComplete;
+ const hasPlan=planComplete,transferred=!!monitorPlan;
  const doughStarted=hasPlan&&!!doughStartedAt&&!Number.isNaN(doughStartedAt.getTime());
  if($('homeBakeDate'))$('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  if($('homeGuests'))$('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
@@ -847,11 +861,12 @@ function renderHomeDashboard(){
  $('homeDoughDetail').textContent=!hasPlan?'Plane einen Teig':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
  $('homeDoughProgress').parentElement.style.display=hasPlan?'':'none';
  document.querySelector('.dough-stages').style.display=hasPlan?'':'none';
- $('startDoughStatus').style.display=hasPlan&&!doughStarted?'':'none';
+ $('transferDoughToMonitor').style.display=hasPlan&&!transferred&&!doughStarted?'':'none';
+ $('startDoughStatus').style.display=hasPlan&&transferred&&!doughStarted?'':'none';
  $('toggleDoughStatus').style.display=hasPlan&&doughStarted?'':'none';
- let progress=0,stage=0,mixLabel=hasPlan?'Plan & Teigstudio abschließen':'Noch kein Plan vorhanden',proofLabel=hasPlan?'wartet auf Start':'wird nach der Planung angezeigt',bakeLabel=hasPlan?(date?(state.bakeTime||'18:30'):'Backzeit'):'wird nach der Planung angezeigt';
+ let progress=0,stage=0,mixLabel=hasPlan?'Plan & Teigstudio abschließen':'Noch kein Plan vorhanden',proofLabel=hasPlan?'wartet auf Start':'wird nach der Planung angezeigt',bakeLabel=hasPlan?(date?(activePlan.bakeTime||'18:30'):'Backzeit'):'wird nach der Planung angezeigt';
  if(doughStarted){
-   const startMs=doughStartedAt.getTime(),endMs=startMs+doughHours*3600000,proofHours=Math.max(1,+state.proof||4),proofMs=Math.max(startMs,endMs-proofHours*3600000);
+   const startMs=doughStartedAt.getTime(),endMs=startMs+doughHours*3600000,proofHours=Math.max(1,+activePlan.proof||4),proofMs=Math.max(startMs,endMs-proofHours*3600000);
    progress=Math.max(0,Math.min(1,(now.getTime()-startMs)/(doughHours*3600000)));
    stage=now.getTime()<proofMs?1:now.getTime()<endMs?2:3;
    const fmt=d=>d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
@@ -883,7 +898,7 @@ document.querySelectorAll('[data-dough-style]').forEach(btn=>btn.addEventListene
 $('saveLearning').onclick=saveLearning;$('copyLearning').onclick=()=>copy(learningText(),'Lernhistorie kopiert');$('resetLearning').onclick=()=>{if(!confirm('Alle gespeicherten Pizza-Fingerprint-Tests auf diesem Gerät löschen?'))return;localStorage.removeItem('pdc-learning-v1');renderLearning();toast('Pizza-Fingerprint zurückgesetzt')};
 function reminderShoppingText(){const r=dough(),rows=[];const flour=r.flour,salt=r.salt,yeast=r.yeast,oil=r.oil;rows.push('Mehl – '+grams(flour));rows.push('Salz – '+grams(salt));rows.push((state.yeastType==='fresh'?'Frischhefe':'Trockenhefe')+' – '+grams(yeast));if(oil>0)rows.push('Olivenöl – '+grams(oil));aggregate().forEach(x=>{const reserve=x.unit==='g'&&x.key!=='San-Marzano-Dose'?1.1:1;const amount=x.amount*reserve;let qty=x.unit==='Blätter'?fmt(x.amount)+' Blätter':grams(amount);if(x.key==='San-Marzano-Dose')qty=grams(amount);rows.push(x.name+' – '+qty)});return [...new Set(rows)].join('\n')}function sendToReminders(){const text=reminderShoppingText();if(!text.trim()){toast('Keine Zutaten zum Übertragen');return}const url='shortcuts://run-shortcut?name='+encodeURIComponent('Ciao Einkauf übertragen')+'&input=text&text='+encodeURIComponent(text);window.location.href=url;toast('Kurzbefehl wird geöffnet')}
 $('copyDough').onclick=()=>copy($('doughSummary').textContent,'Teigrezept kopiert');$('sendReminders').onclick=sendToReminders;$('copyShopping').onclick=()=>copy('TEIG\n'+[...document.querySelectorAll('#doughShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n')+'\n\nBELÄGE\n'+[...document.querySelectorAll('#toppingShop .item')].map(x=>x.innerText.replace('\n',' — ')).join('\n'),'Einkaufsliste kopiert');$('copyPlan').onclick=()=>copy(planText(),'Gesamtplan kopiert');$('saveLog').onclick=()=>{const log='Stein '+($('stoneTemp').value||'—')+' °C · Backzeit '+($('bakeSeconds').value||'—')+' s · Boden: '+$('crustResult').value+' · nächste Anpassung: '+$('nextAdjustment').value;localStorage.setItem('pdc-bake-log',log);$('savedLog').textContent='Gespeicherte Notiz: '+log;$('savedLog').classList.remove('hidden');toast('Backnotiz gespeichert')};$('finish').onclick=()=>{copy(planText(),'Gesamtplan kopiert');view='home';renderStepper();toast('Pizzatag-Plan abgeschlossen')};
-$('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
+$('reset').onclick=()=>{if(!confirm('Den Pizzatag-Plan auf Standard zurücksetzen?'))return;localStorage.removeItem('pdc-guided-v1');localStorage.removeItem('pdc-guided-checks');localStorage.removeItem('pdc-bake-log');localStorage.removeItem('pdc-dough-monitor-plan-v1');localStorage.removeItem('pdc-dough-plan-complete-v1');localStorage.removeItem('pdc-dough-status-started-v1');state={step:0,planName:'Pizzaabend',guests:8,perGuest:1,reserve:1,bakeDate:state.bakeDate,bakeTime:'18:30',flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,counts:Object.fromEntries(pizzas.map(p=>[p.id,p.default])),menuTouched:false};checks={};fields.forEach(id=>$(id).value=state[id]);go(0);refresh();toast('Plan zurückgesetzt')};
 function init(){view='home';syncAutoCounts();if(!state.bakeDate){const now=new Date();state.bakeDate=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10)}fields.forEach(id=>{if($(id))$(id).value=state[id]??$(id).value});renderStepper();renderPizzas();refresh();renderLearning();if(!window.doughMonitorRefresh){window.doughMonitorRefresh=setInterval(()=>{try{if(localStorage.getItem('pdc-dough-status-started-v1'))renderHomeDashboard()}catch(e){}},60000)}if('serviceWorker'in navigator&&location.protocol.startsWith('http'))navigator.serviceWorker.register('./sw.js').catch(()=>{})}
 const sosOverlay=$('doughSosOverlay');
 const sosChoices={volume:'some',bubbles:null,feel:null,when:'later'};
