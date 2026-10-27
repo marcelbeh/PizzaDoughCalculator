@@ -675,7 +675,7 @@ input[type=date],input[type=time]{color:#43291f!important;-webkit-text-fill-colo
     <button class="home-tile" data-goto="2"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M6 10c7-3 13-1 18 4v29c-5-5-11-7-18-4z"/><path d="M42 10c-7-3-13-1-18 4v29c5-5 11-7 18-4z"/><path d="M12 17c3 0 6 1 8 3M12 23c3 0 6 1 8 3M36 17c-3 0-6 1-8 3M36 23c-3 0-6 1-8 3"/><path d="M24 14v29"/></svg></span><span><strong>Rezepte</strong><small>Bewährte Rezepte</small></span><b>›</b></button>
     <button class="home-tile" data-goto="3"><span class="tile-icon gold"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M4 7h6l5 25h23l5-18H12"/><path d="M17 20h22M20 26h17"/><circle cx="19" cy="39" r="2.5"/><circle cx="36" cy="39" r="2.5"/></svg></span><span><strong>Einkaufsliste</strong><small>Zutaten automatisch</small></span><b>›</b></button>
     <button class="home-tile" data-goto="4"><span class="tile-icon fire"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M26 3c2 10-8 12-5 21 2-2 5-5 5-9 9 7 14 14 10 23-3 7-9 9-14 7C9 42 8 31 14 22c2-3 4-5 7-8-1 8 0 11 2 13C28 20 24 12 26 3z" fill="currentColor" stroke="none"/></svg></span><span><strong>Backtag</strong><small>Schritt für Schritt</small></span><b>›</b></button>
-    <button class="home-tile" id="homeSos"><span class="tile-icon dough"><svg viewBox="0 0 48 48" aria-hidden="true"><path d="M7 25c-1-5 3-8 7-10 2-5 7-7 12-5 5-1 10 2 11 7 4 3 5 8 2 12-1 6-7 9-13 8-7 2-15-2-17-7-2-1-2-3-2-5z" fill="#e9c18e" stroke="#f3d5a8" stroke-width="1.6"/><path d="M14 19c2-2 4-3 6-3M28 14c2 0 4 1 5 3M12 27c1 2 3 3 5 3M28 31c2-1 4-2 5-4" fill="none" stroke="#d5a875" stroke-width="2" stroke-linecap="round"/><ellipse cx="23" cy="24" rx="8" ry="5" fill="#f2d3a4" opacity=".65"/></svg></span><span><strong>Teigretter</strong><small>Schnelle Hilfe & Analyse</small></span><b>›</b></button>
+    <button class="home-tile teig-doc" id="homeSos"><span class="tile-icon first-aid" aria-hidden="true"><svg viewBox="0 0 48 48"><rect x="5" y="5" width="38" height="38" rx="9" fill="currentColor" stroke="none"/><path d="M20 12h8v8h8v8h-8v8h-8v-8h-8v-8h8z" fill="#fff7eb" stroke="none"/></svg></span><span><strong>Teig-Doc</strong><small>Erste Hilfe für deinen Teig</small></span><b>›</b></button>
   </div>
 </section>
 <div class="stepper" id="stepper"><button class="step active" data-step="0"><b>1</b>Plan</button><button class="step" data-step="1"><b>2</b>Teigstudio</button><button class="step" data-step="2"><b>3</b>Pizzakarte</button><button class="step" data-step="3"><b>4</b>Einkauf</button><button class="step" data-step="4"><b>5</b>Backtag</button></div>
@@ -767,7 +767,7 @@ function dough(){const n=countsTotal()||recommended(),ball=+state.ball,h=+state.
 function aggregate(){const totals={};for(const p of pizzas){const n=Math.max(0,Math.floor(+state.counts[p.id]||0));if(!n)continue;for(const [name,amount,unit,key] of p.items){const k=key+'|'+unit;totals[k]=(totals[k]||0)+amount*n}}return Object.entries(totals).map(([k,amount])=>{const [key,unit]=k.split('|');return {key,unit,amount,name:(packageInfo[key]||{}).name||key,pack:packageInfo[key]||null}}).sort((a,b)=>a.name.localeCompare(b.name,'de'))}
 function checkedItem(id,title,detail){return '<label class="item '+(checks[id]?'done':'')+'"><input type="checkbox" data-check="'+id+'" '+(checks[id]?'checked':'')+'><main>'+title+(detail?'<small>'+detail+'</small>':'')+'</main></label>'}
 function renderStepper(){document.querySelectorAll('.step').forEach(b=>{const n=+b.dataset.step;b.classList.toggle('active',n===state.step);b.classList.toggle('done',n<state.step)});document.querySelectorAll('.page').forEach(p=>p.classList.toggle('active',view==='workflow'&&p.id==='page'+state.step));$('homeScreen').classList.toggle('active',view==='home');document.querySelectorAll('.tab').forEach(b=>b.classList.toggle('active',b.dataset.tab===({home:'home',0:'plan',1:'plan',2:'recipes',3:'shop',4:'bake'}[view==='home'?'home':state.step])));$('stepper').style.display=view==='home'?'none':'flex';$('navStatus').textContent='Schritt '+(state.step+1)+' von 5 · '+['Plan','Teigstudio','Pizzakarte','Einkauf','Backtag'][state.step];$('navBack').disabled=state.step===0;$('navNext').textContent=state.step===4?'Fertig ✓':'Weiter →';window.scrollTo({top:0,behavior:'smooth'})}
-function go(step){const previousStep=state.step;view='workflow';state.step=Math.max(0,Math.min(4,step));if(state.step>=2&&previousStep===1){try{if(!localStorage.getItem('pdc-dough-status-started-v1'))localStorage.setItem('pdc-dough-status-started-v1',new Date().toISOString())}catch(e){}}save();renderStepper();if(state.step===3)renderShopping();if(state.step===4)renderBakeDay();if(typeof renderHomeDashboard==='function')renderHomeDashboard()}
+function go(step){const previousStep=state.step,previousView=view;view='workflow';state.step=Math.max(0,Math.min(4,step));try{if(previousView==='home'&&state.step===0){localStorage.removeItem('pdc-dough-plan-complete-v1');localStorage.removeItem('pdc-dough-status-started-v1')}if(state.step>=2&&previousStep===1){localStorage.setItem('pdc-dough-plan-complete-v1','1');if(!localStorage.getItem('pdc-dough-status-started-v1'))localStorage.setItem('pdc-dough-status-started-v1',new Date().toISOString())}}catch(e){}save();renderStepper();if(state.step===3)renderShopping();if(state.step===4)renderBakeDay();if(typeof renderHomeDashboard==='function')renderHomeDashboard()}
 const pizzaImages={
  margherita:'https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=1000&q=85',
  salami:'https://mir-s3-cdn-cf.behance.net/project_modules/fs/33cdf3193828619.65f205a1cef9c.jpg',
@@ -822,8 +822,8 @@ function resetDoughStatus(){
 function renderHomeDashboard(){
  const date=state.bakeDate, now=new Date();
  const doughHours=Math.max(1,+state.hours||48), guests=Math.max(1,+state.guests||1);
- const hasPlan=!!dashboardPlan;
- let doughStartedAt=null;try{const savedStart=localStorage.getItem('pdc-dough-status-started-v1');if(savedStart)doughStartedAt=new Date(savedStart)}catch(e){}
+ let doughStartedAt=null,planComplete=false;try{const savedStart=localStorage.getItem('pdc-dough-status-started-v1');if(savedStart)doughStartedAt=new Date(savedStart);planComplete=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
+ const hasPlan=planComplete;
  const doughStarted=hasPlan&&!!doughStartedAt&&!Number.isNaN(doughStartedAt.getTime());
  $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
@@ -1031,4 +1031,11 @@ body{overflow-x:hidden!important}
 
 /* Die Prozessnavigation gehört ausschließlich in den geführten Ablauf, nicht auf den Home-Bildschirm. */
 .home-screen.active ~ #stepper{display:none!important}
+
+/* Teigstatus erst nach abgeschlossenem Plan und Teigstudio anzeigen. */
+.home-screen #homeDoughStatusCard .dough-status-copy{min-width:0}
+.home-tile.teig-doc{border-color:#c72f25!important;background:linear-gradient(135deg,#b91f1f,#e33a2f)!important;box-shadow:0 5px 16px #a51e1e2b!important;color:#fff!important}
+.home-tile.teig-doc strong,.home-tile.teig-doc small,.home-tile.teig-doc>b{color:#fff!important}
+.home-tile.teig-doc .tile-icon.first-aid{display:grid;place-items:center;width:43px;height:43px;flex:0 0 43px;border-radius:10px;background:#fff!important;color:#c62828!important;border:1px solid #ffd4c9}
+.home-tile.teig-doc .tile-icon.first-aid svg{width:31px;height:31px;filter:none}
 </style>
