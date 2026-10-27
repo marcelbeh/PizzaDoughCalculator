@@ -828,7 +828,7 @@ function renderHomeDashboard(){
  $('homeBakeDate').textContent=date?dateFmt(new Date(date+'T12:00:00')):'Datum wählen';
  $('homeGuests').textContent=guests+' '+(guests===1?'Person':'Personen');
  $('homeDoughTitle').textContent=!hasPlan?'Kein Teig geplant':(doughStarted?'Teigreife läuft':'Teigreife noch nicht gestartet');
- $('homeDoughDetail').textContent=!hasPlan?'Starte mit „Pizzatag planen“':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
+ $('homeDoughDetail').textContent=!hasPlan?'Plane einen Teig':(doughStarted?doughHours+' Std.':'Start nach Plan & Teigstudio');
  $('homeDoughProgress').parentElement.style.display=hasPlan?'':'none';
  document.querySelector('.dough-stages').style.display=hasPlan?'':'none';
  $('toggleDoughStatus').style.display=hasPlan?'':'none';
@@ -846,7 +846,7 @@ function renderHomeDashboard(){
  $('homeMixTime').textContent=mixLabel;$('homeProofTime').textContent=proofLabel;$('homeBakeStageTime').textContent=bakeLabel;
  [['homeStageMix',0],['homeStageProof',1],['homeStageBake',2]].forEach(([id,n])=>{const el=$(id);el.classList.toggle('done',stage>n);el.classList.toggle('current',stage===n);el.querySelector('span').textContent=stage>n?'✓':(stage===n?'◉':'○')});
  $('homeDoughStatusCard').style.display='';
- $('homePlanButton').innerHTML=(!hasPlan?'Pizzatag planen':(doughStarted?'Zeitplan ansehen':'Plan & Teigstudio starten'))+' <span aria-hidden="true">→</span>';
+ $('homePlanButton').innerHTML=(!hasPlan?'Plane einen Teig':(doughStarted?'Zeitplan ansehen':'Plan & Teigstudio starten'))+' <span aria-hidden="true">→</span>';
  if(!hasPlan){$('homeDoughProgress').style.width='0%';[['homeStageMix'],['homeStageProof'],['homeStageBake']].forEach(([id])=>{const el=$(id);el.classList.remove('done','current')});}
 }
 function refresh(){syncAutoCounts();save();renderHomeDashboard();$('guestStat').textContent=state.guests;$('recommendedPizzas').textContent=recommended();$('plannedBalls').textContent=countsTotal()||recommended();$('bakeStat').textContent=state.bakeTime;$('dateStat').textContent=state.bakeDate?dateFmt(new Date(state.bakeDate+'T12:00:00')):'Datum offen';renderDough();renderPizzas();renderMenuSummary();if(state.step>=3)renderShopping();if(state.step===4)renderBakeDay()}
