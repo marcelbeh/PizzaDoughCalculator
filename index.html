@@ -850,7 +850,7 @@ function saveLearning(){
 }
 function learningText(){return getLearning().map((x,i)=>(i+1)+'. '+x.date+' · '+(learnLabels[x.result]||x.result)+'\nMehl: '+x.flour+' · '+x.hours+' h · '+x.hydration+' % Hydration · Stein: '+(x.stone||'—')+' °C · Backzeit: '+(x.seconds||'—')+' s\nNächster Test: '+(changeLabels[x.change]||x.change)+(x.note?'\nNotiz: '+x.note:'')).join('\n\n')||'Noch keine Backversuche gespeichert.'}
 function bindChecks(){document.querySelectorAll('[data-check]').forEach(c=>{c.onchange=()=>{checks[c.dataset.check]=c.checked;try{localStorage.setItem('pdc-guided-checks',JSON.stringify(checks))}catch(e){}c.closest('.item').classList.toggle('done',c.checked);progressChecks()}})}
-function progressChecks(){const all=[...document.querySelectorAll('[data-check]')];const done=all.filter(c=>c.checked).length;$('prepProgress').textContent=done+' / '+all.length+' erledigt'}
+function progressChecks(){const all=[...document.querySelectorAll('#prepList [data-check]')];const done=all.filter(c=>c.checked).length;$('prepProgress').textContent=done+' / '+all.length+' erledigt'}
 
 let dashboardPlan=null;
 try{dashboardPlan=JSON.parse(localStorage.getItem('pdc-dashboard-plan-v1')||'null')}catch(e){dashboardPlan=null}
