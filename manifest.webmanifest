@@ -1,10 +1,18 @@
 {
-  "name": "Ciao!",
-  "short_name": "Ciao!",
-  "description": "Geführter Pizzatag-Assistent für Teig, Pizzakarte, Einkauf und Backablauf.",
+  "name": "Ciao",
+  "short_name": "Ciao",
+  "description": "Dein Pizza-Assistent für Teig, Rezepte, Einkauf und Backtag.",
   "start_url": "./index.html",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#11110f",
-  "theme_color": "#11110f",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "background_color": "#f6ead5",
+  "theme_color": "#f6ead5",
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
 }
