@@ -849,8 +849,9 @@ function transferDoughToMonitor(){
  renderHomeDashboard();toast('Teigparameter wurden in den Reife-Monitor übernommen.');
 }
 function startDoughStatus(){
- let planned=false;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
- if(!planned){toast('Bitte zuerst Plan und Teigstudio abschließen.');return}
+ let planned=false,monitorPlan=null;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1';monitorPlan=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null')}catch(e){}
+ if(!planned||!monitorPlan){toast('Bitte zuerst Plan und Teigstudio abschließen.');return}
+ if(localStorage.getItem('pdc-dough-status-started-v1')){toast('Die Stockgare läuft bereits.');return}
  if(!confirm('Bestätigen: Der Teig ist JETZT in der Stockgare und die Reifezeit beginnt ab jetzt?'))return;
  const startedAt=new Date().toISOString();
  try{
@@ -860,7 +861,7 @@ function startDoughStatus(){
  renderHomeDashboard();
  const saved=localStorage.getItem('pdc-dough-status-started-v1');
  if(!saved){toast('Startzeit fehlt – bitte erneut versuchen.');return}
- toast('Reife-Monitor läuft seit '+new Date(saved).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
+ toast('Stockgare gestartet: '+new Date(saved).toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'}));
 }
 function renderHomeDashboard(){
  let monitorPlan=null;try{monitorPlan=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null')}catch(e){}
@@ -911,7 +912,7 @@ function renderHomeDashboard(){
    progress=Math.max(0,Math.min(1,(now.getTime()-startMs)/(doughHours*3600000)));
    stage=now.getTime()<proofMs?1:now.getTime()<endMs?2:3;
    const fmt=d=>d.toLocaleTimeString('de-DE',{hour:'2-digit',minute:'2-digit'});
-   mixLabel='Gestartet · '+fmt(doughStartedAt);
+   mixLabel='Gestartet · '+dateFmt(doughStartedAt)+' · '+fmt(doughStartedAt);
    proofLabel=now.getTime()>=proofMs?'Stückgare läuft':dateFmt(new Date(proofMs))+' · '+fmt(new Date(proofMs));
    bakeLabel=now.getTime()>=endMs?'Teig reif':dateFmt(new Date(endMs))+' · '+fmt(new Date(endMs));
  }
@@ -933,7 +934,7 @@ function planText(){const r=dough(),items=aggregate();return (state.planName||'P
 $('navBack').onclick=()=>go(state.step-1);$('navNext').onclick=()=>{if(state.step<4)go(state.step+1)};document.querySelectorAll('.step').forEach(b=>b.onclick=()=>go(+b.dataset.step));
 document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>go(+b.dataset.goto)));
 $('resetDoughPlanning').addEventListener('click',()=>{if(!confirm('Teigplanung zurücksetzen? Die aktuellen Teigparameter werden auf Standardwerte gesetzt und der Monitor zurückgesetzt.'))return;Object.assign(state,{flour:'pizzeria',method:'mixed',hours:48,yeastType:'dry',ball:280,hydration:64,salt:3,oil:0,roomTemp:21,fridgeTemp:5,waterTemp:10,proof:4,monitorEnabled:false,doughStyle:'neapolitan'});['flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'].forEach(id=>{if($(id))$(id).value=state[id]});['pdc-dough-monitor-plan-v1','pdc-dough-plan-complete-v1','pdc-dough-status-started-v1'].forEach(k=>localStorage.removeItem(k));save();refresh();toast('Teigplanung zurückgesetzt')});
-$('completeDoughPlanning').addEventListener('click',()=>{try{const snapshot={...state,monitorEnabled:true,transferredAt:new Date().toISOString()};localStorage.setItem('pdc-dough-plan-complete-v1','1');localStorage.setItem('pdc-dough-monitor-plan-v1',JSON.stringify(snapshot));state.monitorEnabled=true;save();const check=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null');if(!check||+check.hours!==+state.hours||+check.hydration!==+state.hydration||+check.ball!==+state.ball)throw new Error('Datenprüfung fehlgeschlagen');view='home';renderStepper();renderHomeDashboard();toast('Teigplanung abgeschlossen – Monitor aktualisiert')}catch(e){toast('Teigplanung konnte nicht gespeichert werden')}});
+$('completeDoughPlanning').addEventListener('click',()=>{try{if(!state.bakeDate){toast('Bitte zuerst ein Backdatum festlegen.');return}const snapshot={...state,monitorEnabled:true,transferredAt:new Date().toISOString()};localStorage.setItem('pdc-dough-monitor-plan-v1',JSON.stringify(snapshot));const check=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null');if(!check||+check.hours!==+state.hours||+check.hydration!==+state.hydration||+check.ball!==+state.ball||check.bakeDate!==state.bakeDate||check.bakeTime!==state.bakeTime)throw new Error('Datenprüfung fehlgeschlagen');localStorage.setItem('pdc-dough-plan-complete-v1','1');localStorage.removeItem('pdc-dough-status-started-v1');state.monitorEnabled=true;save();view='home';renderStepper();renderHomeDashboard();toast('Teigplanung übernommen – bitte Stockgare beim tatsächlichen Start bestätigen')}catch(e){toast('Teigplanung konnte nicht zuverlässig gespeichert werden')}});
 $('homePlanButton').addEventListener('click',()=>go(0));['doughHomeButton','recipesHomeButton','shoppingHomeButton'].forEach(id=>{const el=$(id);if(el)el.addEventListener('click',()=>{view='home';renderStepper()})});$('startDoughStatus').addEventListener('click',startDoughStatus);$('toggleDoughStatus').addEventListener('click',resetDoughStatus);
 document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>{const t=b.dataset.tab;if(t==='home'){view='home';renderStepper()}else go(({dough:0,recipes:2,bake:4})[t]??0)}));document.querySelectorAll('.next').forEach(b=>b.onclick=()=>go(state.step+1));const planWizardStage={value:1};function updatePlanSliderLabels(){if($('guestsValue'))$('guestsValue').textContent=$('guests').value;}function showPlanWizardStage(n){planWizardStage.value=Math.max(1,Math.min(5,n));document.querySelectorAll('[data-plan-question]').forEach(q=>q.hidden=+q.dataset.planQuestion!==planWizardStage.value);$('planProgressLabel').textContent=planWizardStage.value===5?'Zusammenfassung':'Frage '+planWizardStage.value+' von 4';$('planProgressBar').style.width=(Math.min(4,planWizardStage.value)/4*100)+'%';$('planWizardBack').hidden=planWizardStage.value===1;$('planWizardNext').hidden=planWizardStage.value===5;$('planWizardFinish').hidden=planWizardStage.value!==5;updatePlanSliderLabels();refresh();} $('planWizardNext').addEventListener('click',()=>{const stage=planWizardStage.value;if(stage===1){const n=Math.max(1,Math.min(40,Math.floor(+$('guests').value||1)));$('guests').value=n;state.guests=n;refresh()}if(stage===4&&!$('bakeDate').value){const now=new Date();$('bakeDate').value=new Date(now.getTime()-now.getTimezoneOffset()*60000).toISOString().slice(0,10);state.bakeDate=$('bakeDate').value;refresh()}showPlanWizardStage(stage+1)});$('planWizardBack').addEventListener('click',()=>showPlanWizardStage(planWizardStage.value-1));$('guests').addEventListener('input',updatePlanSliderLabels);$('reserveEnabled').addEventListener('change',()=>{state.reserve=$('reserveEnabled').checked?1:0;$('reserve').value=state.reserve;state.menuTouched=false;syncAutoCounts();refresh()});$('reserveEnabled').checked=(+state.reserve||0)>0;showPlanWizardStage(1);document.querySelectorAll('.back').forEach(b=>b.onclick=()=>go(state.step-1));
 const fields=['planName','guests','perGuest','reserve','bakeDate','bakeTime','flour','method','hours','yeastType','ball','hydration','salt','roomTemp','fridgeTemp','waterTemp','proof'];
