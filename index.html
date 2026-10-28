@@ -799,7 +799,7 @@ const pizzaImages={
 const USER_PROFILE_KEY='pdc-user-dough-profiles-v1',USER_RECIPE_KEY='pdc-user-pizza-recipes-v1';
 function readP3(key){try{const v=JSON.parse(localStorage.getItem(key)||'[]');return Array.isArray(v)?v:[]}catch(e){return []}}
 function writeP3(key,value){try{localStorage.setItem(key,JSON.stringify(value));return JSON.parse(localStorage.getItem(key)||'null')!==null}catch(e){return false}}
-let editingRecipeId=null;
+let editingRecipeId=null;readP3(USER_RECIPE_KEY).forEach(r=>{const id='user_'+r.id;if(!pizzas.some(p=>p.id===id)){pizzas.push({id,name:r.name,category:r.category||'Eigene Rezepte',default:0,items:(r.items||[]).map(x=>[...x])});if(state.counts[id]===undefined)state.counts[id]=0}});
 function p3Id(){return 'u'+Date.now().toString(36)+Math.random().toString(36).slice(2,7)}
 function safeP3(v){return String(v??'').replace(/[&<>"']/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]))}
 function renderSavedDoughProfiles(){const sel=$('savedDoughProfile');if(!sel)return;const keep=sel.value,profiles=readP3(USER_PROFILE_KEY);sel.innerHTML='<option value="">Profil auswählen …</option>'+profiles.map(p=>'<option value="'+safeP3(p.id)+'">'+safeP3(p.name)+'</option>').join('');if(profiles.some(p=>p.id===keep))sel.value=keep;$('deleteDoughProfile').disabled=!sel.value}
