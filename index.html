@@ -912,9 +912,12 @@ function applyRecommendedCounts(){
 }
 function resetDoughStatus(){
  if(!confirm('Reife-Monitor zurücksetzen? Der gespeicherte Plan bleibt erhalten.'))return;
- try{localStorage.removeItem('pdc-dough-status-started-v1')}catch(e){}
+ try{
+  localStorage.removeItem('pdc-dough-status-started-v1');
+  if(localStorage.getItem('pdc-dough-status-started-v1')!==null)throw new Error('Startzeit konnte nicht gelöscht werden');
+ }catch(e){toast('Reife-Monitor konnte nicht zurückgesetzt werden.');return}
  renderHomeDashboard();
- toast('Reife-Monitor zurückgesetzt');
+ toast('Reife-Monitor zurückgesetzt. Dein Teigplan bleibt erhalten.');
 }
 function transferDoughToMonitor(){
  let planned=false;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1'}catch(e){}
@@ -928,9 +931,11 @@ function transferDoughToMonitor(){
  renderHomeDashboard();toast('Teigparameter wurden in den Reife-Monitor übernommen.');
 }
 function startDoughStatus(){
- let planned=false,monitorPlan=null;try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1';monitorPlan=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null')}catch(e){}
+ let planned=false,monitorPlan=null,existingStart=null;
+ try{planned=localStorage.getItem('pdc-dough-plan-complete-v1')==='1';monitorPlan=JSON.parse(localStorage.getItem('pdc-dough-monitor-plan-v1')||'null');existingStart=localStorage.getItem('pdc-dough-status-started-v1')}catch(e){toast('Teigstatus konnte nicht gelesen werden. Bitte Speicherzugriff prüfen.');return}
  if(!planned||!monitorPlan){toast('Bitte zuerst Plan und Teigstudio abschließen.');return}
- if(localStorage.getItem('pdc-dough-status-started-v1')){toast('Die Stockgare läuft bereits.');return}
+ if(existingStart&&Number.isFinite(new Date(existingStart).getTime())){toast('Die Stockgare läuft bereits.');return}
+ if(existingStart){try{localStorage.removeItem('pdc-dough-status-started-v1')}catch(e){toast('Ungültiger Teigstatus konnte nicht bereinigt werden.');return}}
  if(!confirm('Bestätigen: Der Teig ist JETZT in der Stockgare und die Reifezeit beginnt ab jetzt?'))return;
  const startedAt=new Date().toISOString();
  try{
