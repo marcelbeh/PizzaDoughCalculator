@@ -1,0 +1,183 @@
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url(assets/fonts/inter-400.woff) format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/fonts/inter-500.woff) format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/fonts/inter-600.woff) format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(assets/fonts/inter-700.woff) format('woff');
+}
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 800;
+  font-display: swap;
+  src: url(assets/fonts/inter-800.woff) format('woff');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url(assets/fonts/playfair-display-500.woff) format('woff');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url(assets/fonts/playfair-display-600.woff) format('woff');
+}
+@font-face {
+  font-family: 'Playfair Display';
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url(assets/fonts/playfair-display-700.woff) format('woff');
+}
+/* Ciao! Classico — shared visual tokens. Existing layout and state classes stay intact. */
+:root {
+  color-scheme: light !important;
+  --basilico: #1B5E20;
+  --pomodoro: #D32F2F;
+  --crema: #F9F5EA;
+  --oro: #D4A038;
+  --carbone: #1F1F1F;
+  --primary: var(--basilico);
+  --accent: var(--pomodoro);
+  --bg: var(--crema) !important;
+  --panel: #FFFFFF !important;
+  --panel2: #F0F2E9 !important;
+  --line: #DADDD2 !important;
+  --text: var(--carbone) !important;
+  --muted: #586052 !important;
+  --red: var(--pomodoro) !important;
+  --red2: var(--pomodoro) !important;
+  --green: var(--basilico) !important;
+  --gold: #806018 !important; /* Readable text companion to decorative Oro. */
+  --paper: var(--bg);
+  --paper2: var(--panel);
+  --ink: var(--text);
+  --greenbg: var(--panel2);
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-display: 'Playfair Display', Georgia, serif;
+  --radius-card: 20px;
+  --radius-control: 12px;
+  --shadow: 0 8px 28px #1B5E2008;
+}
+html, body { background: var(--bg) !important; color: var(--text) !important; }
+body { font-family: var(--font-body) !important; font-size: 15px; line-height: 1.6; }
+button, input, select, textarea { font-family: var(--font-body) !important; }
+h1, h2, h3, h4, .strand-copy strong, .academy-entry summary strong, .pizza-tile-name { font-family: var(--font-display) !important; font-weight: 600 !important; letter-spacing: -.025em !important; }
+h2 { font-size: clamp(26px, 4vw, 36px); line-height: 1.2; }
+h3 { line-height: 1.3; }
+.app { padding-top: 20px !important; padding-bottom: calc(110px + env(safe-area-inset-bottom)) !important; }
+.top { padding: 10px 0 22px !important; margin-bottom: 24px !important; border-color: var(--line) !important; background: transparent !important; }
+.brand { justify-content: flex-start !important; padding: 0; }
+.brand-lockup { align-items: flex-start !important; }
+.brand .brand-lockup h1 { margin: 0 !important; transform: none !important; font-size: 0 !important; line-height: 1 !important; letter-spacing: 0 !important; }
+.classico-wordmark { display: block; width: 168px; height: 88px; object-fit: contain; }
+.brand-sub { display: block !important; color: var(--muted) !important; font-size: 8px !important; font-weight: 600; letter-spacing: 1.2px !important; margin-top: 7px !important; }
+.brandmark { display: none; }
+.brand-swish { display: none !important; }
+.iconbtn, .top #reset, .sos-back, .sos-help { min-width: 44px; min-height: 44px; background: var(--panel) !important; color: var(--primary) !important; border: 1px solid var(--line) !important; box-shadow: none !important; }
+.card, .page .card, .dashboard-card, .home-screen .dashboard-card, .home-tile, .ciao-strand-card, .academy-entry, .sos-result, .pizza-detail, .pizza-tile, .saved-recipe-row, .p11-profile-row { background: var(--panel) !important; color: var(--text) !important; border-color: var(--line) !important; border-radius: var(--radius-card) !important; box-shadow: var(--shadow) !important; }
+.card, .home-screen .dashboard-card { padding: 22px !important; margin-bottom: 18px !important; }
+.cardhead { gap: 12px; margin-bottom: 18px; }
+.intro, .muted, .page .intro, .page .muted, .page .field label, .page .choice small, .page .item small { color: var(--muted) !important; }
+.ciao-home-hero { padding: 28px !important; grid-template-columns: minmax(0,1fr) !important; border: 1px solid var(--line) !important; border-top: 3px solid var(--oro) !important; border-radius: var(--radius-card) !important; background: var(--panel) !important; box-shadow: var(--shadow) !important; }
+.ciao-home-hero .ciao-hero-copy h2 { font-family: var(--font-display) !important; font-size: clamp(23px,4.8vw,34px) !important; font-weight: 500 !important; line-height: 1.35 !important; color: var(--primary) !important; }
+.ciao-hero-copy p { font-size: 14px !important; line-height: 1.7 !important; color: var(--muted) !important; max-width: 54ch; }
+.ciao-hero-art, .ciao-basil-bg { display: none !important; }
+.ciao-strand-card { border: 1px solid var(--line) !important; min-height: 116px; }
+.ciao-strand-card .strand-copy strong { color: var(--text) !important; font-size: 21px; }
+.ciao-strand-card .strand-copy small, .ciao-strand-card .strand-symbol { color: var(--muted) !important; }
+.ciao-strand-card .strand-copy em { color: var(--primary) !important; }
+.strand-icon, .tile-icon, .p12-learning-mark { background: var(--panel2) !important; border-color: var(--line) !important; color: var(--primary) !important; box-shadow: none !important; }
+.strand-icon svg { filter: saturate(.6); }
+.btn, .dashboard-primary, .dashboard-plan-actions button:first-child, .pizza-add-primary, #applyAppUpdate, button.primary { min-height: 46px; background: var(--primary) !important; border-color: var(--primary) !important; color: white !important; border-radius: var(--radius-control) !important; font-size: 14px; font-weight: 600; box-shadow: none !important; text-shadow: none; }
+.page .btn.secondary, .btn.secondary, .dashboard-plan-actions button, .dashboard-link, .sos-outline, .saved-recipe-actions button, .p11-profile-actions button { background: var(--panel) !important; border: 1px solid var(--line) !important; color: var(--primary) !important; box-shadow: none !important; border-radius: var(--radius-control); min-height: 44px; }
+.teig-doc, .home-tile.teig-doc, .sos-footer .btn { color: var(--accent) !important; border-color: var(--accent) !important; }
+.sos-footer .btn { background: var(--accent) !important; color: white !important; }
+button:disabled { opacity: .45; }
+button, a, summary { -webkit-tap-highlight-color: transparent; }
+button, .ciao-strand-card, summary { transition: background-color .16s ease, border-color .16s ease, transform .16s ease; }
+:is(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid var(--primary) !important; outline-offset: 3px; }
+.field input:not([type=range]), .field select, .field textarea, .page .field input:not([type=range]), .page .field select, .page .field textarea, .choice select, .page .choice select, .qty, .page .qty, .academy-search, .sos-when select, .sos-screen textarea { background: var(--panel) !important; border: 1px solid #A6AD9E !important; color: var(--text) !important; -webkit-text-fill-color: var(--text) !important; border-radius: var(--radius-control) !important; min-height: 46px; font-size: 16px !important; }
+input::placeholder, textarea::placeholder { color: var(--muted); opacity: 1; }
+input[type=range], input[type=checkbox], input[type=radio], .field input[type=range], .choice input, .checkitem input { accent-color: var(--primary) !important; }
+.step { background: var(--panel) !important; color: var(--muted) !important; border-color: var(--line) !important; }
+.step.active { background: var(--panel2) !important; color: var(--primary) !important; border-color: var(--primary) !important; box-shadow: none !important; }
+.step b { background: var(--panel2) !important; color: var(--muted) !important; }
+.step.active b, .step.done b, .sos-progress-step.active b, .sos-progress-step.done b { background: var(--primary) !important; color: white !important; border-color: var(--primary) !important; }
+.stat, .note, .page .note, .p12-tip, .pilot-next, .shopping-category, .checkitem, .sos-option { background: var(--panel2) !important; color: var(--text) !important; border-color: var(--line) !important; box-shadow: none !important; }
+.stat strong, .rangehead strong, .slider-value, .time, .stat-value { color: var(--primary) !important; }
+.stat span, .stat small, .sos-option small, .sos-question { color: var(--muted) !important; }
+.tag, .pill, .page .tag, .page .pill, .academy-entry summary>b { background: var(--panel2) !important; color: var(--primary) !important; border-color: var(--line) !important; }
+.item, .shopping-row, .page .item { background: transparent !important; border-color: var(--line) !important; }
+.dough-progress, .plan-progress-track { background: var(--line) !important; }
+.dough-progress>span, .plan-progress-track>span { background: var(--primary) !important; }
+.nav { background: #F9F5EAFA !important; border-color: var(--line) !important; box-shadow: 0 -4px 20px #1B5E2008 !important; }
+.ciao-main-nav .tab { min-height: 52px; color: var(--muted) !important; border-radius: var(--radius-control); font-weight: 600 !important; }
+.ciao-main-nav .tab.active { color: var(--primary) !important; background: var(--panel2) !important; }
+.nav button.active, .academy-category.active { background: var(--primary) !important; border-color: var(--primary) !important; color: white !important; }
+.navinner { gap: 4px; }
+.toast, #appUpdateNotice { background: var(--primary) !important; color: white !important; border-color: var(--primary) !important; }
+.sos-overlay { background: #1F1F1F99 !important; }
+.sos-screen, .sos-panel, #doughSosOverlay .sos-screen { background: var(--bg) !important; color: var(--text) !important; }
+.sos-cover, #doughSosOverlay .sos-cover { background: var(--panel2) !important; border: 1px solid var(--line) !important; padding: 24px !important; border-radius: var(--radius-card) !important; height: auto !important; min-height: 140px; }
+.sos-cover h2, #doughSosOverlay .sos-cover h2, .sos-stage h3, #doughSosOverlay .sos-stage h3 { color: var(--text) !important; font-family: var(--font-display) !important; }
+.sos-cover p, #doughSosOverlay .sos-cover p, .sos-result p { color: var(--muted) !important; }
+.sos-option.selected, .checkitem:has(input:checked) { background: var(--panel2) !important; border-color: var(--primary) !important; }
+.sos-option.selected b { color: var(--primary) !important; }
+.sos-result-tip, .sos-tip { background: var(--panel2) !important; color: var(--text) !important; border-color: var(--oro) !important; }
+.pizza-detail-backdrop { background: #1F1F1FAA !important; }
+.pizza-detail-body, .pizza-detail-controls { background: var(--panel) !important; color: var(--text) !important; }
+.pizza-detail-close, .qty-step { background: var(--panel) !important; border-color: var(--line) !important; color: var(--primary) !important; min-height: 44px; min-width: 44px; }
+.academy-entry summary { min-height: 64px; }
+.academy-entry summary strong, .academy-page-heading h2, .academy-entry-body { color: var(--text) !important; }
+.academy-entry summary small { color: var(--gold) !important; }
+.academy-entry summary em { color: var(--muted) !important; }
+@media (min-width: 760px) { .card, .home-screen .dashboard-card { padding: 26px !important; } .ciao-home-hero { padding: 36px !important; } }
+@media (max-width: 430px) { .app { padding-left: 16px !important; padding-right: 16px !important; } .card, .home-screen .dashboard-card { padding: 18px !important; } .ciao-home-hero { padding: 24px 20px !important; } .ciao-main-nav .tab { font-size: 10px !important; padding-left: 2px; padding-right: 2px; } .ciao-strand-card { padding-right: 12px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; transition-duration: .01ms !important; } }
+/* Small line symbols replace the older illustrated dashboard artwork. */
+.strand-icon svg { width: 30px !important; height: 30px !important; filter: none; }
+.ciao-strand-card { border-left: 1px solid var(--line) !important; }
+.ciao-strands-label { color: var(--muted) !important; }
+.strand-arrow { font-size: 0 !important; }
+.strand-arrow::after { content: ''; display: block; width: 8px; height: 8px; border-top: 1.5px solid var(--primary); border-right: 1.5px solid var(--primary); transform: rotate(45deg); }
+.home-tile.teig-doc { background: var(--panel) !important; border: 1px solid var(--line) !important; box-shadow: var(--shadow) !important; }
+.home-tile.teig-doc strong, .home-tile.teig-doc>b { color: var(--accent) !important; }
+.home-tile.teig-doc small { color: var(--muted) !important; }
+.home-tile.teig-doc .tile-icon { color: var(--accent) !important; background: var(--panel2) !important; }
+.ciao-main-nav .tab svg { stroke: currentColor !important; }
+.hero-art { display: none !important; }
+.ciao-strand-card::before { background: var(--primary) !important; width: 2px; }
+.ciao-main-nav .tab.active svg, .ciao-main-nav .tab.active svg path { stroke: var(--primary) !important; }
+#doughSosOverlay { background: #1F1F1F99 !important; }
+#doughSosOverlay .sos-screen { margin: 0 auto !important; min-height: 100dvh !important; max-height: 100dvh; overflow-y: auto; }
+#doughSosOverlay .sos-top, #doughSosOverlay .sos-footer { background: var(--bg) !important; border-color: var(--line) !important; }
+#doughSosOverlay .sos-footer .btn { background: var(--primary) !important; color: white !important; border-radius: var(--radius-control) !important; }
+.dough-style-card { background: var(--panel) !important; border-color: var(--line) !important; color: var(--text) !important; box-shadow: none !important; }
+.dough-style-card.active, .dough-style-card.selected { background: var(--panel2) !important; border-color: var(--primary) !important; }
+.dough-countdown, .home-screen .dough-countdown { background: var(--panel2) !important; border-color: var(--line) !important; color: var(--primary) !important; }

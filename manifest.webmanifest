@@ -1,18 +1,30 @@
 {
-  "name": "Ciao",
-  "short_name": "Ciao",
+  "name": "Ciao!",
+  "short_name": "Ciao!",
   "description": "Dein Pizza-Assistent für Teig, Rezepte, Einkauf und Backtag.",
   "start_url": "./index.html",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#f6ead5",
-  "theme_color": "#f6ead5",
+  "background_color": "#F9F5EA",
+  "theme_color": "#F9F5EA",
   "icons": [
     {
-      "src": "apple-touch-icon.png?v=2",
-      "sizes": "180x180",
+      "src": "icon.svg?v=classico-1",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
